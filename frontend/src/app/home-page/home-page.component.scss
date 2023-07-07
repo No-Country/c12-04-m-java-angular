@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+h1 {
+    background-color: #212121;
+    color: #FAFAFA;
+    font-family: 'Roboto', sans-serif;
+    padding: 25px;
+    margin-bottom: 0;
+}
+
+.proyectsListContainer {
+    margin-top: 0;
+    background: #424242;
+    min-height: 642px;
+    display: flex;
+}
+
+.project-card {
+    position: relative;
+    width: 246px;
+    height: 269px;
+    background-color: #212121;
+    color: white;
+    padding: 10px;
+    margin: 25px;
+    border-radius: 8px;
+}
+
+.create-project-card{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 246px;
+    height: 269px;
+    background-color: #767676;
+    color: white;
+    padding: 10px;
+    margin: 25px;
+    border-radius: 8px;
+}
+
+.white-circle{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    color: #767676;
+    padding: 5px;
+    font-weight: 400;
+    font-size: 25px;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+}
+.project-color{
+    background-color: #D9D9D9;
+    margin: 5px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    width: max;
+    height: 72px;
+}
+.project-card h2{
+    font-size: 16px;
+    font-weight: 500;
+    margin: 15px;
+}
+.project-card p{
+    font-size: 16px;
+    font-weight: 300;
+    margin: 15px;
+}
+.project-edit{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+}
