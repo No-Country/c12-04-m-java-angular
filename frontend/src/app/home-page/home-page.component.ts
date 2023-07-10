@@ -30,7 +30,7 @@ export class HomePageComponent implements OnInit {
 
   obtenerProyectos() { //Simulo el listado de proyecto que me devuelve
     this.proyectos = [
-      { name: 'Proyecto 1', description: 'Descripción del proyecto 1', id: 0, spaces:[{spaceName:'Espacio 1'}]}
+      { name: 'Proyecto 1', description: 'Descripción del proyecto 1', id: 0, spaces: [{ spaceName: 'Espacio 1' }] }
     ];
   }
   openModal(proyecto: Proyecto) {
@@ -41,7 +41,13 @@ export class HomePageComponent implements OnInit {
     this.modalVisible = false;
     this.modalNewProjectVisible = false;
   }
-
+  editandoTexto: boolean = false;
+  activarEdicion() {
+    this.editandoTexto = true;
+  }
+  guardarTexto() {
+    this.editandoTexto = false;
+  }
   //Funciones para el Modal de crear un nuevo proyecto
   modalNewProjectVisible: boolean = false;
   textoTituloEditable: string = 'Nuevo Proyecto';
@@ -54,25 +60,33 @@ export class HomePageComponent implements OnInit {
     }
   }
 
-  editandoTexto: boolean = false;
-  activarEdicion() {
-    this.editandoTexto = true;
-  }
-  guardarTexto() {
-    this.editandoTexto = false;
-  }
   crearProyecto() {
     const nuevoProyecto: Proyecto = {
       name: this.textoTituloEditable,
       description: this.textoDescripcionEditable,
       id: this.proyectos.length,
-      spaces: [{spaceName: this.textoNombreNuevoEspacio}]
+      spaces: [{ spaceName: this.textoNombreNuevoEspacio }]
     };
     this.proyectos.push(nuevoProyecto);
     this.editandoTexto = false;
 
     this.textoTituloEditable = 'Nuevo Proyecto' //Reset de los valores para cuando se cree otro proyecto
     this.textoDescripcionEditable = 'Descripcion de este proyecto';
+    this.closeModal();
+  }
+  //Funciones para editar proyecto ya creado.
+  borrarProyecto(id: number) {
+    const index = this.proyectos.findIndex(proyecto => proyecto.id === id);
+    if (index !== -1) {
+      this.proyectos.splice(index, 1);
+    }
+    this.closeModal();
+  }
+  guardarProyecto() {
+    const index = this.proyectos.findIndex(proyecto => proyecto.id === this.projectEditing.id);
+    if (index !== -1) {
+      this.proyectos[index] = this.projectEditing;
+    }
     this.closeModal();
   }
 }

@@ -84,6 +84,21 @@ h1 {
     bottom: 15px;
     right: 15px;
 }
+input{
+    border-radius: 3px;
+    min-width: 250px;
+    border: none;
+}
+.inputDescription{
+    min-width: 250px;
+    min-height: 120px;
+    resize: none;
+}
+.textDescription{
+    word-wrap: break-word;
+    max-height: 100px;
+    overflow-y: scroll;
+}
 .modalNewProject,
 .modal {
     background-color: #212121;
@@ -118,6 +133,19 @@ h1 {
     text-transform: uppercase;
     font-size: 16px;
     padding: 5px 10px;
+    font-weight: 700;
+}
+.btn-delete-project{
+    position: absolute;
+    left: 40px;
+    bottom: 20px;
+    border: none;
+    background-color: #793535;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 5px 10px;
+    font-weight: 700;
 }
 .btn-edit-new-project{
     position: absolute;
