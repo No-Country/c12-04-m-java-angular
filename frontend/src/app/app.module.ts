@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NopagefoundComponent } from './components/nopagefound/nopagefound.component';
+// import { MaterialModule } from '@shared/material.module'
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { NopagefoundComponent } from './components/nopagefound/nopagefound.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    // MaterialModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
