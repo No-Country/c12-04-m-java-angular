@@ -1,19 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { NopagefoundComponent } from './components/nopagefound/nopagefound.component';
-import { TasksRoutingModule } from './components/tasks/tasks-routing.module';
+import { ProjectComponent } from './project/project.component';
 
 const routes: Routes = [
-	{
-		path: 'tasks',
-		loadChildren: () =>
-			import('./components/tasks/tasks.module').then(modulo => modulo.TasksModule),
-	},
-	{ path: '**', component: NopagefoundComponent },  
+  {    path: 'project',
+  component: ProjectComponent}
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), TasksRoutingModule],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
