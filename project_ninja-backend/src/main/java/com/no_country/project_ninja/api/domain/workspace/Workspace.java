@@ -1,5 +1,8 @@
 package com.no_country.project_ninja.api.domain.workspace;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.no_country.project_ninja.api.domain.space.Space;
+import com.no_country.project_ninja.api.domain.task.Task;
 import com.no_country.project_ninja.api.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "workspace")
@@ -29,11 +33,16 @@ public class Workspace {
 
     @ManyToMany
     @JoinTable(
-            name = "user_workspace", // Name of the join table
+            name = "users_workspace", // Name of the join table
             joinColumns = @JoinColumn(name = "workspace_id"), // Column name in the join table referring to Workspace
             inverseJoinColumns = @JoinColumn(name = "user_id") // Column name in the join table referring to User
     )
-    private Set<User> users;
+    @JsonIgnore
+    private Set<User> users= new HashSet<>();
+
+    @OneToMany(mappedBy = "workspace")
+    @JsonIgnore
+    private Set<Space> spaces;
 
     public Long getId() {
         return id;

@@ -1,11 +1,15 @@
 package com.no_country.project_ninja.api.domain.priority;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.no_country.project_ninja.api.domain.task.Task;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Table(name = "priority")
 @Entity(name = "PriorityTask")
@@ -22,17 +26,10 @@ public class PriorityTask {
     @Column(name = "name_priority", length = 50)
     private String namePriority;
 
-    @OneToOne
-    @JoinColumn(name = "task_id")
-    private Task task;
+    @OneToMany(mappedBy = "priorityTask")
+    @JsonIgnore
+    private Set<Task> tasks= new HashSet<>();
 
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
 
     public Long getId() {
         return id;

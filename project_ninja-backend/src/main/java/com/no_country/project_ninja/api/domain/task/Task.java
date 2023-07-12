@@ -1,5 +1,6 @@
 package com.no_country.project_ninja.api.domain.task;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.no_country.project_ninja.api.domain.priority.PriorityTask;
 import com.no_country.project_ninja.api.domain.space.Space;
 import com.no_country.project_ninja.api.domain.user.User;
@@ -9,6 +10,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Table(name = "task")
@@ -29,11 +32,15 @@ public class Task {
     @Column(length = 250)
     private String description;
 
+    @Column(name = "due_date")
+    private Date dueDate;
+
     @ManyToOne
-    @JoinColumn(name = "space_id")
+    @JoinColumn(name = "space")
     private Space space;
 
-    @OneToOne(mappedBy = "task")
+    @ManyToOne
+    @JoinColumn(name = "priority")
     private PriorityTask priorityTask;
 
     @ManyToMany
@@ -42,7 +49,8 @@ public class Task {
             joinColumns = @JoinColumn(name = "task_id"), // Column name in the join table referring to Task
             inverseJoinColumns = @JoinColumn(name = "user_id") // Column name in the join table referring to User
     )
-    private Set<User> users;
+    @JsonIgnore
+    private Set<User> users= new HashSet<>();
 
     public Long getId() {
         return id;
@@ -90,5 +98,13 @@ public class Task {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
     }
 }

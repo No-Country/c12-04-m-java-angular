@@ -1,14 +1,18 @@
 package com.no_country.project_ninja.api.domain.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.no_country.project_ninja.api.domain.subscription.Subscription;
 import com.no_country.project_ninja.api.domain.task.Task;
+import com.no_country.project_ninja.api.domain.workspace.Workspace;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Table(name = "users")
 @Entity(name = "User")
@@ -31,9 +35,17 @@ public class User {
     @Column(length = 8)
     private String password;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn(name = "subscription_type")
     private Subscription subscription;
 
+    @ManyToMany(mappedBy = "users")
+    @JsonIgnore
+    private Set<Task> taskSet= new HashSet<>();
+
+    @ManyToMany(mappedBy = "users")
+    @JsonIgnore
+    private Set<Workspace> workspaceSet= new HashSet<>();
 
     public Long getId() {
         return id;
