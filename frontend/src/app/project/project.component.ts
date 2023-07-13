@@ -1,19 +1,50 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface Space {
   name: string;
   project: number;
 }
 
-interface Task {
-  name: string;
+interface Workspace {
+  id: number;
+  nameWorkspace: string;
   description: string;
-  expDate: Date;
-  priority: number;
-  space: number;
 }
+
+interface DTOSpace {
+  id: number;
+  nameSpace: string;
+  description: string;
+  workspace: Workspace;
+  tasks: Task[];
+}
+
+interface DTOAddSpace {
+  nameSpace: string;
+  description: string;
+  workspace: Workspace;
+}
+
+interface DTOSpaceSinTasks {
+  id: number;
+  nameSpace: string;
+  description: string;
+  workspace: Workspace;
+}
+
+interface Task {
+  id: number;
+  nameTask: string;
+  description: string;
+  dueDate: Date;
+  priority: number;
+  space: DTOSpace;
+}
+
+let dtoSpaces: any;
 
 @Component({
   selector: 'app-project',
@@ -22,8 +53,9 @@ interface Task {
 })
 export class ProjectComponent {
 
-  url: string= "";
-  
+  idUrl: number = 0;
+  dtoSpaces: any;
+/*  
   spaceListHardcode: Space[]=[
     {
       name: "Diseño",
@@ -92,44 +124,49 @@ export class ProjectComponent {
       space: 2,
     },
   ]
-
-  
-  /*
-  data: Space[]=[
-    {
-      idSpace: 0,
-      name: "",
-      tasks: [
-        {
-          name: "",
-          description: "",
-          expDate: new Date("0000,00,00"),
-          priority: true,
-          idSpace: 0,
-        }
-      ],
-
-    }
-  ];
-  */
-
-  constructor(/*private http:HttpClient*/){ }
+*/
+  constructor(private http:HttpClient,
+    private activatedRouter : ActivatedRoute,){ }
 
   ngOnInit(){
-    
+    this.idUrl = this.activatedRouter.snapshot.params['id'];
     this.loadSpaces();
     
   }
 
   loadSpaces(){
-    /*
-    this.getSpace().subscribe()
-        data =>{
-        this.spaceList = data;
+    
+    this.getSpace().subscribe(
+      data =>{
+        this.dtoSpaces = data;
       }
-    */
+    )
+    console.log(this.dtoSpaces);
+    
    //simulamos la obtencion de datos de el back
-   this.spaceList=this.spaceListHardcode;
+   //this.spaceList=this.spaceListHardcode;
+  }
+
+  createSpace(){
+    let workspace: Workspace;
+    let dTOAddSpace: DTOAddSpace;
+    dTOAddSpace={nameSpace: "",
+    description: "",
+    workspace: {  id: this.idUrl,
+      nameWorkspace: "string",
+      description: "string",
+    },
+  };
+    
+    console.log(this.dtoSpaces);
+    
+   //simulamos la obtencion de datos de el back
+   //this.spaceList=this.spaceListHardcode;
+  }
+
+
+  getSpace(): Observable<any[]>{
+    return this.http.get<any[]>("http://190.191.163.21:8080/space/workspace/1");
   }
 
   //CRUD Space
@@ -153,6 +190,8 @@ export class ProjectComponent {
  
   deleteSpace(id: number): Observable<Space>{
    return this.http.delete<Space>(this.url+`space/delete/${id}`);
-  }*/
+  }
+
+*/
   
 }
