@@ -516,7 +516,7 @@ Respuesta:
 ```
 
 ### Actualizar task:
-### URL: {api.url}/space/{id_task} 
+### URL: {api.url}/task/{id_task} 
 #### Request: PUT
 
 Para actualizar una tarea se debe enviar la peticion identificando la mismo con su respectivo id pasado como parametro en `{id_task}` enviando el json siguiente:
