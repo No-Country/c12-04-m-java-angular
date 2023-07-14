@@ -1,10 +1,3 @@
-<style>
-    #ok{
-        color: rgb(0, 255, 0);
-    }
-</style>
-
-
 # api-ninja-projects
 
 ## Workspace endpoints
