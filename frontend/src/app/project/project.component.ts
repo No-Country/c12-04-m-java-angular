@@ -14,6 +14,10 @@ interface Workspace {
   description: string;
 }
 
+interface WorkspaceId {
+  id: number;
+}
+
 interface DTOSpace {
   id: number;
   nameSpace: string;
@@ -25,7 +29,7 @@ interface DTOSpace {
 interface DTOAddSpace {
   nameSpace: string;
   description: string;
-  workspace: Workspace;
+  workspace: WorkspaceId;
 }
 
 interface DTOSpaceSinTasks {
@@ -55,7 +59,7 @@ export class ProjectComponent {
 
   idUrl: number = 0;
   dtoSpaces: any;
-/*  
+ 
   spaceListHardcode: Space[]=[
     {
       name: "Diseño",
@@ -76,7 +80,7 @@ export class ProjectComponent {
   ];
 
   spaceList: Space[]=[];
-
+/*
   tasksListDiseño: Task[]=[
     {
       name: "hacer los diseños",
@@ -131,6 +135,7 @@ export class ProjectComponent {
   ngOnInit(){
     this.idUrl = this.activatedRouter.snapshot.params['id'];
     this.loadSpaces();
+    this.spaceList=this.spaceListHardcode;
     
   }
 
@@ -142,32 +147,55 @@ export class ProjectComponent {
       }
     )
     console.log(this.dtoSpaces);
-    
-   //simulamos la obtencion de datos de el back
-   //this.spaceList=this.spaceListHardcode;
+  
   }
 
   createSpace(){
-    let workspace: Workspace;
-    let dTOAddSpace: DTOAddSpace;
-    dTOAddSpace={nameSpace: "",
-    description: "",
-    workspace: {  id: this.idUrl,
-      nameWorkspace: "string",
-      description: "string",
-    },
-  };
     
-    console.log(this.dtoSpaces);
-    
-   //simulamos la obtencion de datos de el back
-   //this.spaceList=this.spaceListHardcode;
-  }
+    //let workspaceId: WorkspaceId;
+    //let dTOAddSpace: DTOAddSpace;
+    /*dTOAddSpace={
+      nameSpace: "dasd",
+      description: "",
+      workspace: {
+        id: this.idUrl
+      },*/
 
+    
+      
+      let dTOAddSpace: any={
+        nameSpace: "nuevo espacio",
+        description: "nueva descripcion",
+        workspace: {
+          id: 4,
+          nameWorkspace: "test project",
+          description: "test"
+        },
+    }
+     this.addSpace(dTOAddSpace);
+
+
+  }
 
   getSpace(): Observable<any[]>{
-    return this.http.get<any[]>("http://190.191.163.21:8080/space/workspace/1");
+    return this.http.get<any[]>("http://152.170.10.235/space/workspace/1");
   }
+
+  addSpace(dTOAddSpace:any): Observable<any>{
+    console.log("llega");
+    return this.http.post<any>(`http://152.170.10.235/space`, dTOAddSpace)
+  }
+
+  /*
+  addSpace(dTOAddSpace:DTOAddSpace): Observable<any>{
+    console.log("llega");
+    return this.http.post(`http://152.170.10.235/space`, dTOAddSpace)
+  }
+  */
+
+  deleteSpace(id: number): Observable<any>{
+    return this.http.delete<any>(`http://152.170.10.235/space/${id}`);
+   }
 
   //CRUD Space
   

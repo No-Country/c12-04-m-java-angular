@@ -4,7 +4,7 @@
     <div class="col text-light p-4">
 
         <h1 class="px-4 d-inline">Nombre de proyecto</h1> 
-
+        
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
             <svg xmlns="http://www.w3.org/2000/svg" class="ionicon project-edit d-inline mb-3" viewBox="0 0 512 512" data-bs-target="#exampleModal">
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
@@ -23,7 +23,7 @@
 
             <h3 class="m-3">ESPACIOS</h3>
 
-            <div *ngFor="let space of dtoSpaces"class="card bg-secondary  my-3 mx-4">
+            <div *ngFor="let space of dtoSpaces"class="card bg-secondary  my-3 mx-4"><!--dtoSpaces-->
                 <div class="card-body p-2">
 
                   <h5 class="card-title p-0 ps-3 m-0 d-inline">{{space.nameSpace}}</h5>
@@ -40,11 +40,9 @@
 
             <div class="mx-5">
 
-              <button type="button" class="btn btn-light btn-lg my-5 py-2 px-4 text-secondary">AGREGAR ESPACIO</button>
+              <button type="submit" (click)="createSpace()" class="btn btn-light btn-lg my-5 py-2 px-4 text-secondary">AGREGAR ESPACIO</button>
 
             </div>
-
-            
 
         </div>
 
@@ -168,49 +166,27 @@
     <div class="modal-dialog ">
       <div class="modal-content bg-dark">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">nombre de proyecto</h1>
+          <h1 class="modal-title fs-5 " id="exampleModalLabel">nombre de proyecto</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           ...
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-primary">Guardar</button>
         </div>
       </div>
     </div>
   </div>
 
   <!-- Modal editar espacio -->
-  <div class="modal fade" id="EditSpaceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog ">
-      <div class="modal-content bg-dark">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5 text-light" id="EditSpaceModal">space.name</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <label for="exampleFormControlTextarea1" class="form-label text-light">Descripcion del Espacio</label>
-          <textarea class="form-control bg-dark text-light" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deleteSpaceModal">eliminar espacio</button>
-          <button type="button" class="btn btn-primary">guardar espacio</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <app-modal-edit-space></app-modal-edit-space>
 
   <!-- Modal editar espacio -->
   <div class="modal fade" id="deleteSpaceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
       <div class="modal-content bg-dark">
-<<<<<<< Updated upstream
-        <button type="button" class="btn-close text-light" data-bs-dismiss="modal" aria-label="Close"></button>
-=======
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
->>>>>>> Stashed changes
         <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-exclamation-circle-fill text-light" viewBox="0 0 16 16">
           <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
         </svg>
