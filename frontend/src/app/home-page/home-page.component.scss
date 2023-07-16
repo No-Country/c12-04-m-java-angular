@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
-*{
+* {
     font-family: 'Roboto', sans-serif;
 }
+
 h1 {
     background-color: #212121;
     color: #FAFAFA;
@@ -14,7 +15,8 @@ h1 {
     margin-top: 0;
     background: #424242;
     min-height: 642px;
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .project-card {
@@ -77,28 +79,42 @@ h1 {
     margin: 15px;
 }
 
+.go-to-project,
 .project-edit {
     width: 24px;
     height: 24px;
     position: absolute;
     bottom: 15px;
     right: 15px;
+    cursor: pointer;
 }
-input{
+
+.project-edit {
+    right: 45px;
+}
+
+input {
     border-radius: 3px;
     min-width: 250px;
     border: none;
 }
-.inputDescription{
+
+.inputDescription {
     min-width: 250px;
     min-height: 120px;
     resize: none;
 }
-.textDescription{
+
+.textDescription {
     word-wrap: break-word;
     max-height: 100px;
     overflow-y: scroll;
 }
+
+.textDescription::-webkit-scrollbar {
+    display: none;
+}
+
 .modalNewProject,
 .modal {
     background-color: #212121;
@@ -112,18 +128,21 @@ input{
     transform: translate(-50%, -50%);
     border-radius: 8px;
 }
-.btnCloseModal{
+
+.btnCloseModal {
     position: absolute;
     top: 5px;
     right: 5px;
     width: 32px;
     height: 32px;
 }
-.info-new-project{
+
+.info-new-project {
     margin-top: 25px;
     margin-left: 15px;
 }
-.btn-create-project{
+
+.btn-create-project {
     position: absolute;
     right: 40px;
     bottom: 20px;
@@ -135,7 +154,8 @@ input{
     padding: 5px 10px;
     font-weight: 700;
 }
-.btn-delete-project{
+
+.btn-delete-project {
     position: absolute;
     left: 40px;
     bottom: 20px;
@@ -147,7 +167,8 @@ input{
     padding: 5px 10px;
     font-weight: 700;
 }
-.btn-edit-new-project{
+
+.btn-edit-new-project {
     position: absolute;
     top: 40px;
     right: 10px;

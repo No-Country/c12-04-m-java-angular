@@ -1,10 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+
+interface Espacio {
+  nameSpace: string;
+  description: string;
+  workspace: {
+    id: number;
+  }
+}
 
 interface Proyecto {
-  name: string;
+  nameWorkspace: string;
   description: string;
   id: number;
-  spaces: { spaceName: string }[]
+  spaceSet: Espacio[]
 }
 
 @Component({
@@ -13,26 +24,68 @@ interface Proyecto {
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit {
+  constructor(private http: HttpClient, private router: Router) { }
   proyectos: Proyecto[] = [];
   modalVisible: boolean = false;
+  espacios: Espacio[] = [];
+  spaceEditing: Espacio = {
+    nameSpace: '',
+    description: '',
+    workspace: {
+      id: 0
+    }
+  }
   projectEditing: Proyecto = {
-    name: '',
+    nameWorkspace: '',
     description: '',
     id: 0,
-    spaces: [{
-      spaceName: '',
-    }]
+    spaceSet: [this.spaceEditing]
   };
 
   ngOnInit() {
-    this.obtenerProyectos();
+    this.loadProjects();
+  }
+  loadProjects() {
+    this.obtenerProyectos().subscribe(
+      data => {
+        this.proyectos = data;
+      }
+    )
   }
 
-  obtenerProyectos() { //Simulo el listado de proyecto que me devuelve
-    this.proyectos = [
-      { name: 'Proyecto 1', description: 'Descripción del proyecto 1', id: 0, spaces: [{ spaceName: 'Espacio 1' }] }
-    ];
+  /*obtenerProyectos(): Observable<any[]> { //GET
+    return this.http.get<any[]>("http://ninja-app-v1.azurewebsites.net/workspace");
+  }*/
+  obtenerProyectos(): Observable<any[]> {
+    const url = 'http://ninja-app-v1.azurewebsites.net/workspace';
+
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    });
+
+    return this.http.get<any[]>(url, { headers });
   }
+
+  agregarProyecto(nuevoProyecto: Proyecto): Observable<any> { //POST
+    const url = 'http://ninja-app-v1.azurewebsites.net/workspace';
+    return this.http.post(url, nuevoProyecto);
+  }
+  agregarEspacio(nuevoEspacio: Espacio): Observable<any> {
+    const url = 'http://ninja-app-v1.azurewebsites.net/space';
+    return this.http.post(url, nuevoEspacio);
+  }
+
+  eliminarProyecto(id: number): Observable<any> { //DELETE
+    const url = `http://ninja-app-v1.azurewebsites.net/workspace/${id}`;
+
+    return this.http.delete(url);
+  }
+  editarProyecto(proyecto: Proyecto): Observable<any> { //PUT
+    const url = `http://ninja-app-v1.azurewebsites.net/workspace/${proyecto.id}`;
+
+    return this.http.put(url, proyecto);
+  }
+
   openModal(proyecto: Proyecto) {
     this.projectEditing = proyecto;
     this.modalVisible = true;
@@ -52,41 +105,98 @@ export class HomePageComponent implements OnInit {
   modalNewProjectVisible: boolean = false;
   textoTituloEditable: string = 'Nuevo Proyecto';
   textoDescripcionEditable: string = 'Descripcion de este proyecto';
-  textoNombreNuevoEspacio: string = 'Espacio';
 
   openModalCreateProject() {
-    if (this.proyectos.length < 3) {
+    if (this.proyectos.length < 10) {
       this.modalNewProjectVisible = true;
     }
   }
 
   crearProyecto() {
     const nuevoProyecto: Proyecto = {
-      name: this.textoTituloEditable,
+      nameWorkspace: this.textoTituloEditable,
       description: this.textoDescripcionEditable,
-      id: this.proyectos.length,
-      spaces: [{ spaceName: this.textoNombreNuevoEspacio }]
+      id: this.proyectos.length + 1,
+      spaceSet: []
     };
-    this.proyectos.push(nuevoProyecto);
     this.editandoTexto = false;
 
     this.textoTituloEditable = 'Nuevo Proyecto' //Reset de los valores para cuando se cree otro proyecto
     this.textoDescripcionEditable = 'Descripcion de este proyecto';
+
     this.closeModal();
+    this.agregarProyecto(nuevoProyecto).subscribe(
+      (data) => {
+        this.loadProjects();
+        this.loadSpacesNewProject();
+        this.loadProjects();
+      },
+      (error) => {
+        console.error('Error: ', error);
+      }
+    );
+  }
+  loadSpacesNewProject() {
+    const espacioFrontEnd: Espacio = {
+      nameSpace: 'Front-End',
+      description: 'Espacio dedicado para Front-End',
+      workspace: {
+        id: this.proyectos[this.proyectos.length - 1].id
+      }
+    }
+    const espacioBackEnd: Espacio = {
+      nameSpace: 'Back-End',
+      description: 'Espacio dedicado para Back-End',
+      workspace: {
+        id: this.proyectos[this.proyectos.length - 1].id
+      }
+    }
+    const espacioTesting: Espacio = {
+      nameSpace: 'Testing',
+      description: 'Espacio dedicado para Testing',
+      workspace: {
+        id: this.proyectos[this.proyectos.length - 1].id
+      }
+    }
+    const espacioUXUI: Espacio = {
+      nameSpace: 'UX/UI',
+      description: 'Espacio dedicado para UX/UI',
+      workspace: {
+        id: this.proyectos[this.proyectos.length - 1].id
+      }
+    }
+    //Funciones para cargar los 4 espacios predeterminados a la BBDD
+    this.agregarEspacio(espacioFrontEnd)
+    this.agregarEspacio(espacioBackEnd)
+    this.agregarEspacio(espacioTesting)
+    this.agregarEspacio(espacioUXUI)
   }
   //Funciones para editar proyecto ya creado.
   borrarProyecto(id: number) {
-    const index = this.proyectos.findIndex(proyecto => proyecto.id === id);
-    if (index !== -1) {
-      this.proyectos.splice(index, 1);
-    }
+    this.eliminarProyecto(id).subscribe(
+      () => {
+        this.loadProjects();
+      },
+      (error) => {
+        console.error('Error: ', error);
+      }
+    );
     this.closeModal();
   }
   guardarProyecto() {
-    const index = this.proyectos.findIndex(proyecto => proyecto.id === this.projectEditing.id);
-    if (index !== -1) {
-      this.proyectos[index] = this.projectEditing;
-    }
+    this.editarProyecto(this.projectEditing).subscribe(
+      (data) => {
+        this.loadProjects();
+      },
+      (error) => {
+        console.error('Error: ', error);
+      }
+    );
     this.closeModal();
   }
+
+  redirigir(id: number) { //funcion para que cada proyecto rediriga a su propia pagina
+    this.router.navigateByUrl(`/space/workspace/${id}`);
+  }
+
 }

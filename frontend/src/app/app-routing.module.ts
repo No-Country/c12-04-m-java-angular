@@ -6,6 +6,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 const routes: Routes = [
   { path: '', component: AppComponent },
   { path: 'home', component: HomePageComponent },
+  { path: `space/workspace/:id`, component: AppComponent }, //CAMBIAR AL COMPONENTE DE AGUS
 ];
 
 @NgModule({
