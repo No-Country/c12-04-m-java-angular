@@ -1,0 +1,14 @@
+<div class="navbar">
+    <img src="../../assets/Project Ninja logo.png">
+    <div class="links-navbar">
+        <div class="workspace" (mouseenter)="toggleListProjects()" (mouseleave)="toggleListProjects()">
+            Workspace
+            <ul *ngIf="showList">
+                <li *ngFor="let proyecto of proyectos">{{ proyecto.nombre }}</li>
+            </ul>
+        </div>
+        <a>
+            <p>Perfil</p>
+        </a>
+    </div>
+</div>
