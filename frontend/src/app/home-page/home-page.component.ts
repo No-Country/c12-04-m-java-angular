@@ -54,9 +54,6 @@ export class HomePageComponent implements OnInit {
   }
   urlAPI: string =  'http://ninja-app-v1-api.azure-api.net/';
   
-  /*obtenerProyectos(): Observable<any[]> { //GET
-    return this.http.get<any[]>("http://ninja-app-v1.azurewebsites.net/workspace");
-  }*/
   obtenerProyectos(): Observable<any[]> {
     const url = this.urlAPI + 'workspace';
 
@@ -65,11 +62,8 @@ export class HomePageComponent implements OnInit {
 
   agregarProyecto(nuevoProyecto: Proyecto): Observable<any> { //POST
     const url = this.urlAPI + 'workspace';
-    console.log(nuevoProyecto);
-    const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    });
-    return this.http.post(url, nuevoProyecto, { headers });
+
+    return this.http.post(url, nuevoProyecto);
   }
   agregarEspacio(nuevoEspacio: Espacio): Observable<any> {
     const url = this.urlAPI + 'space';
@@ -195,7 +189,7 @@ export class HomePageComponent implements OnInit {
   }
 
   redirigir(id: number) { //funcion para que cada proyecto rediriga a su propia pagina
-    this.router.navigateByUrl(`/space/workspace/${id}`);
+    this.router.navigateByUrl(`/projects/${id}`);
   }
 
 }

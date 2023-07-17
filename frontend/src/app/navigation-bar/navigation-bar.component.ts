@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -17,7 +18,7 @@ export class NavigationBarComponent {
     { nombre: 'Proyecto 3', espacios: ['Espacio 7', 'Espacio 8', 'Espacio 9'] }
   ];*/
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
   loadProjects() {
     this.getProjects().subscribe(
       data => {
@@ -33,5 +34,8 @@ export class NavigationBarComponent {
   toggleListProjects() {
     this.loadProjects();
     this.showList = !this.showList;
+  }
+  redirigir(id: number) { //funcion para que cada proyecto rediriga a su propia pagina
+    this.router.navigateByUrl(`/space/workspace/${id}`);
   }
 }
