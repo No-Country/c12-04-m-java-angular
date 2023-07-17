@@ -52,36 +52,37 @@ export class HomePageComponent implements OnInit {
       }
     )
   }
-
+  urlAPI: string =  'http://ninja-app-v1-api.azure-api.net/';
+  
   /*obtenerProyectos(): Observable<any[]> { //GET
     return this.http.get<any[]>("http://ninja-app-v1.azurewebsites.net/workspace");
   }*/
   obtenerProyectos(): Observable<any[]> {
-    const url = 'http://ninja-app-v1.azurewebsites.net/workspace';
+    const url = this.urlAPI + 'workspace';
 
-    const headers = new HttpHeaders({
-      'Access-Control-Allow-Origin': '*'
-    });
-
-    return this.http.get<any[]>(url, { headers });
+    return this.http.get<any[]>(url);
   }
 
   agregarProyecto(nuevoProyecto: Proyecto): Observable<any> { //POST
-    const url = 'http://ninja-app-v1.azurewebsites.net/workspace';
-    return this.http.post(url, nuevoProyecto);
+    const url = this.urlAPI + 'workspace';
+    console.log(nuevoProyecto);
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': '*'
+    });
+    return this.http.post(url, nuevoProyecto, { headers });
   }
   agregarEspacio(nuevoEspacio: Espacio): Observable<any> {
-    const url = 'http://ninja-app-v1.azurewebsites.net/space';
+    const url = this.urlAPI + 'space';
     return this.http.post(url, nuevoEspacio);
   }
 
   eliminarProyecto(id: number): Observable<any> { //DELETE
-    const url = `http://ninja-app-v1.azurewebsites.net/workspace/${id}`;
+    const url = this.urlAPI + `workspace?id=${id}`;
 
     return this.http.delete(url);
   }
   editarProyecto(proyecto: Proyecto): Observable<any> { //PUT
-    const url = `http://ninja-app-v1.azurewebsites.net/workspace/${proyecto.id}`;
+    const url = this.urlAPI + `workspace?id=${proyecto.id}`;
 
     return this.http.put(url, proyecto);
   }
@@ -103,8 +104,8 @@ export class HomePageComponent implements OnInit {
   }
   //Funciones para el Modal de crear un nuevo proyecto
   modalNewProjectVisible: boolean = false;
-  textoTituloEditable: string = 'Nuevo Proyecto';
-  textoDescripcionEditable: string = 'Descripcion de este proyecto';
+  textoTituloEditable: string = "Nuevo Proyecto";
+  textoDescripcionEditable: string = "Descripcion de este proyecto";
 
   openModalCreateProject() {
     if (this.proyectos.length < 10) {
@@ -113,16 +114,14 @@ export class HomePageComponent implements OnInit {
   }
 
   crearProyecto() {
-    const nuevoProyecto: Proyecto = {
+    const nuevoProyecto: any = {
       nameWorkspace: this.textoTituloEditable,
       description: this.textoDescripcionEditable,
-      id: this.proyectos.length + 1,
-      spaceSet: []
     };
     this.editandoTexto = false;
 
-    this.textoTituloEditable = 'Nuevo Proyecto' //Reset de los valores para cuando se cree otro proyecto
-    this.textoDescripcionEditable = 'Descripcion de este proyecto';
+    this.textoTituloEditable = "Nuevo Proyecto" //Reset de los valores para cuando se cree otro proyecto
+    this.textoDescripcionEditable = "Descripcion de este proyecto";
 
     this.closeModal();
     this.agregarProyecto(nuevoProyecto).subscribe(

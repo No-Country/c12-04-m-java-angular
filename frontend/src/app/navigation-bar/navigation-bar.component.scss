@@ -46,12 +46,13 @@ ul {
     border: 1px solid black;
     border-radius: 8px;
     display: none;
+    width: 175px;
+    z-index: 9999;
 }
 
 li {
     padding: 10px;
     border-radius: 8px;
-    width: 100px;
 }
 li:hover{
     background-color: #06212b;
