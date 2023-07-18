@@ -190,7 +190,7 @@ export class ProjectComponent {
 
 
   getSpace(): Observable<any[]>{
-    return this.http.get<any[]>(this.url+`space?workspaceId=`+this.idUrl);
+    return this.http.get<any[]>(this.url+`space/workspace?workspaceId=`+this.idUrl);
   }
 
   addSpace(dTOAddSpace:any): Observable<any>{
