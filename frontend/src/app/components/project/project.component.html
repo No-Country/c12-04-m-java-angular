@@ -162,10 +162,8 @@
     </div>
 
   <!-- Modal editar espacio -->
-  <app-modal-edit-space 
-  *ngIf="spaceSelected"
-  [data]="spaceSelected">
-  </app-modal-edit-space>
+
+  <app-modal-edit-space *ngIf="spaceSelected" [data]="spaceSelected"></app-modal-edit-space>
 
   <!-- Modal proyecto -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

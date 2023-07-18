@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.page404 {
+    background-color: #212529;
+    color: white;
+    height: calc(100% - 130px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 75px;
+    align-items: center;
+}
+h1{
+    font-size: 72px;
+}
+h2{
+    font-size: 22px;
+}
+
+.page404 button {
+    background-color: #0A57C9;
+    width: 330px;
+    height: 48px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-transform: uppercase;
+}

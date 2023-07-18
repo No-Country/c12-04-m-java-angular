@@ -1,0 +1,93 @@
+<h1>Proyectos</h1>
+<div class="proyectsListContainer">
+    <div *ngFor="let proyecto of proyectos" class="project-card">
+        <div class="project-color"></div>
+        <h2>{{ proyecto.nameWorkspace }} {{proyecto.id}}</h2>
+        <p class="textDescription">{{proyecto.description}}</p>
+        <div class="project-edit" (click)="openModal(proyecto)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
+                    d="M358.62 129.28L86.49 402.08 70 442l39.92-16.49 272.8-272.13-24.1-24.1zM413.07 74.84l-11.79 11.78 24.1 24.1 11.79-11.79a16.51 16.51 0 000-23.34l-.75-.75a16.51 16.51 0 00-23.35 0z" />
+            </svg>
+        </div>
+        <div class="go-to-project" (click)="redirigir(proyecto.id)">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
+                    d="M268 112l144 144-144 144M392 256H100" />
+            </svg>
+        </div>
+    </div>
+    <div class="create-project-card" (click)="openModalCreateProject()">
+        <p>Agregar proyecto</p>
+        <p class="white-circle">+</p>
+    </div>
+</div>
+<div class="modal" *ngIf="modalVisible">
+    <div class="info-new-project">
+        <h3 *ngIf="!editandoTexto">{{ projectEditing.nameWorkspace }}</h3>
+        <input *ngIf="editandoTexto" [(ngModel)]="projectEditing.nameWorkspace" />
+
+        <p>Descripcion:</p>
+        <p *ngIf="!editandoTexto">{{ projectEditing.description }}</p>
+        <textarea *ngIf="editandoTexto" [(ngModel)]="projectEditing.description" maxlength="200"
+            class="inputDescription"></textarea>
+        <p>Espacios:</p>
+        <ul>
+            <li *ngFor="let espacio of projectEditing.spaceSet">{{ espacio.nameSpace }}</li>
+            <li><button (click)="agregarEspacio(projectEditing.id)">Agregar Espacio</button></li>
+        </ul>
+    </div>
+    <svg *ngIf="!editandoTexto" xmlns="http://www.w3.org/2000/svg" class="ionicon btn-edit-new-project"
+        viewBox="0 0 512 512" (click)="activarEdicion()" width="20">
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
+            d="M358.62 129.28L86.49 402.08 70 442l39.92-16.49 272.8-272.13-24.1-24.1zM413.07 74.84l-11.79 11.78 24.1 24.1 11.79-11.79a16.51 16.51 0 000-23.34l-.75-.75a16.51 16.51 0 00-23.35 0z" />
+    </svg>
+    <svg *ngIf="editandoTexto" (click)="guardarTexto()" xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-check btn-edit-new-project" width="20" height="20" viewBox="0 0 24 24"
+        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M5 12l5 5l10 -10"></path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" (click)="closeModal()"
+        class="btnCloseModal">
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
+            d="M368 368L144 144M368 144L144 368" />
+    </svg>
+    <button (click)="borrarProyecto(projectEditing.id)" class="btn-delete-project">Borrar proyecto</button>
+    <button (click)="guardarProyecto()" class="btn-create-project">Guardar cambios</button>
+</div>
+<div class="modalNewProject" *ngIf="modalNewProjectVisible">
+    <div class="info-new-project">
+        <h3 *ngIf="!editandoTexto">{{ textoTituloEditable }}</h3>
+        <input *ngIf="editandoTexto" [(ngModel)]="textoTituloEditable" />
+
+        <p>Descripcion:</p>
+        <p *ngIf="!editandoTexto">{{ textoDescripcionEditable }}</p>
+        <textarea *ngIf="editandoTexto" [(ngModel)]="textoDescripcionEditable" maxlength="200"
+            class="inputDescription"></textarea>
+        <p>Espacios:</p>
+        <ul>
+            <li>Front-End</li>
+            <li>Back-End</li>
+            <li>Testing</li>
+            <li>UX/UI</li>
+        </ul>
+    </div>
+    <svg *ngIf="!editandoTexto" xmlns="http://www.w3.org/2000/svg" class="ionicon btn-edit-new-project"
+        viewBox="0 0 512 512" (click)="activarEdicion()" width="20">
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
+            d="M358.62 129.28L86.49 402.08 70 442l39.92-16.49 272.8-272.13-24.1-24.1zM413.07 74.84l-11.79 11.78 24.1 24.1 11.79-11.79a16.51 16.51 0 000-23.34l-.75-.75a16.51 16.51 0 00-23.35 0z" />
+    </svg>
+    <svg *ngIf="editandoTexto" (click)="guardarTexto()" xmlns="http://www.w3.org/2000/svg"
+        class="icon icon-tabler icon-tabler-check btn-edit-new-project" width="20" height="20" viewBox="0 0 24 24"
+        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+        <path d="M5 12l5 5l10 -10"></path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512" (click)="closeModal()"
+        class="btnCloseModal">
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
+            d="M368 368L144 144M368 144L144 368" />
+    </svg>
+    <button (click)="crearProyecto()" class="btn-create-project">Crear proyecto</button>
+</div>

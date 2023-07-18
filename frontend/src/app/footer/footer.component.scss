@@ -1,0 +1,18 @@
+footer {
+    background-color: #021218;
+    height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+footer p{
+    font-size: 12px;
+    color: #9C9C9C;
+    text-transform: uppercase;
+}
+footer div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
