@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModalEditSpaceComponent } from '../modal-edit-space/modal-edit-space.component';
 
 interface Space {
   name: string;
@@ -66,7 +67,7 @@ export class ProjectComponent {
   idUrl: number = 0;
   dtoSpaces: any;
   spaceSelected: any = null;
-  url: string = "http://181.89.142.245:8080/";
+  url: string = "http://ninja-app-v1-api.azure-api.net/";
  
   spaceListHardcode: Space[]=[
     {

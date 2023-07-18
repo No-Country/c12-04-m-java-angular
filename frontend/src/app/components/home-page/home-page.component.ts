@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
+
 
 interface Espacio {
   nameSpace: string;
   description: string;
-  workspace: {
-    id: number;
-  }
 }
 
 interface Proyecto {
@@ -29,11 +27,8 @@ export class HomePageComponent implements OnInit {
   modalVisible: boolean = false;
   espacios: Espacio[] = [];
   spaceEditing: Espacio = {
-    nameSpace: '',
-    description: '',
-    workspace: {
-      id: 0
-    }
+    nameSpace: "",
+    description: ""
   }
   projectEditing: Proyecto = {
     nameWorkspace: '',
@@ -52,8 +47,8 @@ export class HomePageComponent implements OnInit {
       }
     )
   }
-  urlAPI: string =  'http://ninja-app-v1-api.azure-api.net/';
-  
+  urlAPI: string = 'http://ninja-app-v1-api.azure-api.net/';
+
   obtenerProyectos(): Observable<any[]> {
     const url = this.urlAPI + 'workspace';
 
@@ -65,9 +60,21 @@ export class HomePageComponent implements OnInit {
 
     return this.http.post(url, nuevoProyecto);
   }
-  agregarEspacio(nuevoEspacio: Espacio): Observable<any> {
-    const url = this.urlAPI + 'space';
-    return this.http.post(url, nuevoEspacio);
+
+  agregarEspacios(nuevoEspacio: Espacio, id: number): Observable<any> {
+    var url = this.urlAPI + `space?workspaceId=${id}`;
+
+    return this.http.post<any>(url, nuevoEspacio);
+  }
+
+  agregarEspacio(id: number): Observable<any> {
+    var url = this.urlAPI + `space?workspaceId=${id}`;
+    var newSpace: Espacio= {
+      nameSpace: "Front-End",
+      description: "Espacio dedicado para Front-End",
+    }
+    console.log('funciona')
+    return this.http.post(url, newSpace);
   }
 
   eliminarProyecto(id: number): Observable<any> { //DELETE
@@ -131,38 +138,27 @@ export class HomePageComponent implements OnInit {
   }
   loadSpacesNewProject() {
     const espacioFrontEnd: Espacio = {
-      nameSpace: 'Front-End',
-      description: 'Espacio dedicado para Front-End',
-      workspace: {
-        id: this.proyectos[this.proyectos.length - 1].id
-      }
+      "nameSpace": "Front-End",
+      "description": "Espacio dedicado para Front-End"
     }
     const espacioBackEnd: Espacio = {
-      nameSpace: 'Back-End',
-      description: 'Espacio dedicado para Back-End',
-      workspace: {
-        id: this.proyectos[this.proyectos.length - 1].id
-      }
+      nameSpace: "Back-End",
+      description: "Espacio dedicado para Back-End",
     }
     const espacioTesting: Espacio = {
-      nameSpace: 'Testing',
-      description: 'Espacio dedicado para Testing',
-      workspace: {
-        id: this.proyectos[this.proyectos.length - 1].id
-      }
+      nameSpace: "Testing",
+      description: "Espacio dedicado para Testing",
+
     }
     const espacioUXUI: Espacio = {
-      nameSpace: 'UX/UI',
-      description: 'Espacio dedicado para UX/UI',
-      workspace: {
-        id: this.proyectos[this.proyectos.length - 1].id
-      }
+      nameSpace: "UX/UI",
+      description: "Espacio dedicado para UX/UI",
     }
     //Funciones para cargar los 4 espacios predeterminados a la BBDD
-    this.agregarEspacio(espacioFrontEnd)
-    this.agregarEspacio(espacioBackEnd)
-    this.agregarEspacio(espacioTesting)
-    this.agregarEspacio(espacioUXUI)
+    this.agregarEspacios(espacioFrontEnd, this.proyectos[this.proyectos.length - 1].id)
+    this.agregarEspacios(espacioBackEnd, this.proyectos[this.proyectos.length - 1].id)
+    this.agregarEspacios(espacioTesting, this.proyectos[this.proyectos.length - 1].id)
+    this.agregarEspacios(espacioUXUI, this.proyectos[this.proyectos.length - 1].id)
   }
   //Funciones para editar proyecto ya creado.
   borrarProyecto(id: number) {

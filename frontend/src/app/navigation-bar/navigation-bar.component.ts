@@ -12,12 +12,6 @@ export class NavigationBarComponent {
   proyectos: any[] = [];
   showList: boolean = false;
 
-  /*ejemploPeticionProyectos: any[] = [
-    { nombre: 'Proyecto 1', espacios: ['Espacio 1', 'Espacio 2', 'Espacio 3'] },
-    { nombre: 'Proyecto 2', espacios: ['Espacio 4', 'Espacio 5', 'Espacio 6'] },
-    { nombre: 'Proyecto 3', espacios: ['Espacio 7', 'Espacio 8', 'Espacio 9'] }
-  ];*/
-
   constructor(private http: HttpClient, private router: Router) { }
   loadProjects() {
     this.getProjects().subscribe(
@@ -36,6 +30,6 @@ export class NavigationBarComponent {
     this.showList = !this.showList;
   }
   redirigir(id: number) { //funcion para que cada proyecto rediriga a su propia pagina
-    this.router.navigateByUrl(`/space/workspace/${id}`);
+    this.router.navigateByUrl(`/projects/${id}`);
   }
 }

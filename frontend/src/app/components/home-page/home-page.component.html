@@ -34,7 +34,7 @@
         <p>Espacios:</p>
         <ul>
             <li *ngFor="let espacio of projectEditing.spaceSet">{{ espacio.nameSpace }}</li>
-            <li><button>Agregar Espacio</button></li>
+            <li><button (click)="agregarEspacio(projectEditing.id)">Agregar Espacio</button></li>
         </ul>
     </div>
     <svg *ngIf="!editandoTexto" xmlns="http://www.w3.org/2000/svg" class="ionicon btn-edit-new-project"
