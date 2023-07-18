@@ -14,8 +14,6 @@ import { ModalEditSpaceComponent } from './components/modal-edit-space/modal-edi
 import { ModalConfirmDeleteSpaceComponent } from './modal-confirm-delete-space/modal-confirm-delete-space.component';
 import { ProjectComponent } from './components/project/project.component';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
