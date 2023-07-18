@@ -1,19 +1,60 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 
 interface Space {
   name: string;
+  description: string;
   project: number;
+}
+/*
+interface Workspace {
+  id: number;
+  nameWorkspace: string;
+  description: string;
+}
+
+interface WorkspaceId {
+  id: number;
+}
+
+interface DTOSpace {
+  id: number;
+  nameSpace: string;
+  description: string;
+  workspace: Workspace;
+  tasks: Task[];
+}
+
+interface DTOSpaceSinTasks {
+  id: number;
+  nameSpace: string;
+  description: string;
+  workspace: Workspace;
 }
 
 interface Task {
-  name: string;
+  id: number;
+  nameTask: string;
   description: string;
-  expDate: Date;
+  dueDate: Date;
   priority: number;
-  space: number;
+  space: DTOSpace;
 }
+*/
+
+interface DTOAddSpace {
+  nameSpace: string;
+  description: string;
+}
+
+interface DTOPutSpace {
+  nameSpace: string;
+  description: string;
+}
+
+let dtoSpaces: DTOAddSpace;
 
 @Component({
   selector: 'app-project',
@@ -22,29 +63,36 @@ interface Task {
 })
 export class ProjectComponent {
 
-  url: string= "";
-  
+  idUrl: number = 0;
+  dtoSpaces: any;
+  spaceSelected: any = null;
+  url: string = "http://181.89.142.245:8080/";
+ 
   spaceListHardcode: Space[]=[
     {
       name: "Diseño",
+      description: "descripcion del espacio de Diseño...",
       project: 1,
     },
     {
       name: "Frontend",
+      description: "descripcion del espacio de Frontend...",
       project: 2,
     },
     {
       name: "Backend",
+      description: "descripcion del espacio de Backend...",
       project: 3,
     },
     {
       name: "QA",
+      description: "descripcion del espacio de QA...",
       project: 4,
     },
   ];
 
   spaceList: Space[]=[];
-
+/*
   tasksListDiseño: Task[]=[
     {
       name: "hacer los diseños",
@@ -92,67 +140,71 @@ export class ProjectComponent {
       space: 2,
     },
   ]
-
-  
-  /*
-  data: Space[]=[
-    {
-      idSpace: 0,
-      name: "",
-      tasks: [
-        {
-          name: "",
-          description: "",
-          expDate: new Date("0000,00,00"),
-          priority: true,
-          idSpace: 0,
-        }
-      ],
-
-    }
-  ];
-  */
-
-  constructor(/*private http:HttpClient*/){ }
+*/
+  constructor(private http:HttpClient,
+    private activatedRouter : ActivatedRoute,){ }
 
   ngOnInit(){
-    
+    this.idUrl = this.activatedRouter.snapshot.params['id'];
     this.loadSpaces();
+    this.spaceList=this.spaceListHardcode;
     
+  }
+
+  setSelectedItem(item: any) {
+    this.spaceSelected = item;
   }
 
   loadSpaces(){
-    /*
-    this.getSpace().subscribe()
-        data =>{
-        this.spaceList = data;
+    
+    this.getSpace().subscribe(
+      data =>{
+        this.dtoSpaces = data;
       }
-    */
-   //simulamos la obtencion de datos de el back
-   this.spaceList=this.spaceListHardcode;
-  }
-
-  //CRUD Space
+    )
+    console.log(this.dtoSpaces);
   
-/*
-  addSpace(space:Space): Observable<Space>{
-    return this.http.post<Space>(this.url+`space/new`, space)
   }
 
-  getSpace(): Observable<Space[]>{
-    return this.http.get<Space[]>(this.url+`space/lista`);
+  createSpace(){
+    
+    /*let workspaceId: WorkspaceId;
+    let dTOAddSpace: DTOAddSpace;
+    dTOAddSpace={
+      nameSpace: "dasd",
+      description: "",
+      workspace: {
+        id: this.idUrl
+      },*/
+      
+      const dTOAddSpace: DTOAddSpace={
+        nameSpace: "prueba",
+        description: "nueva descripcionasdas",
+      }
+      console.log("llega");
+     this.addSpace(dTOAddSpace);
+
   }
 
-  getSpacePorId(id: number): Observable<Space>{
-    return this.http.get<Space>(this.url+`space/get/${id}`);
+
+
+  getSpace(): Observable<any[]>{
+    return this.http.get<any[]>(this.url+`space?workspaceId=`+this.idUrl);
   }
 
-  updateSpace(id: number, space:Space): Observable<Space>{
-    return this.http.put<Space>(this.url+`space/update/${id}`, space)
+  addSpace(dTOAddSpace:any): Observable<any>{
+    console.log("llega2");
+    return this.http.post<any>(this.url+`space?workspaceId=`+this.idUrl, dTOAddSpace)
   }
- 
-  deleteSpace(id: number): Observable<Space>{
-   return this.http.delete<Space>(this.url+`space/delete/${id}`);
-  }*/
-  
+
+
+
+  updateSpace(id: number, dTOPutSpace:any): Observable<any>{
+    return this.http.put<any>(this.url+`space/${id}`, dTOPutSpace)
+  }
+
+  getTasks(idGetSpace: number): Observable<any[]>{
+    return this.http.get<any[]>(this.url+`/task/space/${idGetSpace}`);
+  }
+
 }
