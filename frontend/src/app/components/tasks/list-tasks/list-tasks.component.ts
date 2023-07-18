@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { TaskService } from 'src/app/services/task.service';
 // import {MatTableModule} from '@angular/material/table';
 import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 const ELEMENT_DATA: TaskModel[] = [
   {id: 1, name: 'Tarea 1', description:'Description 1', expiredDate:new Date("2001,08,02"), priority:1, status:'In Progress'},
@@ -26,18 +27,23 @@ export class ListTasksComponent implements OnInit {
   dataSource = ELEMENT_DATA;
   taskList!: TaskModel[];  
 
+  idUrl: number = 0;
+
   tasks$!: Observable<TaskModel[]>;
 
   // constructor(private empleadoService: EmpleadoService, public dialog: MatDialog,
   //   public snackBar: MatSnackBar) { }
 
-  constructor(private taskService: TaskService
+  constructor(
+    private taskService: TaskService, 
+    private activatedRouter : ActivatedRoute
     ) { }  
 
   ngOnInit(): void {
     console.log('dataSource..', this.dataSource);
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
+    this.idUrl = this.activatedRouter.snapshot.params['id'];
     this.loadTasks();
 
 

@@ -7,9 +7,10 @@ import { TasksRoutingModule } from './components/tasks/tasks-routing.module';
 import {ProjectComponent} from './components/project/project.component'
 
 const routes: Routes = [
-  { path: '', component: AppComponent },
-  { path: 'home', component: HomePageComponent },
-  { path: `projects/:id`, component: ProjectComponent }, //CAMBIAR AL COMPONENTE DE AGUS
+//   { path: '', component: AppComponent },
+  	{ path: '', redirectTo: '/home', pathMatch: 'full'},
+  	{ path: 'home', component: HomePageComponent },
+  	{ path: `projects/:id`, component: ProjectComponent }, //CAMBIAR AL COMPONENTE DE AGUS
 	{
 		path: 'tasks',
 		loadChildren: () =>

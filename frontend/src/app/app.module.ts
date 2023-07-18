@@ -13,6 +13,12 @@ import { FooterComponent } from './footer/footer.component';
 import { ModalEditSpaceComponent } from './components/modal-edit-space/modal-edit-space.component';
 import { ModalConfirmDeleteSpaceComponent } from './modal-confirm-delete-space/modal-confirm-delete-space.component';
 import { ProjectComponent } from './components/project/project.component';
+import { TasksModule } from './components/tasks/tasks.module';
+import { ListTasksComponent } from './components/tasks/list-tasks/list-tasks.component';
+import { AddEditTaskComponent } from './components/tasks/add-edit-task/add-edit-task.component';
+
+import { MaterialModule } from '@shared/material.module'
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -22,14 +28,19 @@ import { ProjectComponent } from './components/project/project.component';
     FooterComponent,
     ModalEditSpaceComponent,
     ModalConfirmDeleteSpaceComponent,
-    ProjectComponent
+    ProjectComponent,
+    ListTasksComponent,
+    AddEditTaskComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    TasksModule,
+    ReactiveFormsModule,
+    MaterialModule    
   ],
   providers: [],
   bootstrap: [AppComponent]
