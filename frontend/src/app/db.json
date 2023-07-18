@@ -1,0 +1,109 @@
+{
+  "projects": [
+    {
+        "id": 1,
+        "nameWorkspace": "Project #1",
+        "description": "Project #1 description",
+        "userSet": [
+            {
+                "id": 1,
+                "email": "pedro@pedro.com",
+                "name": "pedro",
+                "password": "1234",
+                "subscription": null
+            }
+        ],
+        "spaceSet": [
+            {
+                "id": 1,
+                "nameSpace": "Frontend",
+                "description": "Frontend description",
+				"tasks": [
+					{
+						"id": 1,
+						"nameTask": "Nombre de otra tarea 1 frontend",
+						"description": null,
+						"dueDate": null	
+					},
+					{
+						"id": 2,
+						"nameTask": "Nombre de otra tarea 2 frontend",
+						"description": null,
+						"dueDate": null
+					}
+			
+				]
+            },
+            {
+                "id": 2,
+                "nameSpace": "Backend",
+                "description": "Backend description",
+				"tasks": [
+					{
+						"id": 3,
+						"nameTask": "Nombre de otra tarea 3 Backend",
+						"description": null,
+						"dueDate": null	
+					},
+					{
+						"id": 4,
+						"nameTask": "Nombre de otra tarea 4 Backend",
+						"description": null,
+						"dueDate": null
+					}
+			
+				]				
+            },
+            {
+                "id": 3,
+                "nameSpace": "ux/ui",
+                "description": "ux/ui Descripción del espacio",
+				"tasks": [
+					{
+						"id": 5,
+						"nameTask": "Nombre de otra tarea 5 ux/ui",
+						"description": null,
+						"dueDate": null	
+					},
+					{
+						"id": 6,
+						"nameTask": "Nombre de otra tarea 6 ux/ui",
+						"description": null,
+						"dueDate": null
+					}
+			
+				]				
+            },
+            {
+                "id": 1,
+                "nameSpace": "QA",
+                "description": "QA Descripción"
+            }			
+        ]		
+    }
+  ],
+  "tasks": [
+	{
+		"id": 1,
+		"name": "Nombre de otra tarea 1 frontend",
+		"description": "description task 1",
+		"priority": 1,
+		"status": ""
+	},
+	{
+		"id": 2,
+		"name": "Nombre de otra tarea 2 frontend",
+		"description": "description task 2",
+		"priority": 1,
+		"status": "In-Progress"
+	},
+	{
+		"id": 3,
+		"name": "Nombre de otra tarea 3 frontend",
+		"description": "description task 3",
+		"priority": 1,
+		"status": "Completado"
+	}		
+  ]
+}
+

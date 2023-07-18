@@ -1,44 +1,79 @@
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, Observable, throwError } from 'rxjs';
 import { TaskModel } from './../models/task.model';
+import { env } from 'src/environment/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
-  taskList: TaskModel[] = [
-    { name:'tarea 1', description:'Esta es la tarea 1' },
-    { name:'tarea 2', description:'Esta es la tarea 2' }
-    // { name:'tarea 1', description:'Esta es la tarea 1', expiredDate:new Date('2001-10-05') },
-    // { name:'tarea 2', description:'Esta es la tarea 2', expiredDate: new Date('2010-07-22') }
+  taskList: any[] = [
+    {id: 1, name: 'Tarea 1', description:'Description 1', priority:1, status:'In Progress'},
+    {id: 2, name: 'Tarea 2', description:'Description 2', priority:2, status:'Completado'},
+  ]
+  
+  apiUrl: string = 'http://localhost:3000/tasks';
 
-  ] 
+  constructor(private httpClient: HttpClient) {}
 
-  constructor() { }
-
-  getTasks() {
+  getTasks1() {
     return this.taskList.slice();
   }
 
-  deleteTask(index: number) {
-    this.taskList.splice(index, 1);
-  }
+  getTasks(): Observable<TaskModel[]> {
+    console.log('services.getTasks');
+    this.apiUrl = 'http://localhost:3000/tasks';
+		return this.httpClient
+			.get<TaskModel[]>(this.apiUrl, {
+				headers: new HttpHeaders({
+					'content-type': 'application/json',
+					encoding: 'UTF-8',
+				}),
+			})
+			.pipe(catchError(this.handleError));
+	}
 
-  addTask(empleado: TaskModel) {
-    this.taskList.unshift(empleado);
-  }
+	addTask(data: any): Observable<any> {
+		return this.httpClient.post(this.apiUrl, data).pipe(catchError(this.handleError));
+	}
+  
+  editTask(task: TaskModel): Observable<TaskModel> {
+		return this.httpClient
+			.put<TaskModel>(`${env.apiUrl}/${task.id}`, task, {
+				headers: new HttpHeaders({
+					description: 'Gary description',
+				}),
+			})
+			.pipe(catchError(this.handleError));
+	}
 
-  getTask(index: number) {
-    return this.taskList[index];
-  }
+	// Handle API errors
+	handleError(error: HttpErrorResponse) {
+		if (error.error instanceof ErrorEvent) {
+			console.error('An error occurred:', error.error.message);
+		} else {
+			console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+		}
+		return throwError('Something bad happened; please try again later.');
+	}  
 
-  editTask(task: TaskModel, idTask: number){
-    this.taskList[idTask].name = task.name;
-    this.taskList[idTask].description = task.description;
-    // this.taskList[idTask].fechaIngreso = task.fechaIngreso;
-    // this.taskList[idTask].sexo = task.sexo;
-    // this.taskList[idTask].estadoCivil = task.estadoCivil;
-  }
+  // deleteTask(index: number) {
+  //   this.taskList.splice(index, 1);
+  // }
 
+  // addTask(empleado: TaskModel) {
+  //   this.taskList.unshift(empleado);
+  // }
+
+  // getTask(index: number) {
+  //   return this.taskList[index];
+  // }
+
+  // editTask(task: TaskModel, idTask: number){
+  //   this.taskList[idTask].name = task.name;
+  //   this.taskList[idTask].description = task.description;
+  // }
 
 }

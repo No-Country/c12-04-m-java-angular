@@ -13,7 +13,7 @@ import { ActionTypes } from '@shared/action-types.enum';
 })
 export class AddEditTaskComponent {
 	actionTypes: ActionTypes | undefined;
-	id_Index: any;
+	id_Index: number;
 	myForm: FormGroup;  
 
   users = [
@@ -45,10 +45,13 @@ export class AddEditTaskComponent {
 	}
 
   SaveTask() {
-		const task: TaskModel = {
+	const task: TaskModel = {
+	  id: 0,
       name: '',
-      description: ''
-      //expiredDate: undefined
+      description: '',
+	  expiredDate: new Date('2022-10-31'),
+	  priority: 1,
+	  status:''
     };
 
 		switch (this.actionTypes) {
@@ -68,10 +71,10 @@ export class AddEditTaskComponent {
 	}
 
 	editTask(task: TaskModel) {
-		this.taskService.editTask(task, this.id_Index);
-		this.snackBar.open('The task has been updated succesfuly!', '', {
-			duration: 3000,
-		});
+		// this.taskService.editTask(task, this.id_Index);
+		// this.snackBar.open('The task has been updated succesfuly!', '', {
+		// 	duration: 3000,
+		// });
 
 		this.router.navigate(['tasks']);
 	}  

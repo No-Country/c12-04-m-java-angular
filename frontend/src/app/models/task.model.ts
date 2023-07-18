@@ -1,7 +1,8 @@
 export interface  TaskModel {
+    id: number;
     name: string;
     description: string;
-    // expiredDate: Date;
-    // priority: number=0;
-    // status: string=''; 
+    expiredDate: Date;
+    priority: number;
+    status: string; 
 }
