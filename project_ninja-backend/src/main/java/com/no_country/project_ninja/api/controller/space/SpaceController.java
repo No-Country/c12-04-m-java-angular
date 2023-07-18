@@ -18,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/space")
+@CrossOrigin()
 public class SpaceController {
 
     @Autowired
@@ -25,8 +26,8 @@ public class SpaceController {
     @Autowired
     private SpaceRepository spaceRepository;
 
-    @GetMapping("/workspace/{workspaceId}")
-    public ResponseEntity<List<SpaceDTO>> getSpacesByWorkspace(@PathVariable Long workspaceId) {
+    @GetMapping
+    public ResponseEntity<List<SpaceDTO>> getSpacesByWorkspace(@RequestParam Long workspaceId) {
         Optional<Workspace> workspaceOptional = workspaceRepository.findById(workspaceId);
 
         if (workspaceOptional.isPresent()) {
@@ -44,13 +45,13 @@ public class SpaceController {
     }
 
     @PostMapping
-    public ResponseEntity<SpaceDTO> createSpace(@RequestBody SpaceDTO spaceDTO) {
+    public ResponseEntity<SpaceDTO> createSpace(@RequestParam Long workspaceId, @RequestBody SpaceDTO spaceDTO) {
         Space space = new Space();
         space.setNameSpace(spaceDTO.getNameSpace());
         space.setDescription(spaceDTO.getDescription());
 
 
-        Optional<Workspace> workspaceOptional = workspaceRepository.findById(spaceDTO.getWorkspace().getId());
+        Optional<Workspace> workspaceOptional = workspaceRepository.findById(workspaceId);
 
         if (workspaceOptional.isPresent()) {
             Workspace workspace = workspaceOptional.get();
@@ -71,8 +72,8 @@ public class SpaceController {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SpaceDTO> updateSpace(@PathVariable Long id, @RequestBody SpaceDTO spaceDTO) {
+    @PutMapping
+    public ResponseEntity<SpaceDTO> updateSpace(@RequestParam Long id, @RequestBody SpaceDTO spaceDTO) {
         Optional<Space> spaceOptional = spaceRepository.findById(id);
 
         if (spaceOptional.isPresent()) {
@@ -90,8 +91,8 @@ public class SpaceController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteSpace(@PathVariable Long id) {
+    @DeleteMapping
+    public ResponseEntity<String> deleteSpace(@RequestParam Long id) {
         Optional<Space> spaceOptional = spaceRepository.findById(id);
 
         if (spaceOptional.isPresent()) {
@@ -121,5 +122,16 @@ public class SpaceController {
 
         return spaceDTO;
     }
+
+    private SpaceDTO mapSpaceMainToDTO(Space space) {
+        SpaceDTO spaceDTO = new SpaceDTO();
+        spaceDTO.setId(space.getId());
+        spaceDTO.setNameSpace(space.getNameSpace());
+        spaceDTO.setDescription(space.getDescription());
+        spaceDTO.setTasks(space.getTasks());
+
+        return spaceDTO;
+    }
+
 
 }
