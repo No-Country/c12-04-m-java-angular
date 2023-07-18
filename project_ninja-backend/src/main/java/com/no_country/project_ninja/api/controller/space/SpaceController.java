@@ -26,7 +26,7 @@ public class SpaceController {
     @Autowired
     private SpaceRepository spaceRepository;
 
-    @GetMapping
+    @GetMapping("/workspace")
     public ResponseEntity<List<SpaceDTO>> getSpacesByWorkspace(@RequestParam Long workspaceId) {
         Optional<Workspace> workspaceOptional = workspaceRepository.findById(workspaceId);
 
@@ -39,6 +39,20 @@ public class SpaceController {
                     .collect(Collectors.toList());
 
             return ResponseEntity.ok(spaceDTOs);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<SpaceDTO> getSpace(@RequestParam Long id) {
+        Optional<Space> spaceOptional = spaceRepository.findById(id);
+
+        if (spaceOptional.isPresent()) {
+            Space space = spaceOptional.get();
+            SpaceDTO spaceDTO= mapSpaceToDTO(space);
+
+            return ResponseEntity.ok(spaceDTO);
         } else {
             return ResponseEntity.notFound().build();
         }

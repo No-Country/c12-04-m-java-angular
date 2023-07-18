@@ -28,7 +28,7 @@ public class Workspace {
     @Column(name = "name_workspace")
     private String nameWorkspace;
 
-    @Column(length = 255)
+    @Column(length = 200)
     private String description;
 
     @ManyToMany

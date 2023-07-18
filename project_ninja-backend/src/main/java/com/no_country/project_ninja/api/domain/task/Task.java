@@ -29,7 +29,7 @@ public class Task {
     @Column(name = "name_task", length = 50)
     private String nameTask;
 
-    @Column(length = 250)
+    @Column(length = 200)
     private String description;
 
     @Column(name = "due_date")

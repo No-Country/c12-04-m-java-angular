@@ -63,12 +63,12 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<TaskDTO> createTask(@RequestParam Long spaceId ,@RequestBody TaskDTO taskDTO) {
         Task task = new Task();
         task.setNameTask(taskDTO.getNameTask());
 
 
-        Optional<Space> spaceOptional = spaceRepository.findById(taskDTO.getSpace().getId());
+        Optional<Space> spaceOptional = spaceRepository.findById(spaceId);
 
         if (spaceOptional.isPresent()) {
             Space space = spaceOptional.get();

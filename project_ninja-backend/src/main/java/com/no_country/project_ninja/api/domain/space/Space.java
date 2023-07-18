@@ -24,10 +24,10 @@ public class Space {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name_space", length = 50)
+    @Column(name = "name_space", length = 20)
     private String nameSpace;
 
-    @Column(length = 255)
+    @Column(length = 200)
     private String description;
 
     @ManyToOne
