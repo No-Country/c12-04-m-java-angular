@@ -5,9 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 interface Space {
   name: string;
+  description: string;
   project: number;
 }
-
+/*
 interface Workspace {
   id: number;
   nameWorkspace: string;
@@ -26,12 +27,6 @@ interface DTOSpace {
   tasks: Task[];
 }
 
-interface DTOAddSpace {
-  nameSpace: string;
-  description: string;
-  workspace: WorkspaceId;
-}
-
 interface DTOSpaceSinTasks {
   id: number;
   nameSpace: string;
@@ -47,8 +42,19 @@ interface Task {
   priority: number;
   space: DTOSpace;
 }
+*/
 
-let dtoSpaces: any;
+interface DTOAddSpace {
+  nameSpace: string;
+  description: string;
+}
+
+interface DTOPutSpace {
+  nameSpace: string;
+  description: string;
+}
+
+let dtoSpaces: DTOAddSpace;
 
 @Component({
   selector: 'app-project',
@@ -59,22 +65,28 @@ export class ProjectComponent {
 
   idUrl: number = 0;
   dtoSpaces: any;
+  spaceSelected: any = null;
+  url: string = "http://181.89.142.245:8080/";
  
   spaceListHardcode: Space[]=[
     {
       name: "Diseño",
+      description: "descripcion del espacio de Diseño...",
       project: 1,
     },
     {
       name: "Frontend",
+      description: "descripcion del espacio de Frontend...",
       project: 2,
     },
     {
       name: "Backend",
+      description: "descripcion del espacio de Backend...",
       project: 3,
     },
     {
       name: "QA",
+      description: "descripcion del espacio de QA...",
       project: 4,
     },
   ];
@@ -139,6 +151,10 @@ export class ProjectComponent {
     
   }
 
+  setSelectedItem(item: any) {
+    this.spaceSelected = item;
+  }
+
   loadSpaces(){
     
     this.getSpace().subscribe(
@@ -152,74 +168,43 @@ export class ProjectComponent {
 
   createSpace(){
     
-    //let workspaceId: WorkspaceId;
-    //let dTOAddSpace: DTOAddSpace;
-    /*dTOAddSpace={
+    /*let workspaceId: WorkspaceId;
+    let dTOAddSpace: DTOAddSpace;
+    dTOAddSpace={
       nameSpace: "dasd",
       description: "",
       workspace: {
         id: this.idUrl
       },*/
-
-    
       
-      let dTOAddSpace: any={
-        nameSpace: "nuevo espacio",
-        description: "nueva descripcion",
-        workspace: {
-          id: 4,
-          nameWorkspace: "test project",
-          description: "test"
-        },
-    }
+      const dTOAddSpace: DTOAddSpace={
+        nameSpace: "prueba",
+        description: "nueva descripcionasdas",
+      }
+      console.log("llega");
      this.addSpace(dTOAddSpace);
-
 
   }
 
+
+
   getSpace(): Observable<any[]>{
-    return this.http.get<any[]>("http://152.170.10.235/space/workspace/1");
+    return this.http.get<any[]>(this.url+`space?workspaceId=`+this.idUrl);
   }
 
   addSpace(dTOAddSpace:any): Observable<any>{
-    console.log("llega");
-    return this.http.post<any>(`http://152.170.10.235/space`, dTOAddSpace)
+    console.log("llega2");
+    return this.http.post<any>(this.url+`space?workspaceId=`+this.idUrl, dTOAddSpace)
   }
 
-  /*
-  addSpace(dTOAddSpace:DTOAddSpace): Observable<any>{
-    console.log("llega");
-    return this.http.post(`http://152.170.10.235/space`, dTOAddSpace)
-  }
-  */
 
-  deleteSpace(id: number): Observable<any>{
-    return this.http.delete<any>(`http://152.170.10.235/space/${id}`);
-   }
 
-  //CRUD Space
-  
-/*
-  addSpace(space:Space): Observable<Space>{
-    return this.http.post<Space>(this.url+`space/new`, space)
+  updateSpace(id: number, dTOPutSpace:any): Observable<any>{
+    return this.http.put<any>(this.url+`space/${id}`, dTOPutSpace)
   }
 
-  getSpace(): Observable<Space[]>{
-    return this.http.get<Space[]>(this.url+`space/lista`);
+  getTasks(idGetSpace: number): Observable<any[]>{
+    return this.http.get<any[]>(this.url+`/task/space/${idGetSpace}`);
   }
 
-  getSpacePorId(id: number): Observable<Space>{
-    return this.http.get<Space>(this.url+`space/get/${id}`);
-  }
-
-  updateSpace(id: number, space:Space): Observable<Space>{
-    return this.http.put<Space>(this.url+`space/update/${id}`, space)
-  }
- 
-  deleteSpace(id: number): Observable<Space>{
-   return this.http.delete<Space>(this.url+`space/delete/${id}`);
-  }
-
-*/
-  
 }

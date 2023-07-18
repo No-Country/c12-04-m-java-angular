@@ -6,5 +6,10 @@ import { Component,Input } from '@angular/core';
   styleUrls: ['./modal-edit-space.component.scss']
 })
 export class ModalEditSpaceComponent {
-  @Input('data') user: any;
+  @Input() data: any;
+  spaceSelected: any;
+
+  setSelectedItem(item: any) {
+    this.spaceSelected = item;
+  }
 }
