@@ -13,6 +13,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ModalEditSpaceComponent } from './components/modal-edit-space/modal-edit-space.component';
 import { ModalConfirmDeleteSpaceComponent } from './modal-confirm-delete-space/modal-confirm-delete-space.component';
 import { ProjectComponent } from './components/project/project.component';
+import { LogInAndRegisterComponent } from './components/log-in-and-register/log-in-and-register.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ProjectComponent } from './components/project/project.component';
     FooterComponent,
     ModalEditSpaceComponent,
     ModalConfirmDeleteSpaceComponent,
-    ProjectComponent
+    ProjectComponent,
+    LogInAndRegisterComponent
   ],
   imports: [
     BrowserModule,
