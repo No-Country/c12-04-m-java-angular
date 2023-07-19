@@ -24,19 +24,33 @@
             <h3 class="m-3">ESPACIOS</h3>
 
             <div *ngFor="let space of dtoSpaces"class="card bg-secondary  my-3 mx-4"><!--dtoSpaces-->
-                <div class="card-body p-2 d-flex">
+              <div type="button" class="btn btn-secondary d-flex" (click)="setSelectedItem(space)">
+                <h5 class=" text-light ps-3 m-0 flex-grow-1 align-self-center">{{space.nameSpace}}</h5>
 
-                  <h5 class="card-title p-0 ps-3 m-0 flex-grow-1 align-self-center">{{space.nameSpace}}</h5>
-
-                  <button type="button" class="btn text-light" data-bs-toggle="modal" data-bs-target="#EditSpaceModal" (click)="setSelectedItem(space)">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon project-edit d-inline" viewBox="0 0 512 512">
-                        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
-                            d="M358.62 129.28L86.49 402.08 70 442l39.92-16.49 272.8-272.13-24.1-24.1zM413.07 74.84l-11.79 11.78 24.1 24.1 11.79-11.79a16.51 16.51 0 000-23.34l-.75-.75a16.51 16.51 0 00-23.35 0z" />
-                    </svg>
-                  </button>
-
-                </div>
+                <button type="button" class="btn text-light" data-bs-toggle="modal" data-bs-target="#EditSpaceModal" (click)="setSelectedItem(space)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="ionicon project-edit d-inline" viewBox="0 0 512 512">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
+                          d="M358.62 129.28L86.49 402.08 70 442l39.92-16.49 272.8-272.13-24.1-24.1zM413.07 74.84l-11.79 11.78 24.1 24.1 11.79-11.79a16.51 16.51 0 000-23.34l-.75-.75a16.51 16.51 0 00-23.35 0z" />
+                  </svg>
+                </button>
+              </div>
             </div>
+
+            <!--<div *ngFor="let space of dtoSpaces" type="button" class="btn btn-secondary display-block">
+              <div class="p-2 d-flex">
+
+                <h5 class="p-0 ps-3 m-0 flex-grow-1 align-self-center">{{space.nameSpace}}</h5>
+
+                <button type="button" class="btn text-light" data-bs-toggle="modal" data-bs-target="#EditSpaceModal" (click)="setSelectedItem(space)">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="ionicon project-edit d-inline" viewBox="0 0 512 512">
+                      <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
+                          d="M358.62 129.28L86.49 402.08 70 442l39.92-16.49 272.8-272.13-24.1-24.1zM413.07 74.84l-11.79 11.78 24.1 24.1 11.79-11.79a16.51 16.51 0 000-23.34l-.75-.75a16.51 16.51 0 00-23.35 0z" />
+                  </svg>
+                </button>
+
+              </div>
+            </div>-->
+
 
             <div class="mx-5">
 
