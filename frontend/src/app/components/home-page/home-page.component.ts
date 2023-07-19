@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, concatMap, from } from 'rxjs';
 import { Router } from '@angular/router';
-
 
 interface Espacio {
   nameSpace: string;
@@ -13,6 +12,7 @@ interface Proyecto {
   nameWorkspace: string;
   description: string;
   id: number;
+  //userSet: [];
   spaceSet: Espacio[]
 }
 
@@ -24,7 +24,6 @@ interface Proyecto {
 export class HomePageComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) { }
   proyectos: Proyecto[] = [];
-  modalVisible: boolean = false;
   espacios: Espacio[] = [];
   spaceEditing: Espacio = {
     nameSpace: "",
@@ -33,6 +32,7 @@ export class HomePageComponent implements OnInit {
   projectEditing: Proyecto = {
     nameWorkspace: '',
     description: '',
+    //userSet: [],
     id: 0,
     spaceSet: [this.spaceEditing]
   };
@@ -61,20 +61,10 @@ export class HomePageComponent implements OnInit {
     return this.http.post(url, nuevoProyecto);
   }
 
-  agregarEspacios(nuevoEspacio: Espacio, id: number): Observable<any> {
-    var url = this.urlAPI + `space?workspaceId=${id}`;
+  agregarEspacio(nuevoEspacio: Espacio, id: number): Observable<any> {
+    const url = this.urlAPI + `space?workspaceId=${id}`;
 
-    return this.http.post<any>(url, nuevoEspacio);
-  }
-
-  agregarEspacio(id: number): Observable<any> {
-    var url = this.urlAPI + `space?workspaceId=${id}`;
-    var newSpace: Espacio= {
-      nameSpace: "Front-End",
-      description: "Espacio dedicado para Front-End",
-    }
-    console.log('funciona')
-    return this.http.post(url, newSpace);
+    return this.http.post(url, nuevoEspacio);
   }
 
   eliminarProyecto(id: number): Observable<any> { //DELETE
@@ -87,9 +77,11 @@ export class HomePageComponent implements OnInit {
 
     return this.http.put(url, proyecto);
   }
-
+  modalVisible: boolean = false;
   openModal(proyecto: Proyecto) {
+    console.log(this.projectEditing)
     this.projectEditing = proyecto;
+    console.log(this.projectEditing)
     this.modalVisible = true;
   }
   closeModal() {
@@ -121,44 +113,62 @@ export class HomePageComponent implements OnInit {
     };
     this.editandoTexto = false;
 
-    this.textoTituloEditable = "Nuevo Proyecto" //Reset de los valores para cuando se cree otro proyecto
-    this.textoDescripcionEditable = "Descripcion de este proyecto";
+    this.textoTituloEditable = "Nuevo Proyecto";
+    this.textoDescripcionEditable = "Descripción de este proyecto";
 
     this.closeModal();
-    this.agregarProyecto(nuevoProyecto).subscribe(
-      (data) => {
-        this.loadProjects();
-        this.loadSpacesNewProject();
-        this.loadProjects();
+
+    this.agregarProyecto(nuevoProyecto).pipe(
+      concatMap((data: any) => {
+        return this.loadSpacesNewProject(data.id);
+      })
+    ).subscribe(
+      () => {
+        this.ngOnInit();
       },
       (error) => {
         console.error('Error: ', error);
       }
     );
   }
-  loadSpacesNewProject() {
-    const espacioFrontEnd: Espacio = {
-      "nameSpace": "Front-End",
-      "description": "Espacio dedicado para Front-End"
+  loadNewSpace(id: number) {
+    const nuevoEspacio: Espacio = {
+      nameSpace: "Nuevo Espacio",
+      description: "Descripcion de nuevo espacio"
     }
+    this.agregarEspacio(nuevoEspacio, id).subscribe(
+      () => {
+        this.loadProjects();
+      },
+      (error) => {
+        console.error('Error al crear el objeto', error);
+      }
+    );
+
+  }
+  loadSpacesNewProject(projectId: number): any {
+    const espacioFrontEnd: Espacio = {
+      nameSpace: "Front-End",
+      description: "Espacio dedicado para Front-End"
+    };
     const espacioBackEnd: Espacio = {
       nameSpace: "Back-End",
       description: "Espacio dedicado para Back-End",
-    }
+    };
     const espacioTesting: Espacio = {
       nameSpace: "Testing",
       description: "Espacio dedicado para Testing",
-
-    }
+    };
     const espacioUXUI: Espacio = {
       nameSpace: "UX/UI",
       description: "Espacio dedicado para UX/UI",
-    }
-    //Funciones para cargar los 4 espacios predeterminados a la BBDD
-    this.agregarEspacios(espacioFrontEnd, this.proyectos[this.proyectos.length - 1].id)
-    this.agregarEspacios(espacioBackEnd, this.proyectos[this.proyectos.length - 1].id)
-    this.agregarEspacios(espacioTesting, this.proyectos[this.proyectos.length - 1].id)
-    this.agregarEspacios(espacioUXUI, this.proyectos[this.proyectos.length - 1].id)
+    };
+
+    return this.agregarEspacio(espacioFrontEnd, projectId).pipe(
+      concatMap(() => this.agregarEspacio(espacioBackEnd, projectId)),
+      concatMap(() => this.agregarEspacio(espacioTesting, projectId)),
+      concatMap(() => this.agregarEspacio(espacioUXUI, projectId))
+    );
   }
   //Funciones para editar proyecto ya creado.
   borrarProyecto(id: number) {
@@ -183,7 +193,17 @@ export class HomePageComponent implements OnInit {
     );
     this.closeModal();
   }
-
+  /*
+    listUsers: boolean = false;
+    toggleListUsersInProject(id:number){ //Mostar lista de usuarios
+      this.listUsers = !this.listUsers;
+    }
+  
+    modalNewUser:boolean =false;
+    openModalAddUser(){ //Mostrar modal para agregar usuario a proyecto
+      this.listUsers = !this.listUsers;
+    }
+  */
   redirigir(id: number) { //funcion para que cada proyecto rediriga a su propia pagina
     this.router.navigateByUrl(`/projects/${id}`);
   }
