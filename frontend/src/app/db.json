@@ -104,6 +104,150 @@
 		"priority": 1,
 		"status": "Completado"
 	}		
+  ],
+  "workspace": [
+    {
+        "id": 3,
+        "nameWorkspace": "1234nuevo nombre",
+        "description": "vadecription: ",
+        "userSet": [],
+        "spaceSet": []
+    },
+    {
+        "id": 4,
+        "nameWorkspace": "test-created",
+        "description": "description test",
+        "userSet": [],
+        "spaceSet": [
+            {
+                "id": 5,
+                "nameSpace": "prueba",
+                "description": "Descripción del espacio",
+                "workspace": {
+                    "id": 4,
+                    "nameWorkspace": "test-created",
+                    "description": "description test"
+                }
+            },
+            {
+                "id": 6,
+                "nameSpace": "prueba again",
+                "description": "Descripción del espacio",
+                "workspace": {
+                    "id": 4,
+                    "nameWorkspace": "test-created",
+                    "description": "description test"
+                }
+            },
+            {
+                "id": 7,
+                "nameSpace": "Front-End",
+                "description": "Espacio dedicado para Front-End",
+                "workspace": {
+                    "id": 4,
+                    "nameWorkspace": "test-created",
+                    "description": "description test"
+                }
+            },
+            {
+                "id": 8,
+                "nameSpace": "Front-End",
+                "description": "Espacio dedicado para Front-End",
+                "workspace": {
+                    "id": 4,
+                    "nameWorkspace": "test-created",
+                    "description": "description test"
+                }
+            },
+            {
+                "id": 10,
+                "nameSpace": "prueba again",
+                "description": "Descripción del espacio",
+                "workspace": {
+                    "id": 4,
+                    "nameWorkspace": "test-created",
+                    "description": "description test"
+                }
+            },
+            {
+                "id": 1,
+                "nameSpace": "Nuevo nombre PUT",
+                "description": "Nueva descripción del espacio",
+                "workspace": {
+                    "id": 4,
+                    "nameWorkspace": "test-created",
+                    "description": "description test"
+                }
+            },
+            {
+                "id": 3,
+                "nameSpace": "Front-End",
+                "description": "Espacio dedicado para Front-End",
+                "workspace": {
+                    "id": 4,
+                    "nameWorkspace": "test-created",
+                    "description": "description test"
+                }
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "nameWorkspace": "test-created",
+        "description": "description test",
+        "userSet": [],
+        "spaceSet": []
+    },
+    {
+        "id": 7,
+        "nameWorkspace": "123sadasd",
+        "description": "ACTUALIZA",
+        "userSet": [],
+        "spaceSet": []
+    },
+    {
+        "id": 32,
+        "nameWorkspace": "test-created",
+        "description": "description test",
+        "userSet": [],
+        "spaceSet": []
+    },
+    {
+        "id": 34,
+        "nameWorkspace": "Nuevo Proyecto",
+        "description": "Descripcion de este proyecto",
+        "userSet": [],
+        "spaceSet": []
+    },
+    {
+        "id": 35,
+        "nameWorkspace": "Nuevo Proyecto",
+        "description": "Descripcion de este proyecto",
+        "userSet": [],
+        "spaceSet": []
+    },
+    {
+        "id": 47,
+        "nameWorkspace": "Nuevo Proyecto",
+        "description": "Descripcion de este proyecto",
+        "userSet": [],
+        "spaceSet": []
+    },
+    {
+        "id": 51,
+        "nameWorkspace": "Nuevo Proyecto",
+        "description": "Descripcion de este proyecto",
+        "userSet": [],
+        "spaceSet": []
+    },
+    {
+        "id": 53,
+        "nameWorkspace": "Nuevo Proyecto",
+        "description": "Descripcion de este proyecto",
+        "userSet": [],
+        "spaceSet": []
+    }	
+
   ]
 }
 
