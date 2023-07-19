@@ -13,7 +13,7 @@ h1 {
 }
 
 .proyectsListContainer {
-    background: #424242;
+    background: #212121;
     min-height: 642px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -23,7 +23,7 @@ h1 {
     position: relative;
     width: 246px;
     height: 269px;
-    background-color: #212121;
+    background-color: #021218;
     color: white;
     padding: 10px;
     margin: 25px;
@@ -37,12 +37,16 @@ h1 {
     align-items: center;
     width: 246px;
     height: 269px;
-    background-color: #767676;
+    background-color: #495057;
     color: white;
     padding: 10px;
     margin: 25px;
     border-radius: 8px;
     cursor: pointer;
+}
+.project-card,
+.create-project-card{
+    box-shadow: 0px 3px 5px #0d6dfd23;
 }
 
 .white-circle {
@@ -62,8 +66,8 @@ h1 {
 .project-color {
     background-color: #D9D9D9;
     margin: 5px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
     width: max;
     height: 72px;
 }
@@ -80,7 +84,6 @@ h1 {
     margin: 15px;
 }
 
-.go-to-project,
 .project-edit {
     width: 24px;
     height: 24px;
@@ -89,9 +92,17 @@ h1 {
     right: 15px;
     cursor: pointer;
 }
-
-.project-edit {
-    right: 45px;
+.go-to-project{
+    border: none;
+    border-radius: 4px;
+    background-color: #0D6EFD;
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 .spacesList {
