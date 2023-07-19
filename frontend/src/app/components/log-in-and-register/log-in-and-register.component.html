@@ -1,1 +1,57 @@
-<p>log-in-and-register works!</p>
+<div class="container-fluid m-0 p-0 bg-dark" style="height: 1080px;">
+
+    <div class="container p-5 " style="width: 428px;">
+
+        <div class="bg-secondary rounded-2">
+            <button type="submit" class="btn btn-secondary"style="width: 166px;" data-bs-toggle="button" [attr.aria-pressed]="formLogInIsVisible ? 'true' : 'false'" (click)="switchLogInOrRegister()">Iniciar sesión</button>
+            <button type="submit" class="btn btn-secondary" style="width: 166px;"data-bs-toggle="button" [attr.aria-pressed]="formLogInIsVisible ? 'true' : 'false'" (click)="switchLogInOrRegister()">Registrarme</button>
+        </div>
+
+        <form *ngIf = "formLogInIsVisible==true">
+            <div class="my-3">
+              <label for="exampleInputEmail1 text-light" class="form-label">Correo electrónico</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introducir correo eletrónico">
+              <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+            </div>
+            <div class="my-3">
+              <label for="exampleInputPassword1 text-light" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="exampleInputPassword1"placeholder="Introducir contraseña">
+            </div>
+            <div class="d-grid  mt-5">
+                <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+            </div>
+        </form>
+
+        <form *ngIf = "formLogInIsVisible==false">
+            <div class="my-3">
+                <label for="exampleInputEmail1 text-light" class="form-label">Nombre de usuario</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introducir nombre de usuario">
+                <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+            </div>
+            <div class="my-3">
+                <label for="exampleInputEmail1 text-light" class="form-label">Rol de equipo</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Seleccionar Rol de equipo">
+                <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+            </div>
+            <div class="my-3">
+              <label for="exampleInputEmail1 text-light" class="form-label">Correo electrónico</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introducir correo eletrónico">
+              <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
+            </div>
+            <div class="my-3">
+              <label for="exampleInputPassword1 text-light" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Introducir contraseña">
+            </div>
+            <div class="my-3">
+                <label for="exampleInputPassword1 text-light" class="form-label">Repetir contraseña</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Repetir contraseña">
+              </div>
+            <div class="d-grid mt-5">
+                <button type="submit" class="btn btn-primary">Registrarme</button>
+            </div>
+        </form>
+
+    </div>
+
+
+</div>

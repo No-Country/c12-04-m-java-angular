@@ -7,4 +7,16 @@ import { Component } from '@angular/core';
 })
 export class LogInAndRegisterComponent {
 
+  formLogInIsVisible: boolean=false;
+
+  switchLogInOrRegister(){
+    if(this.formLogInIsVisible==false){
+      this.formLogInIsVisible=true;
+    }
+    else{
+      this.formLogInIsVisible=false;
+    }
+  }
+  
+
 }
