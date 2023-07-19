@@ -8,19 +8,19 @@
     background-color: #021218;
     height: 90px;
     position: relative;
-    margin-bottom: 0;
 }
 
 .navbar img {
     position: absolute;
     left: 96px;
     top: 14px;
+    cursor: pointer;
 }
 
 .links-navbar {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: center;
     color: #FFFFFF;
     position: absolute;
     right: 0;

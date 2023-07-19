@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -148,8 +148,7 @@ export class ProjectComponent {
   ngOnInit(){
     this.idUrl = this.activatedRouter.snapshot.params['id'];
     this.loadSpaces();
-    this.spaceList=this.spaceListHardcode;
-    
+    this.spaceList=this.spaceListHardcode; 
   }
 
   setSelectedItem(item: any) {
@@ -203,7 +202,7 @@ export class ProjectComponent {
 
   addSpace(dTOAddSpace:any): Observable<any>{
     console.log("llega2");
-    return this.http.post<any>(this.url+`space?workspaceId=`+this.idUrl, dTOAddSpace)
+    return this.http.post<any>(this.url+`space/workspace?workspaceId=`+this.idUrl, dTOAddSpace)
   }
 
 

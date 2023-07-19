@@ -14,6 +14,13 @@ import { ModalEditSpaceComponent } from './components/modal-edit-space/modal-edi
 import { ModalConfirmDeleteSpaceComponent } from './modal-confirm-delete-space/modal-confirm-delete-space.component';
 import { ProjectComponent } from './components/project/project.component';
 import { LogInAndRegisterComponent } from './components/log-in-and-register/log-in-and-register.component';
+import { TasksModule } from './components/tasks/tasks.module';
+import { ListTasksComponent } from './components/tasks/list-tasks/list-tasks.component';
+import { AddEditTaskComponent } from './components/tasks/add-edit-task/add-edit-task.component';
+
+import { MaterialModule } from '@shared/material.module'
+import { ReactiveFormsModule } from '@angular/forms';
+import { PresentationPageComponent } from './presentation-page/presentation-page.component';
 
 @NgModule({
   declarations: [
@@ -24,14 +31,20 @@ import { LogInAndRegisterComponent } from './components/log-in-and-register/log-
     ModalEditSpaceComponent,
     ModalConfirmDeleteSpaceComponent,
     ProjectComponent,
-    LogInAndRegisterComponent
+    LogInAndRegisterComponent,
+    ListTasksComponent,
+    AddEditTaskComponent,
+    PresentationPageComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    TasksModule,
+    ReactiveFormsModule,
+    MaterialModule    
   ],
   providers: [],
   bootstrap: [AppComponent]

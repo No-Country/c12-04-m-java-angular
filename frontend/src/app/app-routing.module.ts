@@ -6,23 +6,25 @@ import { NopagefoundComponent } from './components/nopagefound/nopagefound.compo
 import { TasksRoutingModule } from './components/tasks/tasks-routing.module';
 import {ProjectComponent} from './components/project/project.component'
 import { LogInAndRegisterComponent } from './components/log-in-and-register/log-in-and-register.component';
+import { PresentationPageComponent } from './presentation-page/presentation-page.component';
 
 const routes: Routes = [
-
+	//   { path: '', component: AppComponent },
   { path: '', component: AppComponent },
   { path: 'home', component: HomePageComponent },
   { path: `projects/:id`, component: ProjectComponent },
   { path: 'logInAndRegister', component: LogInAndRegisterComponent },
+  { path: '', component: PresentationPageComponent },
 	{
 		path: 'tasks',
 		loadChildren: () =>
 			import('./components/tasks/tasks.module').then(modulo => modulo.TasksModule),
 	},
-	{ path: '**', component: NopagefoundComponent },    
+	{ path: '**', component: NopagefoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), TasksRoutingModule],
-  exports: [RouterModule]
+	imports: [RouterModule.forRoot(routes), TasksRoutingModule],
+	exports: [RouterModule]
 })
 export class AppRoutingModule { }
