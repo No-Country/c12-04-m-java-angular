@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, Input, OnInit, } from '@angular/core';
 import { TaskModel} from './../../../models/task.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { TaskService } from 'src/app/services/task.service';
@@ -17,7 +17,7 @@ const ELEMENT_DATA: TaskModel[] = [
   // standalone: true,
   // imports: [MatTableModule],  
 })
-export class ListTasksComponent implements OnInit {
+export class ListTasksComponent implements OnInit,DoCheck {
 
   // displayedColumns: string[] = ['name', 'description', 'status', 'actions'];
   //dataSource = new MatTableDataSource<TaskModel>();
@@ -31,6 +31,9 @@ export class ListTasksComponent implements OnInit {
 
   tasks$!: Observable<TaskModel[]>;
 
+  @Input() spaceIdHijo: number = 4;
+  spaceId: number = 4;
+
   // constructor(private empleadoService: EmpleadoService, public dialog: MatDialog,
   //   public snackBar: MatSnackBar) { }
 
@@ -38,16 +41,22 @@ export class ListTasksComponent implements OnInit {
     private taskService: TaskService, 
     private activatedRouter : ActivatedRoute
     ) { }  
+  
 
   ngOnInit(): void {
+    console.log('spaceIdHijo', this.spaceIdHijo);
     console.log('dataSource..', this.dataSource);
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
     this.idUrl = this.activatedRouter.snapshot.params['id'];
-    this.loadTasks();
-
-
+    //this.loadTasks();
    }
+
+  ngDoCheck(){
+    console.log(this.spaceIdHijo);
+  }   
+
+  /*
 
   loadTasks1() {
     // this.dataSource = this.taskService.getTasks();
@@ -79,4 +88,5 @@ export class ListTasksComponent implements OnInit {
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
   }    
+  */
 }
