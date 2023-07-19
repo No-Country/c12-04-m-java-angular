@@ -4,23 +4,24 @@ import { AppComponent } from './app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { NopagefoundComponent } from './components/nopagefound/nopagefound.component';
 import { TasksRoutingModule } from './components/tasks/tasks-routing.module';
-import {ProjectComponent} from './components/project/project.component'
+import { ProjectComponent } from './components/project/project.component'
+import { PresentationPageComponent } from './presentation-page/presentation-page.component';
 
 const routes: Routes = [
-//   { path: '', component: AppComponent },
-  	{ path: '', redirectTo: '/home', pathMatch: 'full'},
-  	{ path: 'home', component: HomePageComponent },
-  	{ path: `projects/:id`, component: ProjectComponent }, //CAMBIAR AL COMPONENTE DE AGUS
+	//   { path: '', component: AppComponent },
+	{ path: '', component: PresentationPageComponent },
+	{ path: 'home', component: HomePageComponent },
+	{ path: `projects/:id`, component: ProjectComponent }, //CAMBIAR AL COMPONENTE DE AGUS
 	{
 		path: 'tasks',
 		loadChildren: () =>
 			import('./components/tasks/tasks.module').then(modulo => modulo.TasksModule),
 	},
-	{ path: '**', component: NopagefoundComponent },    
+	{ path: '**', component: NopagefoundComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), TasksRoutingModule],
-  exports: [RouterModule]
+	imports: [RouterModule.forRoot(routes), TasksRoutingModule],
+	exports: [RouterModule]
 })
 export class AppRoutingModule { }

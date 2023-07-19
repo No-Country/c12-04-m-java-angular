@@ -19,6 +19,7 @@ import { AddEditTaskComponent } from './components/tasks/add-edit-task/add-edit-
 
 import { MaterialModule } from '@shared/material.module'
 import { ReactiveFormsModule } from '@angular/forms';
+import { PresentationPageComponent } from './presentation-page/presentation-page.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ModalConfirmDeleteSpaceComponent,
     ProjectComponent,
     ListTasksComponent,
-    AddEditTaskComponent
+    AddEditTaskComponent,
+    PresentationPageComponent
   ],
   imports: [
     BrowserModule,

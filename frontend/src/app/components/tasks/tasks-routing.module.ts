@@ -6,7 +6,7 @@ import { AddEditTaskComponent } from './add-edit-task/add-edit-task.component';
 
 const routes: Routes = [
   {
-    path: '', 
+    path: 'tasks',
     // component: ListTasksComponent,
     children: [
       { path: '', component: ListTasksComponent },
