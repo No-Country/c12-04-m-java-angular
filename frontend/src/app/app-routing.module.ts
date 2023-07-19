@@ -4,14 +4,15 @@ import { AppComponent } from './app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { NopagefoundComponent } from './components/nopagefound/nopagefound.component';
 import { TasksRoutingModule } from './components/tasks/tasks-routing.module';
-import { ProjectComponent } from './components/project/project.component'
+import {ProjectComponent} from './components/project/project.component'
+import { LogInAndRegisterComponent } from './components/log-in-and-register/log-in-and-register.component';
 import { PresentationPageComponent } from './presentation-page/presentation-page.component';
 
 const routes: Routes = [
-	//   { path: '', component: AppComponent },
 	{ path: '', component: PresentationPageComponent },
-	{ path: 'home', component: HomePageComponent },
-	{ path: `projects/:id`, component: ProjectComponent }, //CAMBIAR AL COMPONENTE DE AGUS
+  	{ path: 'home', component: HomePageComponent },
+  	{ path: `projects/:id`, component: ProjectComponent },
+  	{ path: 'logInAndRegister', component: LogInAndRegisterComponent },
 	{
 		path: 'tasks',
 		loadChildren: () =>

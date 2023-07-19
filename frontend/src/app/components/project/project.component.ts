@@ -178,11 +178,19 @@ export class ProjectComponent {
       },*/
       
       const dTOAddSpace: DTOAddSpace={
-        nameSpace: "prueba",
-        description: "nueva descripcionasdas",
+        nameSpace: "pruebaCA",
+        description: "nueva descripcionasdasCA",
       }
       console.log("llega");
-     this.addSpace(dTOAddSpace);
+     this.addSpace(dTOAddSpace).subscribe(
+      () => {
+        console.log('Objeto creado correctamente');
+        // Aquí puedes realizar alguna acción adicional después de eliminar el objeto
+      },
+      (error) => {
+        console.error('Error al crear el objeto', error);
+      }
+    );
 
   }
 
