@@ -18,6 +18,8 @@ export class TaskService {
 
 	constructor(private httpClient: HttpClient) {}
 
+	/*
+
 	getTasks1() {
 		return this.taskList.slice();
 	}
@@ -84,5 +86,5 @@ export class TaskService {
   //   this.taskList[idTask].name = task.name;
   //   this.taskList[idTask].description = task.description;
   // }
-
+  */
 }

@@ -65,7 +65,7 @@ export class AddEditTaskComponent {
 	}
 
 	addTask(task: TaskModel) {
-		this.taskService.addTask(task);
+		//this.taskService.addTask(task);----------------------------------------------------------------------------------------------
 		this.snackBar.open('The task has beed added succesfuly!', '', { duration: 3000 });
 		this.router.navigate(['tasks']);
 	}

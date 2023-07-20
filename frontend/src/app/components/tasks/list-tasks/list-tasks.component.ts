@@ -57,7 +57,7 @@ export class ListTasksComponent implements OnInit {
 
    ngOnChanges_js(){
     console.log("ngOnChanges...", this.spaceIdHijo);
-    this.tasks$ = this.taskService.getTasks_azure(this.spaceIdHijo);
+    //this.tasks$ = this.taskService.getTasks_azure(this.spaceIdHijo);------------------------------------------
     this.tasks$.subscribe((xxx) => {
       console.log('lista.x.', xxx.values);
       this.dataSource = xxx;
@@ -66,7 +66,7 @@ export class ListTasksComponent implements OnInit {
 
   ngOnChanges(){
     console.log("ngOnChanges...", this.spaceIdHijo);
-    this.tasks1$ = this.taskService.getTasks_azure(this.spaceIdHijo);
+    //this.tasks1$ = this.taskService.getTasks_azure(this.spaceIdHijo);----------------------------------------------
     this.tasks1$.subscribe((xxx) => {
       console.log('lista.x.', xxx);
       this.dataSource = xxx;
