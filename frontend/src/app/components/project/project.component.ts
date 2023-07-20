@@ -68,6 +68,7 @@ export class ProjectComponent {
   dtoSpaces: any;
   spaceSelected: any = null;
   url: string = "http://ninja-app-v1-api.azure-api.net/";
+  projectName: string ="";
  
   spaceListHardcode: Space[]=[
     {
@@ -147,6 +148,7 @@ export class ProjectComponent {
 
   ngOnInit(){
     this.idUrl = this.activatedRouter.snapshot.params['id'];
+    this.projectName = this.activatedRouter.snapshot.params['proyectoName'];
     this.loadSpaces();
     this.spaceList=this.spaceListHardcode; 
   }
