@@ -11,7 +11,7 @@ import { PresentationPageComponent } from './presentation-page/presentation-page
 const routes: Routes = [
 	{ path: '', component: PresentationPageComponent },
   	{ path: 'home', component: HomePageComponent },
-  	{ path: `projects/:id`, component: ProjectComponent },
+  	{ path: `projects/:proyectoName/:id`, component: ProjectComponent },
   	{ path: 'logInAndRegister', component: LogInAndRegisterComponent },
 	{
 		path: 'tasks',

@@ -36,8 +36,12 @@ export class NavigationBarComponent {
     this.loadProjects();
     this.showList = !this.showList;
   }
-  redirigir(id: number) { //funcion para que cada proyecto rediriga a su propia pagina
-    this.router.navigateByUrl(`/projects/${id}`);
+  redirigir(id: number,proyectoName: string) { //funcion para que cada proyecto rediriga a su propia pagina
+    this.router.navigateByUrl(`/projects/${proyectoName}/${id}`).then(() => {
+      // Después de la redirección, recargamos la página
+      window.location.reload();
+    });
+
   }
   redirigirHome(){
     this.router.navigateByUrl(`home`);

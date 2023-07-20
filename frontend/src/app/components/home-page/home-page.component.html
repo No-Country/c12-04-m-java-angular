@@ -4,7 +4,7 @@
         <div class="project-color"></div>
         <h2>{{ proyecto.nameWorkspace }} {{proyecto.id}}</h2>
         <p class="textDescription">{{proyecto.description}}</p>
-        <button class="go-to-project" (click)="redirigir(proyecto.id)">Ir a proyecto</button>
+        <button class="go-to-project" (click)="redirigir(proyecto.id,proyecto.nameWorkspace)">Ir a proyecto</button><!--cambios agus-->
         <div class="project-edit" (click)="openModal(proyecto)">
             <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
                 <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
