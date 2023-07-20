@@ -1,8 +1,8 @@
 export interface  TaskModel {
     id: number;
-    name: string;
+    nameTask: string;
     description: string;
-    expiredDate: Date;
-    priority: number;
+    dueDate: Date;
+    priorityTask: number;
     status: string; 
 }

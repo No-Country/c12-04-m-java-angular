@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-log-in-and-register',
@@ -8,6 +9,11 @@ import { Component } from '@angular/core';
 export class LogInAndRegisterComponent {
 
   formLogInIsVisible: boolean=false;
+
+  constructor(private router: Router){}
+  redirigir() {
+    this.router.navigateByUrl(`/home`);
+  }
 
   switchLogInOrRegister(){
     if(this.formLogInIsVisible==false){

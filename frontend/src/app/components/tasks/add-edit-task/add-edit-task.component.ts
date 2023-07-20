@@ -47,10 +47,10 @@ export class AddEditTaskComponent {
   SaveTask() {
 	const task: TaskModel = {
 	  id: 0,
-      name: '',
+      nameTask: '',
       description: '',
-	  expiredDate: new Date('2022-10-31'),
-	  priority: 1,
+	  dueDate: new Date('2022-10-31'),
+	  priorityTask: 1,
 	  status:''
     };
 

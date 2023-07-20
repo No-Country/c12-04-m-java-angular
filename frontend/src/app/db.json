@@ -85,23 +85,26 @@
   "tasks": [
 	{
 		"id": 1,
-		"name": "Nombre de otra tarea 1 frontend",
+		"nameTask": "Nombre de otra tarea 1",
 		"description": "description task 1",
-		"priority": 1,
+        "dueDate": "2001-08-02",
+		"priorityTask": 1,
 		"status": ""
 	},
 	{
 		"id": 2,
-		"name": "Nombre de otra tarea 2 frontend",
+		"nameTask": "Nombre de otra tarea 2",
 		"description": "description task 2",
-		"priority": 1,
+        "dueDate": "2011-09-02",
+		"priorityTask": 1,
 		"status": "In-Progress"
 	},
 	{
 		"id": 3,
-		"name": "Nombre de otra tarea 3 frontend",
+		"nameTask": "Nombre de otra tarea 3",
 		"description": "description task 3",
-		"priority": 1,
+        "dueDate": "2021-10-02",
+		"priorityTask": 1,
 		"status": "Completado"
 	}		
   ],

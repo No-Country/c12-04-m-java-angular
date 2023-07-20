@@ -27,7 +27,7 @@
             <!-- Position Column -->
             <ng-container class="p-0" matColumnDef="demo-name">
               <th mat-header-cell *matHeaderCellDef> Name </th>
-              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.name}} </td>
+              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.nameTask}} </td>
             </ng-container>
             
             <ng-container class="p-0" matColumnDef="demo-description">
@@ -39,7 +39,7 @@
 
             <ng-container class="p-0" matColumnDef="expdate">
               <th mat-header-cell *matHeaderCellDef> Expiration date </th>
-              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.expiredDate | date: 'MM/dd/yyyy'}} </td>
+              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.dueDate | date: 'MM/dd/yyyy'}} </td>
               <!-- <div class="p-0"  *matHeaderCellDef> Description</div>
               <div class="bg-secondary  p-3" *matCellDef="let element">{{element.description}}</div> -->
             </ng-container>            
@@ -47,7 +47,7 @@
             <!-- Position Column -->
             <ng-container class="p-0" matColumnDef="priority">
               <th mat-header-cell *matHeaderCellDef> Priority </th>
-              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.priority}} </td>
+              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.priorityTask}} </td>
             </ng-container>
             
             <!-- Position Column -->

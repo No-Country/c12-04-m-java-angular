@@ -1,4 +1,4 @@
-import { Component, DoCheck, Input, OnInit, } from '@angular/core';
+import { Component, Input, OnInit, } from '@angular/core';
 import { TaskModel} from './../../../models/task.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { TaskService } from 'src/app/services/task.service';
@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 const ELEMENT_DATA: TaskModel[] = [
-  {id: 1, name: 'Tarea 1', description:'Description 1', expiredDate:new Date("2001,08,02"), priority:1, status:'In Progress'},
-  {id: 2, name: 'Tarea 2', description:'Description 2', expiredDate:new Date('2018-01-10'), priority:2, status:'Completado'},
+  {id: 1, nameTask: 'Tarea 1', description:'Description 1', dueDate:new Date("2001,08,02"), priorityTask:1, status:'In Progress'},
+  {id: 2, nameTask: 'Tarea 2', description:'Description 2', dueDate:new Date('2018-01-10'), priorityTask:2, status:'Completado'},
 ];
 @Component({
   selector: 'app-list-tasks',
@@ -17,7 +17,7 @@ const ELEMENT_DATA: TaskModel[] = [
   // standalone: true,
   // imports: [MatTableModule],  
 })
-export class ListTasksComponent implements OnInit,DoCheck {
+export class ListTasksComponent implements OnInit {
 
   // displayedColumns: string[] = ['name', 'description', 'status', 'actions'];
   //dataSource = new MatTableDataSource<TaskModel>();
@@ -30,9 +30,10 @@ export class ListTasksComponent implements OnInit,DoCheck {
   idUrl: number = 0;
 
   tasks$!: Observable<TaskModel[]>;
+  tasks1$!: Observable<any[]>;
 
-  @Input() spaceIdHijo: number = 4;
-  spaceId: number = 4;
+  @Input() spaceIdHijo: number = 0;
+  // spaceId: number = 4;
 
   // constructor(private empleadoService: EmpleadoService, public dialog: MatDialog,
   //   public snackBar: MatSnackBar) { }
@@ -44,17 +45,37 @@ export class ListTasksComponent implements OnInit,DoCheck {
   
 
   ngOnInit(): void {
-    console.log('spaceIdHijo', this.spaceIdHijo);
-    console.log('dataSource..', this.dataSource);
+    this.idUrl = this.activatedRouter.snapshot.params['id'];
+    console.log('ngOnInit-idUrl', this.idUrl);
+    console.log('ngOnInit-spaceIdHijo', this.spaceIdHijo);
+    // console.log('dataSource..', this.dataSource);
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
     this.idUrl = this.activatedRouter.snapshot.params['id'];
     //this.loadTasks();
    }
 
-  ngDoCheck(){
-    console.log(this.spaceIdHijo);
-  }   
+   ngOnChanges_js(){
+    console.log("ngOnChanges...", this.spaceIdHijo);
+    this.tasks$ = this.taskService.getTasks_azure(this.spaceIdHijo);
+    this.tasks$.subscribe((xxx) => {
+      console.log('lista.x.', xxx.values);
+      this.dataSource = xxx;
+    });
+  }
+
+  ngOnChanges(){
+    console.log("ngOnChanges...", this.spaceIdHijo);
+    this.tasks1$ = this.taskService.getTasks_azure(this.spaceIdHijo);
+    this.tasks1$.subscribe((xxx) => {
+      console.log('lista.x.', xxx);
+      this.dataSource = xxx;
+    });
+  }  
+
+  // ngDoCheck(){
+  //   console.log(this.spaceIdHijo);
+  // }   
 
   /*
 

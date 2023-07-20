@@ -9,6 +9,6 @@ import { Router } from '@angular/router';
 export class PresentationPageComponent {
   constructor(private router: Router){}
   redirigir() {
-    this.router.navigateByUrl(`/home`);
+    this.router.navigateByUrl(`/logInAndRegister`);
   }
 }
