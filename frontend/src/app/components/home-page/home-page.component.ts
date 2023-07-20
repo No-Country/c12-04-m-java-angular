@@ -204,8 +204,9 @@ export class HomePageComponent implements OnInit {
       this.listUsers = !this.listUsers;
     }
   */
-  redirigir(id: number) { //funcion para que cada proyecto rediriga a su propia pagina
-    this.router.navigateByUrl(`/projects/${id}`);
+  redirigir(id: number,proyectoName: string) { //funcion para que cada proyecto rediriga a su propia pagina
+    this.router.navigateByUrl(`/projects/${proyectoName}/${id}`);
+
   }
 
 }
