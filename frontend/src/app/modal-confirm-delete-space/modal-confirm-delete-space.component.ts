@@ -20,12 +20,13 @@ export class ModalConfirmDeleteSpaceComponent {
     this.deleteSpace(id).subscribe(
       () => {
         console.log('Objeto eliminado correctamente');
-        // Aquí puedes realizar alguna acción adicional después de eliminar el objeto
+        window.location.reload()
       },
       (error) => {
         console.error('Error al eliminar el objeto', error);
+        window.location.reload()
       }
-    );;
+    );
   }
 
   deleteSpace(idd: number): Observable<any>{
