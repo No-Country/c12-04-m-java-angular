@@ -1,6 +1,4 @@
 package com.no_country.project_ninja.api.controller.space;
-
-
 import com.no_country.project_ninja.api.domain.space.Space;
 import com.no_country.project_ninja.api.domain.workspace.Workspace;
 import com.no_country.project_ninja.api.domain.space.SpaceRepository;
@@ -125,27 +123,14 @@ public class SpaceController {
     }
 
 
-
     private SpaceDTO mapSpaceToDTO(Space space) {
         SpaceDTO spaceDTO = new SpaceDTO();
         spaceDTO.setId(space.getId());
         spaceDTO.setNameSpace(space.getNameSpace());
         spaceDTO.setDescription(space.getDescription());
-        spaceDTO.setWorkspace(space.getWorkspace());
-        spaceDTO.setTasks(space.getTasks());
+        spaceDTO.setTasks(space.getTaskSimpleDTOs());
 
         return spaceDTO;
     }
-
-    private SpaceDTO mapSpaceMainToDTO(Space space) {
-        SpaceDTO spaceDTO = new SpaceDTO();
-        spaceDTO.setId(space.getId());
-        spaceDTO.setNameSpace(space.getNameSpace());
-        spaceDTO.setDescription(space.getDescription());
-        spaceDTO.setTasks(space.getTasks());
-
-        return spaceDTO;
-    }
-
 
 }

@@ -1,26 +1,29 @@
 package com.no_country.project_ninja.api.controller.task;
 
+import com.no_country.project_ninja.api.domain.priority.PriorityTask;
+import com.no_country.project_ninja.api.domain.priority.PriorityTaskRepository;
 import com.no_country.project_ninja.api.domain.space.Space;
 import com.no_country.project_ninja.api.domain.space.SpaceRepository;
-import com.no_country.project_ninja.api.domain.task.DataTask;
 import com.no_country.project_ninja.api.domain.task.Task;
 import com.no_country.project_ninja.api.domain.task.TaskRepository;
 import com.no_country.project_ninja.api.domain.task.dto.TaskDTO;
-import com.no_country.project_ninja.api.domain.user.DataUser;
+import com.no_country.project_ninja.api.domain.task.dto.TaskSimpleDTO;
 import com.no_country.project_ninja.api.domain.user.User;
 import com.no_country.project_ninja.api.domain.user.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/task")
@@ -33,15 +36,19 @@ public class TaskController {
     private SpaceRepository spaceRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PriorityTaskRepository priorityTaskRepository;
 
     @GetMapping("/space")
-    public ResponseEntity<Page<TaskDTO>> getTasksBySpace(@RequestParam Long spaceId, Pageable pageable) {
+    public ResponseEntity<List<TaskDTO>> getTasksBySpace(@RequestParam Long spaceId, Pageable pageable) {
         Optional<Space> spaceOptional = spaceRepository.findById(spaceId);
 
         if (spaceOptional.isPresent()) {
             Space space = spaceOptional.get();
-            Page<Task> tasksPage = taskRepository.findBySpace(space, pageable);
-            Page<TaskDTO> taskDTOPage = tasksPage.map(this::mapTaskToDTO);
+            List<Task> tasksPage = taskRepository.findBySpace(space);
+            List<TaskDTO> taskDTOPage = tasksPage.stream()
+                    .map(this::mapTaskToDTO)
+                    .collect(Collectors.toList());
             return ResponseEntity.ok(taskDTOPage);
         } else {
             return ResponseEntity.notFound().build();
@@ -63,7 +70,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskDTO> createTask(@RequestParam Long spaceId ,@RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<TaskDTO> createTask(@RequestParam Long spaceId, @RequestBody TaskDTO taskDTO) {
         Task task = new Task();
         task.setNameTask(taskDTO.getNameTask());
 
@@ -93,21 +100,30 @@ public class TaskController {
 
 
     @PutMapping
-    public ResponseEntity<TaskDTO> updateTask(@RequestParam Long id, @RequestBody TaskDTO taskDTO) {
+    public ResponseEntity<String> updateTask(@RequestParam Long id, @RequestBody @Valid TaskSimpleDTO taskSimpleDTO) {
         Optional<Task> taskOptional = taskRepository.findById(id);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         if (taskOptional.isPresent()) {
             Task task = taskOptional.get();
-            task.setNameTask(taskDTO.getNameTask());
-            task.setDescription(taskDTO.getDescription());
-            task.setDueDate(taskDTO.getDueDate());
-            task.setPriorityTask(taskDTO.getPriorityTask());
+            task.setNameTask(taskSimpleDTO.getNameTask());
+            task.setDescription(taskSimpleDTO.getDescription());
+            Date dueDate = taskSimpleDTO.getDueDate();
+            task.setDueDate(dueDate);
+            task.setStatus(taskSimpleDTO.isStatus());
+
+            // Busca la PriorityTask por el id y asigna la relación al objeto Task
+            Long priorityTaskId = taskSimpleDTO.getPriorityTask();
+            if (priorityTaskId != null) {
+                PriorityTask priorityTask = priorityTaskRepository.findById(priorityTaskId)
+                        .orElseThrow(() -> new EntityNotFoundException("PriorityTask not found with id: " + priorityTaskId));
+                task.setPriorityTask(priorityTask);
+            } else {
+                task.setPriorityTask(null); // Si priorityTaskId es null, elimina la relación con PriorityTask
+            }
 
             Task updatedTask = taskRepository.save(task);
-            TaskDTO updatedTaskDTO = mapTaskToDTO(updatedTask);
 
-            return ResponseEntity.ok(updatedTaskDTO);
+            return ResponseEntity.ok("Task Updated");
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -191,10 +207,9 @@ public class TaskController {
         taskDTO.setDescription(task.getDescription());
         taskDTO.setDueDate(task.getDueDate());
         taskDTO.setPriorityTask(task.getPriorityTask());
+        taskDTO.setStatus(task.isStatus());
         taskDTO.setUserSet(task.getUsers());
-        taskDTO.setSpace(task.getSpace());
 
         return taskDTO;
     }
-
 }

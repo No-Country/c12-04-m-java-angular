@@ -124,7 +124,7 @@ public class WorkspaceController {
         workspaceDTO.setNameWorkspace(workspace.getNameWorkspace());
         workspaceDTO.setDescription(workspace.getDescription());
         workspaceDTO.setUserSet(workspace.getUsers());
-        workspaceDTO.setSpaceSet(workspace.getSpaces());
+        workspaceDTO.setSpace(workspace.getSpaceDTOs());
 
         return workspaceDTO;
     }

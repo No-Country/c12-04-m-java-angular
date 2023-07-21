@@ -1,21 +1,27 @@
 package com.no_country.project_ninja.api.domain.task.dto;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.no_country.project_ninja.api.domain.priority.PriorityTask;
-import com.no_country.project_ninja.api.domain.user.User;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
-public class TaskDTO {
+
+public class TaskSimpleDTO {
     private Long id;
+    @NotBlank
     private String nameTask;
+    @NotBlank
     private String description;
+    @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy", timezone = "GMT-3")
     private Date dueDate;
-    private PriorityTask priorityTask;
+    @NotNull
     private boolean status;
-    private Set<User> userSet= new HashSet<>();
+    @NotNull
+    private Long priorityTask;
+
 
     public Long getId() {
         return id;
@@ -49,20 +55,12 @@ public class TaskDTO {
         this.dueDate = dueDate;
     }
 
-    public PriorityTask getPriorityTask() {
+    public Long getPriorityTask() {
         return priorityTask;
     }
 
-    public void setPriorityTask(PriorityTask priorityTask) {
+    public void setPriorityTask(Long priorityTask) {
         this.priorityTask = priorityTask;
-    }
-
-    public Set<User> getUserSet() {
-        return userSet;
-    }
-
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
     }
 
     public boolean isStatus() {

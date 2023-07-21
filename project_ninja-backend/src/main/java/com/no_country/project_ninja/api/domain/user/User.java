@@ -10,9 +10,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Table(name = "users")
 @Entity(name = "User")
@@ -35,17 +34,20 @@ public class User {
     @Column(length = 8)
     private String password;
 
+    @Column(name = "team_rol")
+    private String teamRol;
+
     @OneToOne(cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn(name = "subscription_type")
     private Subscription subscription;
 
     @ManyToMany(mappedBy = "users")
     @JsonIgnore
-    private Set<Task> taskSet= new HashSet<>();
+    private List<Task> taskSet= new ArrayList<>();
 
     @ManyToMany(mappedBy = "users")
     @JsonIgnore
-    private Set<Workspace> workspaceSet= new HashSet<>();
+    private List<Workspace> workspaceSet= new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -85,5 +87,13 @@ public class User {
 
     public void setSubscription(Subscription subscription) {
         this.subscription = subscription;
+    }
+
+    public String getTeamRol() {
+        return teamRol;
+    }
+
+    public void setTeamRol(String teamRol) {
+        this.teamRol = teamRol;
     }
 }

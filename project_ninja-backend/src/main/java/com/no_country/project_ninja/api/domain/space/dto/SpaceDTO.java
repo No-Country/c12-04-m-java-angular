@@ -1,17 +1,16 @@
 package com.no_country.project_ninja.api.domain.space.dto;
+import com.no_country.project_ninja.api.domain.task.dto.TaskDTO;
 
-import com.no_country.project_ninja.api.domain.task.Task;
-import com.no_country.project_ninja.api.domain.workspace.Workspace;
 
-import java.util.HashSet;
-import java.util.Set;
+
+import java.util.List;
+
 
 public class SpaceDTO {
     private Long id;
     private String nameSpace;
     private String description;
-    private Workspace workspace;
-    private Set<Task> tasks= new HashSet<>();
+    private List<TaskDTO> tasks;
 
     public Long getId() {
         return id;
@@ -37,19 +36,13 @@ public class SpaceDTO {
         this.description = description;
     }
 
-    public Workspace getWorkspace() {
-        return workspace;
-    }
-
-    public void setWorkspace(Workspace workspace) {
-        this.workspace = workspace;
-    }
-
-    public Set<Task> getTasks() {
+    public List<TaskDTO> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Set<Task> tasks) {
+    public void setTasks(List<TaskDTO> tasks) {
         this.tasks = tasks;
     }
+
+
 }

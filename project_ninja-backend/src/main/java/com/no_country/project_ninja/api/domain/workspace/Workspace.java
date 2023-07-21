@@ -2,7 +2,7 @@ package com.no_country.project_ninja.api.domain.workspace;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.no_country.project_ninja.api.domain.space.Space;
-import com.no_country.project_ninja.api.domain.task.Task;
+import com.no_country.project_ninja.api.domain.space.dto.SpaceDTO;
 import com.no_country.project_ninja.api.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Table(name = "workspace")
 @Entity(name = "Workspace")
@@ -74,5 +76,21 @@ public class Workspace {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    public List<SpaceDTO> getSpaceDTOs() {
+        return this.spaces.stream()
+                .map(this::mapSpaceToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private SpaceDTO mapSpaceToDTO(Space space) {
+        SpaceDTO spaceDTO = new SpaceDTO();
+        spaceDTO.setId(space.getId());
+        spaceDTO.setNameSpace(space.getNameSpace());
+        spaceDTO.setDescription(space.getDescription());
+        spaceDTO.setTasks(space.getTaskSimpleDTOs());
+
+        return spaceDTO;
     }
 }

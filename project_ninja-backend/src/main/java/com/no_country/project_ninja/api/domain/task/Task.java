@@ -3,6 +3,7 @@ package com.no_country.project_ninja.api.domain.task;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.no_country.project_ninja.api.domain.priority.PriorityTask;
 import com.no_country.project_ninja.api.domain.space.Space;
+import com.no_country.project_ninja.api.domain.task.dto.TaskSimpleDTO;
 import com.no_country.project_ninja.api.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,9 @@ public class Task {
     @ManyToOne
     @JoinColumn(name = "space")
     private Space space;
+
+    @Column(name = "status")
+    private boolean status;
 
     @ManyToOne
     @JoinColumn(name = "priority")
@@ -106,5 +110,13 @@ public class Task {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
