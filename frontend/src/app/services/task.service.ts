@@ -14,7 +14,7 @@ export class TaskService {
 		{id: 2, name: 'Tarea 2', description:'Description 2', priority:2, status:'Completado'},
 	]
   
-  	apiUrl: string = 'http://localhost:3000/tasks';
+  	apiUrl: string = 'https://localhost:3000/tasks';
 
 	constructor(private httpClient: HttpClient) {}
 

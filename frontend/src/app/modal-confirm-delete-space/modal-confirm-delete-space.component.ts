@@ -12,7 +12,7 @@ export class ModalConfirmDeleteSpaceComponent {
   constructor(private http: HttpClient){}
   @Input() datad: any;
   
-  url: string="http://ninja-app-v1-api.azure-api.net/";
+  url: string="https://ninja-app-v1-api.azure-api.net/";
 
   deleteSpaceX(id: number){
     console.log("llega a borrar1")
