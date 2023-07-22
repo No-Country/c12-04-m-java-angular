@@ -3,15 +3,14 @@
     <div class="container p-5 " style="width: 428px;">
 
         <div class="bg-secondary rounded-2">
-            <button type="submit" class="btn btn-secondary"style="width: 166px;" data-bs-toggle="button" [attr.aria-pressed]="formLogInIsVisible ? 'true' : 'false'" (click)="switchLogInOrRegister()">Iniciar sesión</button>
-            <button type="submit" class="btn btn-secondary" style="width: 166px;"data-bs-toggle="button" [attr.aria-pressed]="formLogInIsVisible ? 'true' : 'false'" (click)="switchLogInOrRegister()">Registrarme</button>
+            <button type="submit" class="btn btn-secondary" [ngClass]="{'active': button1Disabled }" (click)="buttonClicked(1)"  style="width: 166px;" data-bs-toggle="button" aria-pressed="true">Iniciar sesión</button>
+            <button type="submit" class="btn btn-secondary" [ngClass]="{'active': button2Disabled }" (click)="buttonClicked(2)"  style="width: 166px;"data-bs-toggle="button" aria-pressed="true">Registrarme</button>
         </div>
 
-        <form *ngIf = "formLogInIsVisible==true">
+        <form *ngIf = "button1Disabled==true">
             <div class="my-3">
               <label for="exampleInputEmail1 text-light" class="form-label">Correo electrónico</label>
               <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introducir correo eletrónico">
-              <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
             </div>
             <div class="my-3">
               <label for="exampleInputPassword1 text-light" class="form-label">Contraseña</label>
@@ -22,21 +21,18 @@
             </div>
         </form>
 
-        <form *ngIf = "formLogInIsVisible==false">
+        <form *ngIf = "button2Disabled==true">
             <div class="my-3">
                 <label for="exampleInputEmail1 text-light" class="form-label">Nombre de usuario</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introducir nombre de usuario">
-                <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
             </div>
             <div class="my-3">
                 <label for="exampleInputEmail1 text-light" class="form-label">Rol de equipo</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Seleccionar Rol de equipo">
-                <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
             </div>
             <div class="my-3">
               <label for="exampleInputEmail1 text-light" class="form-label">Correo electrónico</label>
               <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introducir correo eletrónico">
-              <!--<div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>-->
             </div>
             <div class="my-3">
               <label for="exampleInputPassword1 text-light" class="form-label">Contraseña</label>
