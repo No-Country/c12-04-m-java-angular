@@ -20,7 +20,7 @@
 
                 <h5 class=" text-light ps-3 m-0 flex-grow-1 align-self-center">{{space.nameSpace}}</h5>
 
-                <button type="button" class="btn text-light" data-bs-toggle="modal" data-bs-target="#EditSpaceModal" (click)="setSelectedSpace(space)">
+                <button type="button" class="btn text-light" data-bs-toggle="modal" data-bs-target="#EditSpaceModal" (click)="setSelectedSpace(space)"><!-- -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="ionicon project-edit d-inline" viewBox="0 0 512 512">
                       <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
                           d="M358.62 129.28L86.49 402.08 70 442l39.92-16.49 272.8-272.13-24.1-24.1zM413.07 74.84l-11.79 11.78 24.1 24.1 11.79-11.79a16.51 16.51 0 000-23.34l-.75-.75a16.51 16.51 0 00-23.35 0z" />
@@ -31,7 +31,7 @@
 
             <div class="mx-5">
 
-              <button type="submit" (click)="createSpace()" class="btn btn-primary btn-lg my-5 py-2 px-4 text-light">AGREGAR ESPACIO</button>
+              <button *ngIf = "numberOfSpaces" type="submit" class="btn btn-primary btn-lg my-5 py-2 px-4 text-light" data-bs-toggle="modal" data-bs-target="#NewSpaceModal"  >AGREGAR ESPACIO</button>
 
             </div>
 
@@ -43,26 +43,14 @@
     <div class="col-9 text-light border-start">
 
       <!--esta es la parte donde comienza el espacio para el modulo de tareas-->
-
-      <div class="d-flex flex-row mb-3">
-
-        <h3 class="p-3 d-inline">Acomodar Por:</h3>
-        <div class="d-flex my-3">
-            <select class="form-select" aria-label="Default select example">
-                <option selected>Asignadas a ti</option>
-                <option value="1">Prioridad</option>
-                <option value="2">Fecha</option>
-            </select>
-        </div>
-
-      </div>
-
+      
       <!-- Modal listar tareas (Pending parametro=SpaceId)-->
       <!--<app-list-tasks [spaceIdHijo]="spaceSelected.id"></app-list-tasks>-->
         
     </div>
 
-  <app-modal-edit-space *ngIf="spaceSelected" [data]="spaceSelected"></app-modal-edit-space>
+  <app-modal-edit-space [data]="spaceSelected"></app-modal-edit-space>
+  <app-modal-new-space [data]="newSpace"></app-modal-new-space>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog ">

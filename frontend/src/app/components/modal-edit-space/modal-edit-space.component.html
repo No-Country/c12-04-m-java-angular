@@ -2,15 +2,15 @@
     <div class="modal-dialog ">
       <div class="modal-content bg-dark">
         <div class="modal-header border-0">
-          <textarea class="form-control bg-dark fs-5 border-dark" [(ngModel)]="data.nameSpace" style="height: 20px;" id="floatingTextarea" maxlength="25">{{data.nameSpace}}</textarea>
+          <textarea class="form-control bg-dark fs-5 border-dark" [(ngModel)]="spaceEdited.nameSpace" style="height: 20px;" id="floatingTextarea" maxlength="20"></textarea>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body bg-dark border-0">
-          <textarea class="form-control bg-dark border-secondary" [(ngModel)]="data.description" id="exampleFormControlTextarea1" [placeholder]="data.description" maxlength="200" rows="3">{{data.description}}</textarea>
+          <textarea class="form-control bg-dark border-secondary" [(ngModel)]="spaceEdited.description" style="height: 125px;" id="exampleFormControlTextarea1" [placeholder]="spaceEdited.description" maxlength="200" rows="3"></textarea>
         </div>
         <div class="modal-footer d-flex border-0">
           <button type="button" class="btn btn-dark btn-outline-danger text-light me-auto"  data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deleteSpaceModal">eliminar espacio</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateSpace(data.id,data)">guardar espacio</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="updateSpace(data.id,spaceEdited)">guardar espacio</button>
         </div>
       </div>
     </div>

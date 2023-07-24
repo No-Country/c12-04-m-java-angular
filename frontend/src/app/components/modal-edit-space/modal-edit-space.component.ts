@@ -16,7 +16,7 @@ interface DTOPutSpace {
 
 
 export class ModalEditSpaceComponent {
-  @Input() data: any;
+  @Input() data: any;// con   @Input() data: any; parece que se vinculaba al espacio recibido con el get
   spaceSelected: any;
   urlM: string = "https://ninja-app-v1-api.azure-api.net/";
   spaceEdited: DTOPutSpace = {
@@ -25,18 +25,17 @@ export class ModalEditSpaceComponent {
   }
   constructor(private http:HttpClient){ }
 
+  ngOnChanges(){
+    this.spaceEdited.nameSpace=this.data.nameSpace;
+    this.spaceEdited.description=this.data.description;
+  }
+
   setSelectedSpace(space: any) {
     this.spaceSelected = space;
   }
 
   updateSpace(id: number, dTOPutSpace:any){
 
-    this.spaceEdited.nameSpace = this.data.nameSpace;
-    this.spaceEdited.description = this.data.description;
-    console.log(this.spaceEdited);
-
-    console.log(`el id por usar es: ${id}`)
-    console.log(this.urlM+`space?id=${id}`)
     this.updateSpaceDos(id,this.spaceEdited).subscribe(() => {
       console.log('Objeto editado correctamente');
       window.location.reload();

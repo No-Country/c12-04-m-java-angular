@@ -21,6 +21,7 @@ import { AddEditTaskComponent } from './components/tasks/add-edit-task/add-edit-
 import { MaterialModule } from '@shared/material.module'
 import { ReactiveFormsModule } from '@angular/forms';
 import { PresentationPageComponent } from './presentation-page/presentation-page.component';
+import { ModalNewSpaceComponent } from './components/modal-new-space/modal-new-space.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PresentationPageComponent } from './presentation-page/presentation-page
     NavigationBarComponent,
     FooterComponent,
     ModalEditSpaceComponent,
+    ModalNewSpaceComponent,
     ModalConfirmDeleteSpaceComponent,
     ProjectComponent,
     LogInAndRegisterComponent,

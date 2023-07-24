@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,6 @@ interface Espacio {
   nameSpace: string;
   description: string;
 }
-
 
 interface DTOAddSpace {
   nameSpace: string;
@@ -22,17 +21,23 @@ let dtoSpaces: DTOAddSpace;
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss']
 })
-export class ProjectComponent {
+
+export class ProjectComponent{
 
   idUrl: number = 0;
   spaceList: any;
-  spaceSelected: any = null;
+  spaceSelected: any = {
+    nameSpace: "espacio",
+    description: "descripcion del espacio"
+  }
+  newSpace: any = {
+    nameSpace: "espacio",
+    description: "descripcion del espacio"
+  };
   url: string = "https://ninja-app-v1-api.azure-api.net/";
   projectName: string ="";
-  spaceDefault: Espacio = {
-    nameSpace: "nuevo Espacio",
-    description: "nueva Description"
-  }
+
+  numberOfSpaces: boolean=false;
  
   constructor(private http:HttpClient,
     private activatedRouter : ActivatedRoute,){ }
@@ -47,26 +52,22 @@ export class ProjectComponent {
     this.spaceSelected = item;
   }
 
+  changeNumberOfSpaces(spaceList:any){
+    if(spaceList.length<6){
+      this.numberOfSpaces=true;
+    }
+  }
+
   loadSpaces(){
     this.getSpace().subscribe(
       data =>{
         this.spaceList = data;
+        this.spaceSelected = data[0];
+        this.changeNumberOfSpaces(this.spaceList);
       })}
-
-  createSpace(){
-     this.addSpace(this.spaceDefault).subscribe(() => {
-        console.log('Objeto creado correctamente');
-        window.location.reload();
-      },
-      (error) => {
-        console.error('Error al crear el objeto', error);
-      })}
-
-  addSpace(dTOAddSpace:any): Observable<any>{
-    return this.http.post<any>(this.url+`space?workspaceId=`+this.idUrl, dTOAddSpace)
-  }
 
   getSpace(): Observable<any[]>{
     return this.http.get<any[]>(this.url+`space/workspace?workspaceId=`+this.idUrl);
   }
+  
 }
