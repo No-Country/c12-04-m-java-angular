@@ -50,6 +50,7 @@
 
   <app-modal-edit-space [data]="spaceSelected"></app-modal-edit-space>
   <app-modal-new-space [data]="newSpace"></app-modal-new-space>
+  <app-modal-new-task></app-modal-new-task>
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
@@ -98,6 +99,8 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
+
+  <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#NewTaskModal">abrir new task</button>
 
 </div>
