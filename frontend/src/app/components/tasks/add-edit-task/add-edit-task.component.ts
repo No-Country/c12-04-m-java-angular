@@ -18,6 +18,12 @@ export class AddEditTaskComponent {
 	isVisible = true;
 	myForm: FormGroup;  
 
+  spaceId: number = 0;	
+  dataSelected: any = {
+    spaceId: 0,
+    task: null
+  }  
+
   users = [
     {name: 'Percy'},
     {name: 'David'},
@@ -57,17 +63,18 @@ constructor(
 		private aRoute: ActivatedRoute,
 		public snackBar: MatSnackBar,	
 		private dialogRef: MatDialogRef<AddEditTaskComponent>,
-		@Inject(MAT_DIALOG_DATA) public data: TaskModel
+		@Inject(MAT_DIALOG_DATA) public data: any
   ){
 	console.log('data..', data)
+	this.dataSelected = data;
     this.myForm = new FormGroup({
-		id: new FormControl(data.id),
-		nameTask: new FormControl(data.nameTask),
-		// nameTask: this.myForm.get('nameTask')?.value,
-		description: new FormControl(data.description),
-		dueDate: new FormControl(data.dueDate),
-		priorityTask: new FormControl(data.priorityTask),
-		status: new FormControl(data.status),
+		id: new FormControl(data.task.id),
+		nameTask: new FormControl(data.task.nameTask),
+		description: new FormControl(data.task.description),
+		dueDate: new FormControl(data.task.dueDate),
+		priorityTask: new FormControl(data.task.priorityTask),
+		status: new FormControl(data.task.status),
+		
     });
 
 	// this.myForm.patchValue({
@@ -79,11 +86,14 @@ constructor(
 	// });
 
 
-	this.actionTypes = data.id === 0 ? ActionTypes.ADD : ActionTypes.EDIT;
-	this.actionTitle = data.id === 0 ? 'Agregar Tarea' : 'Editar Tarea';
+	this.actionTypes = data.task.id === 0 ? ActionTypes.ADD : ActionTypes.EDIT;
+	this.actionTitle = data.task.id === 0 ? 'Agregar Tarea' : 'Editar Tarea';
 
-		const idParam = 'id';
-		this.id_Index = this.aRoute.snapshot.params[idParam];
+	const idParam = 'id';
+	this.id_Index = this.aRoute.snapshot.params[idParam];
+	console.log('actionTypes', this.actionTypes);
+	console.log('actionTitle', this.actionTitle)
+
   }
 
 	ngOnInit(): void {
@@ -106,6 +116,7 @@ constructor(
 	  priorityTask: this.myForm.value.priorityTask,
 	  status: this.actionTypes === ActionTypes.ADD ? '' : this.myForm.value.status
     };
+	console.log('SaveTask', this.actionTypes);
 
 		switch (this.actionTypes) {
 			case ActionTypes.ADD:
@@ -117,13 +128,34 @@ constructor(
 		}
 	}
 
+	// createTask(){
+	// 	this.addTask(this.newSpace).subscribe((data) => {
+	// 	   console.log('Objeto creado correctamente');
+	// 	   window.location.reload();
+	// 	 },
+	// 	 (error) => {
+	// 	   console.error('Error al crear el objeto', error);
+	// 	 })}
+
 	addTask(task: TaskModel) {
-		//this.taskService.addTask(task);----------------------------------------------------------------------------------------------
-		this.snackBar.open('The task has beed added succesfuly!', '', { duration: 3000 });
-		this.router.navigate(['tasks']);
+		console.log('add-edit/addTask', task.nameTask);
+		console.log('add-edit/spaceId', this.dataSelected.spaceId);
+		// this.taskService.addTask(task.nameTask,  this.dataSelected.spaceId);
+		this.taskService.addTask(task.nameTask,  this.dataSelected.spaceId) 
+			.subscribe((data) => {
+				console.log('Objeto creado correctamente');
+		   		window.location.reload();		
+			}),
+			// (error) => {
+			// 	console.error('Error al crear el objeto', error);
+			// })};
+			
+		this.snackBar.open('Tarea agregada!', '', { duration: 3000 });
+		// this.router.navigate(['home']);
 	}
 
 	editTask(task: TaskModel) {
+		console.log('add-edit/editTask', task);
 		// this.taskService.editTask(task, this.id_Index);
 		// this.snackBar.open('The task has been updated succesfuly!', '', {
 		// 	duration: 3000,
