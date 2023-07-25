@@ -50,6 +50,7 @@ export class ProjectComponent{
 
   setSelectedSpace(item: any) {
     this.spaceSelected = item;
+    console.log(this.spaceSelected.id)
   }
 
   changeNumberOfSpaces(spaceList:any){
