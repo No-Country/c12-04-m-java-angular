@@ -9,14 +9,54 @@ import { env } from 'src/environment/environment';
 })
 export class TaskService {
 
-	taskList: any[] = [
-		{id: 1, name: 'Tarea 1', description:'Description 1', priority:1, status:'In Progress'},
-		{id: 2, name: 'Tarea 2', description:'Description 2', priority:2, status:'Completado'},
-	]
+	// taskList: any[] = [
+	// 	{id: 1, name: 'Tarea 1', description:'Description 1', priority:1, status:'In Progress'},
+	// 	{id: 2, name: 'Tarea 2', description:'Description 2', priority:2, status:'Completado'},
+	// ]
   
   	apiUrl: string = 'http://localhost:3000/tasks';
 
 	constructor(private httpClient: HttpClient) {}
+
+	getTasks_azure(socialId: number): Observable<TaskModel[]> {
+		//https://ninja-app-v1-api.azure-api.net/task/space?spaceId=151
+		// socialId=151;
+		console.log('services.getTasks-azure...', socialId);
+		this.apiUrl = "https://ninja-app-v1-api.azure-api.net/";
+		this.apiUrl = this.apiUrl + `task/space?spaceId=${socialId}`;
+		console.log('services.getTasks-azure apiUrl...', this.apiUrl);
+		return this.httpClient
+			.get<any[]>(this.apiUrl)
+	
+		.pipe(catchError(this.handleError));
+	}
+
+  deleteTask(index: number) {
+    // this.taskList.splice(index, 1);
+  }
+
+  addTask(empleado: TaskModel) {
+    // this.taskList.unshift(empleado);
+  }
+
+  getTask(index: number) {
+    // return this.taskList[index];
+  }
+
+  editTask(task: TaskModel, idTask: number){
+    // this.taskList[idTask].name = task.nameTask;
+    // this.taskList[idTask].description = task.description;
+  }
+  
+  	// Handle API errors
+	handleError(error: HttpErrorResponse) {
+		if (error.error instanceof ErrorEvent) {
+			console.error('An error occurred:', error.error.message);
+		} else {
+			console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+		}
+		return throwError('Something bad happened; please try again later.');
+	}  
 
 	/*
 
@@ -37,14 +77,7 @@ export class TaskService {
 				.pipe(catchError(this.handleError));
 	}
 
-	getTasks_azure(socialId: number): Observable<any[]> {
-		console.log('services.getTasks-azure...', socialId);
-		this.apiUrl = "http://ninja-app-v1-api.azure-api.net/task/space?spaceId=5";
-		return this.httpClient
-			.get<any[]>(this.apiUrl)
 	
-		.pipe(catchError(this.handleError));
-	}	
 
 	addTask(data: any): Observable<any> {
 		return this.httpClient.post(this.apiUrl, data).pipe(catchError(this.handleError));
@@ -60,31 +93,8 @@ export class TaskService {
 				.pipe(catchError(this.handleError));
 		}
 
-	// Handle API errors
-	handleError(error: HttpErrorResponse) {
-		if (error.error instanceof ErrorEvent) {
-			console.error('An error occurred:', error.error.message);
-		} else {
-			console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
-		}
-		return throwError('Something bad happened; please try again later.');
-	}  
 
-  // deleteTask(index: number) {
-  //   this.taskList.splice(index, 1);
-  // }
 
-  // addTask(empleado: TaskModel) {
-  //   this.taskList.unshift(empleado);
-  // }
 
-  // getTask(index: number) {
-  //   return this.taskList[index];
-  // }
-
-  // editTask(task: TaskModel, idTask: number){
-  //   this.taskList[idTask].name = task.name;
-  //   this.taskList[idTask].description = task.description;
-  // }
   */
 }

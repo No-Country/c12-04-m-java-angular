@@ -6,17 +6,47 @@
     </select>
 </div>  
 </section> -->
+      <!-- <div class="d-flex flex-row mb-3">
+
+        <h3 class="p-3 d-inline ">Lista de tareas</h3>
+        <div class="col-lg-6">
+          <h2>Listado de Empleados</h2>
+        </div>
+        <div class="d-flex my-3">
+          <div class="col-lg-6" style="text-align: right;">
+            <button mat-raised-button color="warn" routerLink="/add">AGREGAR</button>
+          </div>
+        </div>
+
+      </div> -->
+      <div class="row">
+        <div class="col-lg-6">
+          <h2 class="p-3 d-inline ">Listado de Tareas</h2>
+        </div>
+        <div class="col-lg-6" style="text-align: right;">
+          <!-- <button mat-raised-button color="warn" routerLink="/add">AGREGAR</button> -->
+          <!-- <div class="d-flex flex-row-reverse">
+            <button type="button" class="btn btn-light btn-lg my-4 mx-5 mb-5 end-0 p-2 text-secondary"  (click)="openDialog()">+ Tarea</button>
+          </div> -->
+          <button type="button" class="btn btn-light btn-lg text-secondary"  (click)="openDialogAdd()">+ Tarea</button>          
+        </div>
+        
+      </div> 
+
 
 <div class="bg-dark border border-secondary border-opacity-50 rounded-2 m-3">
-
+  
 
         <div class="m-3">
+          <div class="row">
+          
+          <!-- <mat-form-field appearance="fill">
+            <mat-label>Buscar por cualquier informacion</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filtro" autocomplete="off">
+            <mat-icon matPrefix>search</mat-icon>
+          </mat-form-field> -->
 
-          <h3>Lista de tareas</h3>
-
-
-         
-          <table mat-table [dataSource]="dataSource" class="table table-dark table-borderless table-hover">
+          <table mat-table [dataSource]="dataSource" matSort class="table table-dark table-borderless table-hover">
 
             <!-- Id Column -->
             <ng-container class="p-0" matColumnDef="id">
@@ -25,45 +55,56 @@
             </ng-container>            
 
             <!-- Position Column -->
-            <ng-container class="p-0" matColumnDef="demo-name">
-              <th mat-header-cell *matHeaderCellDef> Name </th>
+            <ng-container class="p-0" matColumnDef="nameTask">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
               <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.nameTask}} </td>
             </ng-container>
             
-            <ng-container class="p-0" matColumnDef="demo-description">
-              <th mat-header-cell *matHeaderCellDef> Description </th>
+            <ng-container class="p-0" matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
               <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.description}} </td>
-              <!-- <div class="p-0"  *matHeaderCellDef> Description</div>
-              <div class="bg-secondary  p-3" *matCellDef="let element">{{element.description}}</div> -->
             </ng-container>
 
-            <ng-container class="p-0" matColumnDef="expdate">
-              <th mat-header-cell *matHeaderCellDef> Expiration date </th>
-              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.dueDate | date: 'MM/dd/yyyy'}} </td>
-              <!-- <div class="p-0"  *matHeaderCellDef> Description</div>
-              <div class="bg-secondary  p-3" *matCellDef="let element">{{element.description}}</div> -->
+            <ng-container class="p-0" matColumnDef="dueDate">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Expiration date </th>
+              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.dueDate}} </td>
             </ng-container>            
 
             <!-- Position Column -->
-            <ng-container class="p-0" matColumnDef="priority">
-              <th mat-header-cell *matHeaderCellDef> Priority </th>
-              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.priorityTask}} </td>
+            <ng-container class="p-0" matColumnDef="priorityTask">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
+              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.priorityTask.id + ': ' + element.priorityTask.namePriority}} </td>
             </ng-container>
             
-            <!-- Position Column -->
             <ng-container class="p-0" matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td class="bg-secondary p-3" mat-cell *matCellDef="let element"> {{element.status}} </td>
-            </ng-container>
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+              <td class="bg-secondary p-3 " mat-cell *matCellDef="let element">  
+                <mat-checkbox class="example-margin" [checked]="element.status ? true : false" >{{ element.status ? 'Completado' : ''}}</mat-checkbox>
+              </td>
+            </ng-container>               
+ 
+            <ng-container class="p-0" matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+              <td class="bg-secondary p-3 " mat-cell *matCellDef="let element; let i = index"> 
+                <a (click)=openDialog(element)  class="task-action">
+                  <mat-icon>edit</mat-icon>
+                </a>
+                <a (click)=deleteTask(element.id)  class="task-action">
+                  <mat-icon>delete</mat-icon>
+                </a>
+              </td>
+            </ng-container>            
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>    
         </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
 
         </div>
 
       </div>
 
       <div class="d-flex flex-row-reverse">
-        <button type="button" class="btn btn-light btn-lg my-4 mx-5 mb-5 end-0 p-2 text-secondary"  routerLink="/add">+ Tarea</button>
+        <button type="button" class="btn btn-light btn-lg my-4 mx-5 mb-5 end-0 p-2 text-secondary"  (click)="openDialogAdd()">+ Tarea</button>
       </div>

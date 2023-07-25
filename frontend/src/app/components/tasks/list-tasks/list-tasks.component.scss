@@ -33,6 +33,11 @@
     height: calc(100% - 220px);
 }
 
+.task-action {
+    background-color: #767676;
+    color: #f2eeee;
+}
+
 .task-list h2 {
     display: flex;
     align-items: center;
@@ -63,3 +68,4 @@
     height: 20px;
     width: 20px;
 }
+
