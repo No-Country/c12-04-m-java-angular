@@ -34,7 +34,6 @@
 }
 
 .task-action {
-    background-color: #767676;
     color: #f2eeee;
 }
 
@@ -69,3 +68,16 @@
     width: 20px;
 }
 
+.mat-row{
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+
+mat-row{
+    border-color: #c90a0a;
+}
+
+.custom-table{
+    border-collapse: separate;
+    border-spacing: 0 7px;
+}
