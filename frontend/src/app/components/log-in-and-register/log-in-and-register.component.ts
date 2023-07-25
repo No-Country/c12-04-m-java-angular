@@ -8,21 +8,23 @@ import { Router } from '@angular/router';
 })
 export class LogInAndRegisterComponent {
 
-  formLogInIsVisible: boolean=false;
-
   constructor(private router: Router){}
+
+  button1Disabled = false;
+  button2Disabled = true;
+
+  buttonClicked(buttonNumber: number) {
+    if (buttonNumber === 1) {
+      this.button1Disabled = true;
+      this.button2Disabled = false;
+    } else {
+      this.button1Disabled = false;
+      this.button2Disabled = true;
+    }
+  }
+
   redirigir() {
     this.router.navigateByUrl(`/home`);
   }
-
-  switchLogInOrRegister(){
-    if(this.formLogInIsVisible==false){
-      this.formLogInIsVisible=true;
-    }
-    else{
-      this.formLogInIsVisible=false;
-    }
-  }
-  
 
 }
