@@ -22,6 +22,8 @@ import { MaterialModule } from '@shared/material.module'
 import { ReactiveFormsModule } from '@angular/forms';
 import { PresentationPageComponent } from './presentation-page/presentation-page.component';
 import { ModalNewSpaceComponent } from './components/modal-new-space/modal-new-space.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { ModalNewSpaceComponent } from './components/modal-new-space/modal-new-s
     LogInAndRegisterComponent,
     ListTasksComponent,
     AddEditTaskComponent,
-    PresentationPageComponent
+    PresentationPageComponent,
+    PasswordRecoveryComponent,
+    PasswordChangeComponent
   ],
   imports: [
     BrowserModule,
