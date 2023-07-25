@@ -24,6 +24,7 @@ import { PresentationPageComponent } from './presentation-page/presentation-page
 import { ModalNewSpaceComponent } from './components/modal-new-space/modal-new-space.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { ModalNewTaskComponent } from './components/modal-new-task/modal-new-task.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PasswordChangeComponent } from './components/password-change/password-c
     AddEditTaskComponent,
     PresentationPageComponent,
     PasswordRecoveryComponent,
-    PasswordChangeComponent
+    PasswordChangeComponent,
+    ModalNewTaskComponent
   ],
   imports: [
     BrowserModule,
