@@ -15,6 +15,11 @@
             <div class="my-3">
               <label for="exampleInputPassword1 text-light" class="form-label">Contraseña</label>
               <input type="password" class="form-control" id="exampleInputPassword1"placeholder="Introducir contraseña">
+              <div id="passwordHelpBlock" class="form-text d-flex flex-row-reverse">
+                <a href="" class="link-light">
+                  Olvidé mi contraseña
+                </a>
+              </div>
             </div>
             <div class="d-grid  mt-5">
                 <button type="submit" class="btn btn-primary" (click)="redirigir()">Iniciar sesión</button>
@@ -26,10 +31,19 @@
                 <label for="exampleInputEmail1 text-light" class="form-label">Nombre de usuario</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introducir nombre de usuario">
             </div>
-            <div class="my-3">
-                <label for="exampleInputEmail1 text-light" class="form-label">Rol de equipo</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Seleccionar Rol de equipo">
-            </div>
+            <label for="exampleInputEmail1 text-light" class="form-label">Rol de equipo</label>
+            <select class="form-select my-0 custom-select" aria-label="Rol de equipo" style="width: 200px;">
+              <option selected>select</option>
+              <option value="1">Diseñador/a UX</option>
+              <option value="2">Diseñador/a UI</option>
+              <option value="3">Desarrollador/a Frontend</option>
+              <option value="4">Desarrollador/a Backend</option>
+              <option value="5">QA de Automatización</option>
+              <option value="6">QA Manual</option>
+              <option value="7">Option</option>
+              <option value="8">Diseñador/a UI</option>
+              <option value="9">Project Manager</option>
+            </select>
             <div class="my-3">
               <label for="exampleInputEmail1 text-light" class="form-label">Correo electrónico</label>
               <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Introducir correo eletrónico">
@@ -37,6 +51,11 @@
             <div class="my-3">
               <label for="exampleInputPassword1 text-light" class="form-label">Contraseña</label>
               <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Introducir contraseña">
+              <div id="passwordHelpBlock" class="form-text">
+                Mínimo 8 caracteres,Máximo 20.
+                Debe incluir Mayúsculas,Minúsculas, y símbolos.
+                No incluir espacios.
+              </div>
             </div>
             <div class="my-3">
                 <label for="exampleInputPassword1 text-light" class="form-label">Repetir contraseña</label>
