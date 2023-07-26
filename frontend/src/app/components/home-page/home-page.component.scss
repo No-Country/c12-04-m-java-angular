@@ -44,8 +44,9 @@ h1 {
     border-radius: 8px;
     cursor: pointer;
 }
+
 .project-card,
-.create-project-card{
+.create-project-card {
     box-shadow: 0px 3px 5px #0d6dfd23;
 }
 
@@ -92,7 +93,8 @@ h1 {
     right: 15px;
     cursor: pointer;
 }
-.go-to-project{
+
+.go-to-project {
     border: none;
     border-radius: 4px;
     background-color: #0D6EFD;
@@ -108,7 +110,29 @@ h1 {
 .spacesList {
     max-height: 120px;
     overflow: scroll;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+    text-align: center;
+    padding: 5px 10px;
 }
+.spacesList li,
+.spacesList button{
+    border-radius: 4px;
+    background-color: #2B3035;
+    border: none;
+    color: white;
+}
+.spacesList button{
+    background-color: #495057;
+}
+.spacesList button:hover{
+    background-color: #2B3035;
+}
+
 
 input {
     border-radius: 3px;
@@ -134,9 +158,8 @@ input {
 
 .modalNewProject,
 .modalForProject {
-    background-color: #212121;
+    background-color: #212529;
     color: white;
-    border: 1px solid black;
     width: 579px;
     height: 386px;
     position: fixed;
@@ -144,6 +167,38 @@ input {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 8px;
+    z-index: 9999;
+}
+
+.new-spaces-list {
+    display: flex;
+    flex-direction: row;
+}
+
+.modalNewProject ul {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+    list-style-type: none;
+    margin: 25px;
+}
+
+.modalNewProject li {
+    padding: 5px 10px;
+    background-color: #2B3035;
+    border-radius: 4px;
+}
+
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
 }
 
 .btnCloseModal {
@@ -164,25 +219,88 @@ input {
     right: 40px;
     bottom: 20px;
     border: none;
-    background-color: #767676;
+    background-color: #0A57C9;
+    color: white;
     border-radius: 8px;
     text-transform: uppercase;
     font-size: 16px;
     padding: 5px 10px;
-    font-weight: 700;
+    font-weight: 500;
+}
+
+.btn-create-project:hover {
+    background-color: #094bad;
 }
 
 .btn-delete-project {
     position: absolute;
     left: 40px;
     bottom: 20px;
-    border: none;
-    background-color: #793535;
+    border: 3px solid #DC3545;
+    background-color: #2B3035;
+    color: white;
     border-radius: 8px;
     text-transform: uppercase;
     font-size: 16px;
     padding: 5px 10px;
-    font-weight: 700;
+    font-weight: 500;
+}
+
+.btn-delete-project:active,
+.btn-delete-project:hover {
+    background-color: #DC3545;
+}
+
+.modalConfirmDelete {
+    background-color: #2B3035;
+    color: white;
+    width: 350px;
+    height: 260px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    text-align: center;
+    z-index: 9999;
+}
+
+.modalConfirmDelete :last-child {
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    border: 3px solid #DC3545;
+    background-color: #DC3545;
+    color: white;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 5px 10px;
+    font-weight: 500;
+}
+
+.modalConfirmDelete :nth-child(3) {
+    position: absolute;
+    left: 40px;
+    bottom: 20px;
+    border: 3px solid #495057;
+    background-color: #495057;
+    color: white;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 5px 10px;
+    font-weight: 500;
+}
+
+.modalConfirmDelete h2 {
+    padding-top: 40px;
+    font-size: 36px;
+    font-weight: 300;
+}
+
+.modalConfirmDelete p {
+    font-size: 14px;
 }
 
 .btn-edit-new-project {
@@ -191,30 +309,76 @@ input {
     right: 10px;
 }
 
-/*.users-in-project{
+.input-invite {
+    margin-top: 35px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-content: center;
+}
+
+.input-invite p {
+    font-size: 20px;
+}
+
+.input-invite input {
+    height: 30px;
+    width: 125px;
+    background-color: #2B3035;
+    color: white;
+}
+
+.input-invite button {
+    background-color: #0A57C9;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    padding: 5px 10px;
+    height: 30px;
+}
+
+.success-message {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 5px;
+    z-index: 99999;
+}
+
+
+.users-in-project {
     width: 32px;
     height: 32px;
     position: absolute;
-    bottom:20px;
+    bottom: 20px;
     left: 275px;
     background-color: #D9D9D9;
     border-radius: 50%;
 }
-.users-in-project svg{
+
+.users-in-project svg {
     margin: 3px;
 }
-.listUsers{
+
+.listUsers {
     background-color: #767676;
     border-radius: 8px;
     width: fit-content;
     list-style-type: none;
     padding: 5px;
 }
-.modalNewUser{
+
+.modalNewUser {
     width: 300px;
     height: 200px;
     background-color: #767676;
-}*/
+}
+
 *::-webkit-scrollbar {
     width: 6px;
     width: 6px;

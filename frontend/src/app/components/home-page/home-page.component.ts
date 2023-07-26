@@ -1,18 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, concatMap, from } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, concatMap, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 interface Espacio {
   nameSpace: string;
   description: string;
 }
-
+interface Usuario {
+  name: string;
+  id: number
+}
 interface Proyecto {
   nameWorkspace: string;
   description: string;
   id: number;
-  //userSet: [];
+  userSet: Usuario[];
   spaceSet: Espacio[]
 }
 
@@ -29,10 +32,11 @@ export class HomePageComponent implements OnInit {
     nameSpace: "",
     description: ""
   }
+
   projectEditing: Proyecto = {
     nameWorkspace: '',
     description: '',
-    //userSet: [],
+    userSet: [],
     id: 0,
     spaceSet: [this.spaceEditing]
   };
@@ -42,12 +46,15 @@ export class HomePageComponent implements OnInit {
   }
   loadProjects() {
     this.obtenerProyectos().subscribe(
-      data => {
+      (data) => {
         this.proyectos = data;
+      },
+      (error) => {
+        console.error('Error: ', error);
       }
     )
   }
-  urlAPI: string = 'http://ninja-app-v1-api.azure-api.net/';
+  urlAPI: string = 'https://ninja-app-v1.azurewebsites.net/';
 
   obtenerProyectos(): Observable<any[]> {
     const url = this.urlAPI + 'workspace';
@@ -55,7 +62,7 @@ export class HomePageComponent implements OnInit {
     return this.http.get<any[]>(url);
   }
 
-  agregarProyecto(nuevoProyecto: Proyecto): Observable<any> { //POST
+  agregarProyecto(nuevoProyecto: any): Observable<any> { //POST
     const url = this.urlAPI + 'workspace';
 
     return this.http.post(url, nuevoProyecto);
@@ -109,7 +116,7 @@ export class HomePageComponent implements OnInit {
   crearProyecto() {
     const nuevoProyecto: any = {
       nameWorkspace: this.textoTituloEditable,
-      description: this.textoDescripcionEditable,
+      description: this.textoDescripcionEditable
     };
     this.editandoTexto = false;
 
@@ -124,7 +131,7 @@ export class HomePageComponent implements OnInit {
       })
     ).subscribe(
       () => {
-        this.ngOnInit();
+        this.loadProjects();
       },
       (error) => {
         console.error('Error: ', error);
@@ -167,10 +174,18 @@ export class HomePageComponent implements OnInit {
     return this.agregarEspacio(espacioFrontEnd, projectId).pipe(
       concatMap(() => this.agregarEspacio(espacioBackEnd, projectId)),
       concatMap(() => this.agregarEspacio(espacioTesting, projectId)),
-      concatMap(() => this.agregarEspacio(espacioUXUI, projectId))
+      concatMap(() => this.agregarEspacio(espacioUXUI, projectId)),
+      catchError((error) => {
+        console.error('Error en la petición: ', error);
+        return of([]);
+      })
     );
   }
   //Funciones para editar proyecto ya creado.
+  modalConfirmDelete: boolean = false;
+  toggleModalDelete() {
+    this.modalConfirmDelete = !this.modalConfirmDelete
+  }
   borrarProyecto(id: number) {
     this.eliminarProyecto(id).subscribe(
       () => {
@@ -181,6 +196,7 @@ export class HomePageComponent implements OnInit {
       }
     );
     this.closeModal();
+    this.toggleModalDelete();
   }
   guardarProyecto() {
     this.editarProyecto(this.projectEditing).subscribe(
@@ -193,20 +209,43 @@ export class HomePageComponent implements OnInit {
     );
     this.closeModal();
   }
-  /*
-    listUsers: boolean = false;
-    toggleListUsersInProject(id:number){ //Mostar lista de usuarios
-      this.listUsers = !this.listUsers;
-    }
-  
-    modalNewUser:boolean =false;
-    openModalAddUser(){ //Mostrar modal para agregar usuario a proyecto
-      this.listUsers = !this.listUsers;
-    }
-  */
-  redirigir(id: number,proyectoName: string) { //funcion para que cada proyecto rediriga a su propia pagina
-    this.router.navigateByUrl(`/projects/${proyectoName}/${id}`);
-
+  listUsers: boolean = false;
+  toggleListUsersInProject() { //Mostar lista de usuarios
+    this.listUsers = !this.listUsers;
   }
+  modalNewUser: boolean = false;
+  idUserToAdd: number = 0;
+  showSuccessMessage: boolean = false;
 
+  checkIfUserExists(idUser: number, idProject: number): void {
+    this.addUserToProject(idUser, idProject).pipe(
+      catchError((error) => {
+        console.error('Error en la petición:', error);
+        return of({ status: 200, body: error.message || 'Error desconocido' });
+      })
+    ).subscribe(
+      (response) => {
+        if (response.status === 200) {
+          console.log('La solicitud se completó con éxito');
+          console.log(response.body);
+          this.idUserToAdd = 0;
+          this.showSuccessMessage = true;
+          this.loadProjects();
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+          }, 3000);
+        } else {
+          console.log(response.status);
+          console.log('La solicitud falló con un código de estado: ' + response['status']);
+        }
+      }
+    );
+  }
+  addUserToProject(idUser: number, idProject: number): Observable<any> {
+    const url = this.urlAPI + `workspace/users?workspaceId=${idProject}&userId=${idUser}`;
+    return this.http.post(url, {})
+  }
+  redirigir(id: number, proyectoName: string) { //funcion para que cada proyecto rediriga a su propia pagina
+    this.router.navigateByUrl(`/projects/${proyectoName}/${id}`);
+  }
 }

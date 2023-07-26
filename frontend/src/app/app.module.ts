@@ -17,10 +17,11 @@ import { LogInAndRegisterComponent } from './components/log-in-and-register/log-
 import { TasksModule } from './components/tasks/tasks.module';
 import { ListTasksComponent } from './components/tasks/list-tasks/list-tasks.component';
 import { AddEditTaskComponent } from './components/tasks/add-edit-task/add-edit-task.component';
+import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { PresentationPageComponent } from './presentation-page/presentation-page.component';
 
 import { MaterialModule } from '@shared/material.module'
 import { ReactiveFormsModule } from '@angular/forms';
-import { PresentationPageComponent } from './presentation-page/presentation-page.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { PresentationPageComponent } from './presentation-page/presentation-page
     LogInAndRegisterComponent,
     ListTasksComponent,
     AddEditTaskComponent,
-    PresentationPageComponent
+    PresentationPageComponent,
+    ProfilePageComponent
   ],
   imports: [
     BrowserModule,
