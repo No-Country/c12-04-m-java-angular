@@ -1,0 +1,17 @@
+<div class="modal fade" id="NewSpaceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content bg-dark">
+        <div class="modal-header border-0">
+          <textarea class="form-control bg-dark fs-5 border-dark"  [(ngModel)]="newSpace.nameSpace" style="height: 20px;" id="floatingTextarea" maxlength="20"></textarea>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body bg-dark border-0">
+          <textarea class="form-control bg-dark border-secondary" [(ngModel)]="newSpace.description" style="height: 125px;" id="exampleFormControlTextarea1" [placeholder]="newSpace.description" maxlength="200" rows="3"></textarea>
+        </div>
+        <div class="modal-footer d-flex border-0">
+          <button type="button" class="btn btn-dark btn-outline-danger text-light me-auto"  data-bs-dismiss="modal" >cancelar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createSpace()">guardar espacio</button><!--(click)="updateSpace(data.id,spaceEdited)"-->
+        </div>
+      </div>
+    </div>
+  </div>

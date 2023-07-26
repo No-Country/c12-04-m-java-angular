@@ -33,6 +33,10 @@
     height: calc(100% - 220px);
 }
 
+.task-action {
+    color: #f2eeee;
+}
+
 .task-list h2 {
     display: flex;
     align-items: center;
@@ -62,4 +66,18 @@
 .task-block__button-add img {
     height: 20px;
     width: 20px;
+}
+
+.mat-row{
+    margin-top: 200px;
+    margin-bottom: 200px;
+}
+
+mat-row{
+    border-color: #c90a0a;
+}
+
+.custom-table{
+    border-collapse: separate;
+    border-spacing: 0 7px;
 }

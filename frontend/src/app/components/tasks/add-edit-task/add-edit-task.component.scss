@@ -1,28 +1,75 @@
-.full-width {
-    width: 30%;
+  /** form **/
+  .form-wraper{
+    width: 100%;
+    // margin-top: 2%;
+  }
+  
+  .form-container{
+    width: 100%;
+    margin: auto;
+    padding-bottom: 10px !important;
+    display: block;
+    // background: rgb(253, 253, 253);
   }
 
-.task-card {
-    min-width: 120px;
-    margin: 20px auto;
-}
+  .form-element {
+    margin-top: 10px;
+    width: 100%;
+    // font-size: 16px;
+    // background-color: transparent;
+    // a { text-decoration: none;} 
+  }
+
+  button {
+    margin-right: 1rem;
+  }
+  
+  mat-card {
+    max-width: 400px;
+    margin: 2em auto;
+    text-align: center;
+  }
+
+  mat-form-field {
+    display: block;
+  }
+    
 
 .mat-radio-button {
     display: block;
     margin: 5px 0;
   }
+
+
+
+// .row {
+//     display: flex;
+//     flex-direction: row;
+//   }
   
-.row {
-    display: flex;
-    flex-direction: row;
+//   .col {
+//     flex: 1;
+//     margin-right: 20px;
+//   }
+  
+//   .col:last-child {
+//     margin-right: 0;
+//   }
+
+  // .mat-card{
+  //   display:flex;
+  //   flex-direction: column;
+  // }
+  
+  // .mat-card-header {
+  //   flex-shrink: 0;
+  // }
+  
+  .mat-card-content{
+    flex-grow: 1;
+    overflow: auto;
   }
-  
-  .col {
-    flex: 1;
-    margin-right: 20px;
-  }
-  
-  .col:last-child {
-    margin-right: 0;
-  }
-  
+  tr{
+    margin-top: 200px;
+    margin-bottom: 200px;
+}

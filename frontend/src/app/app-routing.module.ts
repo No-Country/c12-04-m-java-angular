@@ -8,6 +8,8 @@ import {ProjectComponent} from './components/project/project.component'
 import { LogInAndRegisterComponent } from './components/log-in-and-register/log-in-and-register.component';
 import { PresentationPageComponent } from './presentation-page/presentation-page.component';
 import { ProfilePageComponent } from './components/profile-page/profile-page.component';
+import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
 
 const routes: Routes = [
 	{ path: '', component: PresentationPageComponent },
@@ -15,6 +17,8 @@ const routes: Routes = [
   	{ path: `projects/:proyectoName/:id`, component: ProjectComponent },
   	{ path: 'logInAndRegister', component: LogInAndRegisterComponent },
 	{ path: 'profile', component: ProfilePageComponent},
+	{ path: 'PasswordRecovery', component: PasswordRecoveryComponent},
+	{ path: 'PasswordChange', component: PasswordChangeComponent},
 	{
 		path: 'tasks',
 		loadChildren: () =>

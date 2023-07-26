@@ -1,0 +1,76 @@
+<div class="modal fade" id="NewTaskModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content bg-dark">
+
+        <div class="modal-header border-0">
+            <textarea class="form-control bg-dark fs-5 border-dark" style="height: 20px;" id="floatingTextarea" maxlength="20">nombre de la tarea</textarea>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body bg-dark border-0 d-flex">
+
+            <div class="me-auto">
+                <label for="exampleInputEmail1 m-1 p-2" class="form-label d-inline">Persona a cargo</label>
+                <select class="form-select my-0 mx-2 custom-select d-inline" aria-label="Rol de equipo" style="width: 130px;">
+                    <option selected>select</option>
+                    <option value="1">persona 1</option>
+                    <option value="2">persona 2</option>
+                    <option value="3">persona 3</option>
+                    <option value="4">persona 4</option>
+                </select>
+            </div>
+
+            <div class="d-inline">
+                <label for="exampleInputEmail1 m-1 p-1  d-inline" class="form-label">Prioridad</label>
+                <select class="form-select my-0 custom-select mx-2 d-inline" aria-label="Rol de equipo" style="width: 100px;">
+                    <option selected>select</option>
+                    <option value="1">Alta</option>
+                    <option value="2">Media</option>
+                    <option value="3">Baja</option>
+                </select>
+            </div>
+
+        </div>
+
+        <div class="modal-body bg-dark border-0 d-flex">
+
+            <textarea class="form-control bg-dark border-secondary"  style="height: 125px;" id="exampleFormControlTextarea1" maxlength="200" rows="3" placeholder="Esta es la descripcion de la tarea">sadasd</textarea>
+
+        </div>
+
+        <div class="modal-body bg-dark border-0 d-flex">
+
+            <!--            
+            <div class="me-3 d-inline">
+                <label for="exampleInputEmail1 m-1 p-1" class="form-label">Status</label>
+                <select class="form-select my-0 custom-select" aria-label="Rol de equipo" style="width: 100px;">
+                    <option selected>select</option>
+                    <option value="1">persona 1</option>
+                    <option value="2">persona 2</option>
+                    <option value="3">persona 3</option>
+                    <option value="4">persona 4</option>
+                </select>
+            </div>
+            -->
+
+            <div class="">
+                <label for="exampleInputEmail1 m-1 p-2" class="form-label">Fecha limite</label>
+                <select class="form-select my-0 mx-2 custom-select" aria-label="Rol de equipo" style="width: 200px;">
+                    <option selected>DD/MM/AAAA</option>
+                    <option value="1">persona 1</option>
+                    <option value="2">persona 2</option>
+                    <option value="3">persona 3</option>
+                    <option value="4">persona 4</option>
+                </select>
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer d-flex border-0">
+          <button type="button" class="btn btn-dark btn-outline-danger text-light me-auto"  data-bs-dismiss="modal" >cancelar</button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">guardar tarea</button>
+        </div>
+      </div>
+    </div>
+  </div>

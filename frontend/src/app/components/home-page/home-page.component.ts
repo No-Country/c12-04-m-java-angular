@@ -54,7 +54,7 @@ export class HomePageComponent implements OnInit {
       }
     )
   }
-  urlAPI: string = 'https://ninja-app-v1.azurewebsites.net/';
+  urlAPI: string = 'http://ninja-app-v1-api.azure-api.net/';
 
   obtenerProyectos(): Observable<any[]> {
     const url = this.urlAPI + 'workspace';

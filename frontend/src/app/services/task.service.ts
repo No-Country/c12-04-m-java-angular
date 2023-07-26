@@ -4,25 +4,102 @@ import { catchError, Observable, throwError } from 'rxjs';
 import { TaskModel } from './../models/task.model';
 import { env } from 'src/environment/environment';
 
+interface DTOAddTask{
+	nameTask: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class TaskService {
 
-	taskList: any[] = [
-		{id: 1, name: 'Tarea 1', description:'Description 1', priority:1, status:'In Progress'},
-		{id: 2, name: 'Tarea 2', description:'Description 2', priority:2, status:'Completado'},
-	]
-  
-  	apiUrl: string = 'http://localhost:3000/tasks';
+  	// apiUrl: string = 'https://localhost:3000/tasks';
+	apiUrl = "https://ninja-app-v1-api.azure-api.net/";
 
 	constructor(private httpClient: HttpClient) {}
 
-	/*
+getTasks_azure(socialId: number): Observable<TaskModel[]> {
+		//https://ninja-app-v1-api.azure-api.net/task/space?spaceId=151
+		// socialId=151;
+		console.log('services.getTasks-azure...', socialId);
 
-	getTasks1() {
-		return this.taskList.slice();
+		let url = this.apiUrl + `task/space?spaceId=${socialId}`;
+		console.log('services.getTasks-azure apiUrl...', url);
+		return this.httpClient
+			.get<any[]>(url)
+	
+		.pipe(catchError(this.handleError));
 	}
+
+  deleteTask(index: number) {
+    // this.taskList.splice(index, 1);
+	let url = this.apiUrl + `task?id=${index}`	
+	console.log('service-deleteTask', url);
+	console.log('service-deleteTask-id', index);
+	// return this.httpClient
+	// 	.delete<any>(url)
+	// 	.pipe(catchError(this.handleError));
+		
+	return this.httpClient.delete(url);
+	
+  }
+
+  addTask_old(task: TaskModel, spaceId:number) {
+
+	task.priorityTask.id = 1;
+	task.priorityTask.namePriority = "Medio";
+	task.status = false;
+
+	let url = this.apiUrl + `task?spaceId=${spaceId}`;
+	console.log('service-addTask', task);	
+	console.log('service-apiUrl###', url);
+
+	return this.httpClient.post(url, task.nameTask);		
+
+  }
+
+  addTask(dTOAddTask:any, spaceId:number): Observable<any>{
+	let url = this.apiUrl + `task?spaceId=${spaceId}`;
+	console.log('service-addTask', dTOAddTask);
+	console.log('service-url', url);		
+	// return this.httpClient.post<any>(url, dTOAddTask);
+	return this.httpClient
+	.post<any>(url, dTOAddTask, {
+		headers: new HttpHeaders({
+			'content-type': 'application/json',
+			encoding: 'UTF-8',
+		}),
+	});
+
+  }
+
+
+  editTask(task: TaskModel, idTask: number){
+	let url = this.apiUrl + `task/${task.id}`
+
+	console.log('service-editTask', task);	
+	console.log('service-editTask', url);
+
+	return this.httpClient
+		.put<TaskModel>(url, task)
+		.pipe(catchError(this.handleError));
+
+  }
+  
+  	// Handle API errors
+	handleError(error: HttpErrorResponse) {
+		if (error.error instanceof ErrorEvent) {
+			console.error('An error occurred:', error.error.message);
+		} else {
+			console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
+		}
+		return throwError('Something bad happened; please try again later.');
+	}  
+
+	/*
 
   	getTasks(socialId: number): Observable<TaskModel[]> {
 		console.log('services.getTasks...', socialId);
@@ -37,14 +114,7 @@ export class TaskService {
 				.pipe(catchError(this.handleError));
 	}
 
-	getTasks_azure(socialId: number): Observable<any[]> {
-		console.log('services.getTasks-azure...', socialId);
-		this.apiUrl = "http://ninja-app-v1-api.azure-api.net/task/space?spaceId=5";
-		return this.httpClient
-			.get<any[]>(this.apiUrl)
 	
-		.pipe(catchError(this.handleError));
-	}	
 
 	addTask(data: any): Observable<any> {
 		return this.httpClient.post(this.apiUrl, data).pipe(catchError(this.handleError));
@@ -60,31 +130,8 @@ export class TaskService {
 				.pipe(catchError(this.handleError));
 		}
 
-	// Handle API errors
-	handleError(error: HttpErrorResponse) {
-		if (error.error instanceof ErrorEvent) {
-			console.error('An error occurred:', error.error.message);
-		} else {
-			console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
-		}
-		return throwError('Something bad happened; please try again later.');
-	}  
 
-  // deleteTask(index: number) {
-  //   this.taskList.splice(index, 1);
-  // }
 
-  // addTask(empleado: TaskModel) {
-  //   this.taskList.unshift(empleado);
-  // }
 
-  // getTask(index: number) {
-  //   return this.taskList[index];
-  // }
-
-  // editTask(task: TaskModel, idTask: number){
-  //   this.taskList[idTask].name = task.name;
-  //   this.taskList[idTask].description = task.description;
-  // }
   */
 }
