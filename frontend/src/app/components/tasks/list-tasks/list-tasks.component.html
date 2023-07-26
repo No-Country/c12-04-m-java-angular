@@ -27,6 +27,13 @@
               <td class="bg-dark p-3 rounded-start-2 align-middle" mat-cell *matCellDef="let element">{{element.id}}</td>
             </ng-container>             -->
 
+            <ng-container class="p-0 align-middle" matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+              <td class="bg-dark p-3 align-middle" mat-cell *matCellDef="let element">  
+                <mat-checkbox class="example-margin" [checked]="element.status ? true : false" >{{ element.status ? 'Completado' : 'Registrado'}}</mat-checkbox>
+              </td>
+            </ng-container>        
+
             <!-- Position Column -->
             <ng-container class="p-0 align-middle" matColumnDef="nameTask">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre  </th>
@@ -59,13 +66,6 @@
               <td class="bg-dark p-3 align-middle" mat-cell *matCellDef="let element"> {{element.priorityTask === null ? '' : element.priorityTask.id + ': ' + element.priorityTask.namePriority}} </td>
               <!-- <td class="bg-dark p-3 align-middle" mat-cell *matCellDef="let element"> 1 </td> -->
             </ng-container>
-            
-            <ng-container class="p-0 align-middle" matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-              <td class="bg-dark p-3 align-middle" mat-cell *matCellDef="let element">  
-                <mat-checkbox class="example-margin" [checked]="element.status ? true : false" >{{ element.status ? 'Completado' : 'Registrado'}}</mat-checkbox>
-              </td>
-            </ng-container>         
  
             <ng-container class="p-0 align-middle" matColumnDef="acciones">
               <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
