@@ -16,7 +16,7 @@ export class NavigationBarComponent {
   constructor(private http: HttpClient, private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.showNavbar = !(event.url === '/');
+        this.showNavbar = !((event.url === '/')||(event.url === '/logInAndRegister'));
       }
     })
   };
@@ -28,7 +28,7 @@ export class NavigationBarComponent {
     )
   }
   getProjects(): Observable<any[]> {
-    const url = 'http://ninja-app-v1-api.azure-api.net/workspace'
+    const url = 'https://ninja-app-v1-api.azure-api.net/workspace'
     return this.http.get<any[]>(url);
   }
 
