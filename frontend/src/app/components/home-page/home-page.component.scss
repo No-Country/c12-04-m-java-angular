@@ -93,6 +93,12 @@ h1 {
     right: 15px;
     cursor: pointer;
 }
+.nameAndDescription{
+    display: flex;
+    flex-direction: column;
+    max-width: 250px;
+    row-gap: 25px;
+}
 
 .go-to-project {
     border: none;

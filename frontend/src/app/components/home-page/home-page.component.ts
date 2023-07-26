@@ -40,7 +40,7 @@ export class HomePageComponent implements OnInit {
     id: 0,
     spaceSet: [this.spaceEditing]
   };
-
+  totalProjects: number = this.proyectos.length;
   ngOnInit() {
     this.loadProjects();
   }
@@ -48,13 +48,14 @@ export class HomePageComponent implements OnInit {
     this.obtenerProyectos().subscribe(
       (data) => {
         this.proyectos = data;
+        this.totalProjects = this.proyectos.length; //Si hay mas de 10 proyectos, no muestra la tarjeta de agregar proyecto
       },
       (error) => {
         console.error('Error: ', error);
       }
     )
   }
-  urlAPI: string = 'http://ninja-app-v1-api.azure-api.net/';
+  urlAPI: string = 'https://ninja-app-v1-api.azure-api.net/';
 
   obtenerProyectos(): Observable<any[]> {
     const url = this.urlAPI + 'workspace';

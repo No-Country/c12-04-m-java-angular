@@ -10,6 +10,7 @@ export class LogInAndRegisterComponent {
 
   constructor(private router: Router){}
 
+  formLogInIsVisible : boolean = false;
   button1Disabled = false;
   button2Disabled = true;
 
@@ -26,8 +27,6 @@ export class LogInAndRegisterComponent {
   redirigir() {
     this.router.navigateByUrl(`/home`);
   }
-
-<<<<<<< HEAD
   switchLogInOrRegister(){
     if(this.formLogInIsVisible==false){
       this.formLogInIsVisible=true;
@@ -36,6 +35,4 @@ export class LogInAndRegisterComponent {
       this.formLogInIsVisible=false;
     }
   }
-=======
->>>>>>> 0e9230a168a9585ac6103619acfe17d5fb63ee9e
 }
