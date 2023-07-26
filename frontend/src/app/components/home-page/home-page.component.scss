@@ -48,6 +48,11 @@ h1 {
 .project-card,
 .create-project-card {
     box-shadow: 0px 3px 5px #0d6dfd23;
+    transition: transform 0.3s ease;
+}
+.project-card:hover,
+.create-project-card:hover{
+    transform: scale(1.1);
 }
 
 .white-circle {
@@ -115,7 +120,7 @@ h1 {
 
 .spacesList {
     max-height: 120px;
-    overflow: scroll;
+    overflow-y: scroll;
     list-style-type: none;
     display: grid;
     grid-template-columns: repeat(3, 2fr);
@@ -216,8 +221,10 @@ input {
 }
 
 .info-new-project {
+    overflow-y: scroll;
     margin-top: 25px;
     margin-left: 15px;
+    height: calc(100% - 80px);
 }
 
 .btn-create-project {

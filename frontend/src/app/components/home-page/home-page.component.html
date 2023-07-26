@@ -22,12 +22,14 @@
 
 <div class="modalForProject" *ngIf="modalVisible">
     <div class="info-new-project">
-        <h3 *ngIf="!editandoTexto">{{ projectEditing.nameWorkspace }}</h3>
-        <input *ngIf="editandoTexto" [(ngModel)]="projectEditing.nameWorkspace" />
+        <div class="nameAndDescription">
+            <h3 *ngIf="!editandoTexto">{{ projectEditing.nameWorkspace }}</h3>
+            <input *ngIf="editandoTexto" [(ngModel)]="projectEditing.nameWorkspace" />
 
-        <p *ngIf="!editandoTexto">{{ projectEditing.description }}</p>
-        <textarea *ngIf="editandoTexto" [(ngModel)]="projectEditing.description" maxlength="200"
-            class="inputDescription"></textarea>
+            <p *ngIf="!editandoTexto">{{ projectEditing.description }}</p>
+            <textarea *ngIf="editandoTexto" [(ngModel)]="projectEditing.description" maxlength="200"
+                class="inputDescription"></textarea>
+        </div>
         <div class="input-invite">
             <p>Invitar miembros:</p>
             <input type="number" [(ngModel)]="idUserToAdd">

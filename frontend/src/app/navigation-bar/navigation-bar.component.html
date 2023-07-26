@@ -7,6 +7,6 @@
                 <li *ngFor="let proyecto of proyectos" (click)="redirigir(proyecto.id,proyecto.nameWorkspace)">{{ proyecto.nameWorkspace }}</li>
             </ul>
         </div>
-        <a><div class="profileNavBar">Perfil</div></a>
+        <a><div class="profileNavBar" (click)="redirigirProfile()">Perfil</div></a>
     </div>
 </div>

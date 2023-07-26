@@ -46,4 +46,7 @@ export class NavigationBarComponent {
   redirigirHome(){
     this.router.navigateByUrl(`home`);
   }
+  redirigirProfile(){
+    this.router.navigateByUrl(`profile`);
+  }
 }
