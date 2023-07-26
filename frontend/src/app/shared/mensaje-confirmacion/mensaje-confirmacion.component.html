@@ -1,11 +1,8 @@
-<h1 mat-dialog-title style="text-align: center;">Mensaje de Confirmacion</h1>
+<h1 mat-dialog-title style="text-align: center;">Notificacion de Confirmacion</h1>
 <div mat-dialog-content style="text-align: center;">
-  <h2 style="text-align: center;">{{ this.mensaje }}</h2>
-  <h2>{{ mensaje }}</h2>
   <p style="text-align: center;">{{ mensaje }}</p>
 </div>
 <div mat-dialog-actions style="margin-left: 50px;">
-  <button mat-button (click)="onNoClick()">Cancelar</button>
-  <!-- <button mat-button cdkFocusInitial>Aceptar</button> -->
-  <button mat-button [mat-dialog-close]="btn" cdkFocusInitial>Aceptar</button>
+  <button mat-raised-button  color="primary" (click)="onNoClick()">Cancelar</button>
+  <button mat-raised-button color="warn" [mat-dialog-close]="btn" cdkFocusInitial>Aceptar</button>  
 </div>
