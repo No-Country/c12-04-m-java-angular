@@ -20,7 +20,7 @@
             <span class="mda-form-msg">Este campo es <strong>requerido</strong></span>
         </div>
         <div *ngIf="myForm.get('nameTask')?.hasError('maxlength') && myForm.get('nameTask')?.touched" style="margin-top: -20px;">
-          <span class="mda-form-msg">El campo debe tener como maximo <strong> 10 caracteres</strong></span>
+          <span class="mda-form-msg">El campo debe tener como máximo <strong> 10 caracteres</strong></span>
         </div>          
 
           <ng-container *ngIf="isVisible">
@@ -28,7 +28,7 @@
               <input matInput placeholder="Descripcion de la tarea" formControlName="description">
             </mat-form-field>
             <div *ngIf="myForm.get('description')?.hasError('maxlength') && myForm.get('description')?.touched" style="margin-top: -20px;">
-              <span class="mda-form-msg">El campo debe tener como maximo <strong> 20 caracteres</strong></span>
+              <span class="mda-form-msg">El campo debe tener como máximo <strong> 20 caracteres</strong></span>
           </div>                          
           </ng-container>
 

@@ -27,12 +27,12 @@ export class ProjectComponent{
   idUrl: number = 0;
   spaceList: any;
   spaceSelected: any = {
-    nameSpace: "espacio",
-    description: "descripcion del espacio"
+    nameSpace: "Espacio",
+    description: "Descripción del espacio"
   }
   newSpace: any = {
-    nameSpace: "espacio",
-    description: "descripcion del espacio"
+    nameSpace: "Espacio",
+    description: "Descripción del espacio"
   };
   url: string = "https://ninja-app-v1-api.azure-api.net/";
   projectName: string ="";

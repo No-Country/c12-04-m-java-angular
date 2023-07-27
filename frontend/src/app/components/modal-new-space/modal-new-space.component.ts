@@ -28,8 +28,8 @@ export class ModalNewSpaceComponent {
     description: ""
   }
   newSpace: DTOPutSpace = {
-    nameSpace: `espacio`,
-    description: "descripcion del espacio"
+    nameSpace: `Espacio`,
+    description: "Descripción del espacio"
   }
   idUrl: number=0;
 
@@ -84,8 +84,8 @@ export class ModalNewSpaceComponent {
     data =>{
       this.numberOfSpace = data.length+1;
       this.newSpace = {
-        nameSpace: `espacio ${this.numberOfSpace}`,
-        description: "descripcion del espacio"
+        nameSpace: `Espacio ${this.numberOfSpace}`,
+        description: "Descripción del espacio"
       }
     })
   }
