@@ -6,8 +6,8 @@
     <div class="container p-5 " style="width: 428px;">
 
         <div class="bg-secondary rounded-2">
-            <button type="submit" class="btn btn-secondary" [ngClass]="{'active': button1Disabled }" (click)="buttonClicked(1)"  style="width: 166px;" data-bs-toggle="button" aria-pressed="true">Iniciar sesión</button>
-            <button type="submit" class="btn btn-secondary" [ngClass]="{'active': button2Disabled }" (click)="buttonClicked(2)"  style="width: 166px;"data-bs-toggle="button" aria-pressed="true">Registrarme</button>
+            <button type="submit" class="btn btn-secondary m-0" [ngClass]="{'active': button1Disabled }" (click)="buttonClicked(1)"  style="width: 166px;" data-bs-toggle="button" aria-pressed="true">Iniciar sesión</button>
+            <button type="submit" class="btn btn-secondary m-0" [ngClass]="{'active': button2Disabled }" (click)="buttonClicked(2)"  style="width: 166px;"data-bs-toggle="button" aria-pressed="true">Registrarme</button>
         </div>
 
         <form *ngIf = "button1Disabled==true">
