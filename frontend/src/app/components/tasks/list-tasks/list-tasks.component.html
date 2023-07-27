@@ -1,16 +1,18 @@
-<div class="row">
-  <div class="col-lg-6">
-        <h2 class="p-3 d-inline ">Listado de Tareas</h2>
-  </div>
-  <div class="col-lg-6" style="text-align: right;">
-    <ng-container>
-      <button type="button" class="btn btn-light btn-lg text-secondary" [disabled]="this.isDisable" (click)="openDialogAdd()">+ Tarea</button>          
-    </ng-container>
-  </div>
-</div> 
+
 
 <div class="border border-secondary border-opacity-50 rounded-2 m-3">
-        <div class="m-3" style="background-color: #021218;">
+
+  <div class="row">
+    <div class="col-lg-12 mt-3 d-flex ">
+      <div class="me-auto">
+        <h2 class="p-0 mx-3 ">Listado de Tareas</h2>
+      </div>
+      <ng-container class="">
+        <button type="button" class="btn btn-primary" [disabled]="this.isDisable" (click)="openDialogAdd()">+ Tarea</button>          
+      </ng-container>
+    </div>
+  </div> 
+        <div class="mx-3 mt-1" style="background-color: #021218;">
           <div class="row">
           
           <!-- <mat-form-field appearance="fill">
