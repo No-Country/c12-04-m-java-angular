@@ -15,10 +15,27 @@ header img {
     left: 96px;
     top: 14px;
 }
-header button{
+
+header .btn-register {
+    border: none;
+    border-radius: 4px;
+    background-color: #0A57C9;
+    color: white;
+    padding: 5px 15px;
+}
+
+header .btn-login {
+    border: none;
+    border-radius: 4px;
+    background-color: #646b75;
+    color: white;
+    padding: 5px 15px;
+}
+
+.btns-log {
     position: absolute;
-    right: 50px;
     top: 24px;
+    right: 40px;
 }
 
 .presentation {
@@ -91,7 +108,7 @@ article {
     padding-bottom: 75px;
 }
 
-button {
+.register-section button {
     border: none;
     border-radius: 4px;
     background-color: #0A57C9;
