@@ -72,4 +72,9 @@
   tr{
     margin-top: 100px;
     margin-bottom: 200px;
-}
+  }
+
+  .mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: var(--mdc-dialog-container-shape, 4px);
+    background-color: #fe0909;
+  }
