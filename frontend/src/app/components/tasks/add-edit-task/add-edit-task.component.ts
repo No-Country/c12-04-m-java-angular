@@ -25,11 +25,13 @@ export class AddEditTaskComponent {
 	apiUrl: string = "https://ninja-app-v1-api.azure-api.net/";	
 
 	actionTypes: ActionTypes | undefined;
+	actionBtn: string = "Editar";
 	id_Index: number;
 	isVisible = true;
 	myForm: FormGroup;  
 
-  spaceId: number = 0;	
+  spaceId: number = 0;
+  taskId: number = 0;	
   dataSelected: any = {
     spaceId: 0,
     task: null
@@ -51,7 +53,15 @@ export class AddEditTaskComponent {
     {name: 'Gary'},
     {name: 'Javier'},
     {name: 'Agustin'}    
-  ]
+  ];
+
+  priorities1: any[] = [
+	{id: '1', name: 'Baja'},
+	{id: '2', name: 'Media'},
+	{id: '3', name: 'Alta'}
+  ];  
+  
+  priorities: any[] = ['Baja', 'Media', 'Alta'];
 
   actionTitle: string = 'Agregar Tarea';
 
@@ -68,6 +78,7 @@ constructor(
   ){
 	console.log('data..', data)
 	this.dataSelected = data;
+	let pid = 
     this.myForm = new FormGroup({
 		id: new FormControl(data.task.id),
 		nameTask: new FormControl(data.task.nameTask),
@@ -77,9 +88,14 @@ constructor(
 		status: new FormControl(data.task.status),
 		
     });
+	// this.myForm.setValue(data.task.priorityTask.id);
+	// this.myForm.get('priorityTask').setValue(data.task.priorityTask.id);
 
+	var whiteSpace = "  ";
 	this.actionTypes = data.task.id === 0 ? ActionTypes.ADD : ActionTypes.EDIT;
-	this.actionTitle = data.task.id === 0 ? 'Agregar Tarea' : 'Editar Tarea';
+	this.actionTitle = data.task.id === 0 ? 'Agregar Tarea': 'Editar Tarea' + whiteSpace + 'Id:' +data.task.id;
+	this.actionBtn = data.task.id === 0 ? 'Agregar': 'Editar';
+	
 
 	const idParam = 'id';
 	this.id_Index = this.aRoute.snapshot.params[idParam];
@@ -88,41 +104,74 @@ constructor(
 
   }
 
+  setValueUpdate(priorityTaskId: number): void {
+    this.myForm.get('priorityTask')?.setValue(priorityTaskId);
+  }  
+
 ngOnInit(): void {
 		this.isVisible = this.actionTypes === ActionTypes.EDIT;
+		if (this.actionTypes === ActionTypes.EDIT)
+		{
+			console.log('patchValue', this.data);
+			this.myForm.patchValue({
+				id: this.data.task.id,
+				nameTask: this.data.task.nameTask,
+				description: this.data.task.description,
+				dueDate: this.data.task.dueDate,
+				//priorityTask: "2", 
+				priorityTask: this.data.task.priorityTask.id.toString(),
+				status: this.data.task.status,				
+			});
+			// this.myForm.setValue(this.data.task.priorityTask.id);
+			// this.myForm.get('priorityTask')?.setValue(this.data.task.priorityTask.id)
+			console.log('patch-priorityTask1:', this.myForm.get('priorityTask'));
+			console.log('patch-priorityTask2:', this.myForm.controls['priorityTask']);
+		}
+
 	}
 
+priorityGroup = 0;
+priorityValue = 0;
+// prioritySelected = this.data.task.priorityTask.id;
+
+onPriorityChange() {
+	this.priorityValue= this.priorityGroup;
+	console.log('priorityValue', this.priorityValue)
+}
+onPriorityChange1(event: { source: { id: string; }; value: string; }) {
+	this.priorityValue= this.priorityGroup;
+	console.log('priorityValue', this.priorityValue)
+    console.log("event.source=" + event.source.id);
+    console.log("event.value=" + event.value);	
+}	
+	
+statusGroup = false;
+statusValue = false;
+onStatusChange() {
+	this.statusValue= this.statusGroup;
+	console.log('statusValue', this.statusValue)
+}		
 
 onCancelDialog(): void {
 		this.dialogRef.close();
 	  }
 
-	  priorityGroup = 0;
-	  priorityValue = 0;
-	  onPriorityChange() {
-		this.priorityValue= this.priorityGroup;
-		console.log('priorityValue', this.priorityValue)
-	  }	
-	  
-	  statusGroup = false;
-	  statusValue = false;
-	  onStatusChange() {
-		this.statusValue= this.statusGroup;
-		console.log('statusValue', this.statusValue)
-	  }		  
 
-SaveTask() {
+GuardarTask() {
 	const task: any = {
 	  id: this.actionTypes === ActionTypes.ADD ? 0 : this.myForm.value.id,
       nameTask: this.myForm.value.nameTask,
       description: this.myForm.value.description,
 	  dueDate: this.datepipe.transform(this.myForm.value.dueDate, 'dd/MM/yyyy'),
-	  priorityTask: this.priorityValue, //this.priority, // this.myForm.value.priorityTask,
-	  status: this.statusValue //this.actionTypes === ActionTypes.ADD ? false : true //this.myForm.value.status
+	  // dueDate: this.myForm.get('dueDate')?.value,
+	  // priorityTask: this.priorityValue, //this.priority, // this.myForm.value.priorityTask,
+	  priorityTask: this.myForm.value.priorityTask,
+	  status: this.statusValue
     };
 	console.log('SaveTask', this.actionTypes);
 	console.log('this.myForm.value.priorityTask', this.myForm.value.priorityTask);
-
+	console.log('this.myForm.value.priorityTask5', this.myForm.value.dueDate);
+	console.log('this.myForm.value.priorityTask6', task.dueDate);
 
 	switch (this.actionTypes) {
 		case ActionTypes.ADD:
@@ -130,11 +179,27 @@ SaveTask() {
 				this.createTask();
 			break;
 		case ActionTypes.EDIT:
+			//this. esEditar(task);
 			this.editTask(task);
 		break;
 	}
-	this.dialogRef.close();
+	// this.dialogRef.close();
 }
+
+esEditar(task: any) {
+    // const empleado: Empleado = this.empleadoService.getEmpleado(
+    //   this.idEmpleado
+    // );
+    console.log(task);
+    this.myForm.patchValue({
+      nameTask: task.nameTask,
+      description: task.description,
+	  dueDate: task.dueDate, //this.datepipe.transform(this.myForm.value.dueDate, 'dd/MM/yyyy'),
+	  priorityTask: task.priority.id, //this.priorityValue, //this.priority, // this.myForm.value.priorityTask,
+	  status: task.status //this.actionTypes === ActionTypes.ADD ? false : true //this.myForm.value.status
+
+    });
+  }
 
 createTask(){
 		this.newTask.nameTask = this.myForm.value.nameTask;
@@ -145,15 +210,17 @@ createTask(){
 			  if (error.status===200) {
 				console.log('La tarea ha sido creada con exito.');
 				this.snackBar.open('La tarea ha sido creada con exito!!!', 'Completado', {
-					duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
+					duration: 3000, verticalPosition: "top", horizontalPosition: "end" 
 				  }); 
+				this.onCancelDialog();
 			  }
 			},
 			complete: () => {
 			  console.log('La tarea ha sido creada con exito.');
 			  this.snackBar.open('La tarea ha sido creada con exito!!!', 'Completado', {
-				duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
-			  }); 
+				duration: 3000, verticalPosition: "top", horizontalPosition: "end" 
+			  });
+			  this.onCancelDialog();
 			},
 		  });		
 		}
@@ -180,12 +247,18 @@ addTask(task: TaskModel) {
 			// })};
 			
 			this.snackBar.open('La tarea ha sido creada con exito!!!', 'Completado', {
-				duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
+				duration: 3000, verticalPosition: "top", horizontalPosition: "end" 
 			  }); 
 	}
 
 editTask(task: any) {
-		console.log('add-edit/editTask', task);
+		//task.priorityTask = 3; //this.priorityValue;
+		task.status= this.statusValue;
+		console.log('add-edit/editTask1', task);
+		console.log('add-edit/editTask2', this.statusValue);
+		console.log('add-edit/editTask3', task.status);
+		// task.status = true;
+
 		this.editTaskNew(task.id, task).subscribe({
 
 			error: error => {
@@ -193,15 +266,17 @@ editTask(task: any) {
 				if (error.status===200) {
 				  console.log('La tarea ha sido editada con exito.');
 				  this.snackBar.open('La tarea ha sido editada con exito!!!', 'Completado', {
-					duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
+					duration: 3000, verticalPosition: "top", horizontalPosition: "end" 
 				  });
 				}
+				this.onCancelDialog();
 			  },
 			  complete: () => {
 				console.log('La tarea ha sido editada con exito.');
 				this.snackBar.open('La tarea ha sido editada con exito!!!', 'Completado', {
-				  duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
-				}); 
+				  duration: 3000, verticalPosition: "top", horizontalPosition: "end" 
+				});
+				this.onCancelDialog(); 
 			  },			  			
 
 		})
