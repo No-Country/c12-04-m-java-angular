@@ -13,15 +13,17 @@ interface DTOAddTask{
 })
 
 
-
 export class TaskService {
 
-  	// apiUrl: string = 'https://localhost:3000/tasks';
 	apiUrl = "https://ninja-app-v1-api.azure-api.net/";
+
+	httpOptions = {
+		headers : ({'Content-Type': 'application/json'})
+		}	
 
 	constructor(private httpClient: HttpClient) {}
 
-getTasks_azure(socialId: number): Observable<TaskModel[]> {
+	getTasks(socialId: number): Observable<TaskModel[]> {
 		//https://ninja-app-v1-api.azure-api.net/task/space?spaceId=151
 		// socialId=151;
 		console.log('services.getTasks-azure...', socialId);
@@ -65,14 +67,18 @@ getTasks_azure(socialId: number): Observable<TaskModel[]> {
 	let url = this.apiUrl + `task?spaceId=${spaceId}`;
 	console.log('service-addTask', dTOAddTask);
 	console.log('service-url', url);		
-	// return this.httpClient.post<any>(url, dTOAddTask);
-	return this.httpClient
-	.post<any>(url, dTOAddTask, {
-		headers: new HttpHeaders({
-			'content-type': 'application/json',
-			encoding: 'UTF-8',
-		}),
-	});
+	return this.httpClient.post<any>(url, dTOAddTask);
+	
+	// return this.httpClient
+	// .post<any>(url, dTOAddTask, {
+	// 	headers: new HttpHeaders({
+	// 		'content-type': 'application/json',
+	// 		encoding: 'UTF-8',
+	// 	}),
+	// });
+
+	// return this.httpClient.post(url,JSON.stringify(dTOAddTask), this.httpOptions)
+
 
   }
 

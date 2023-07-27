@@ -11,6 +11,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 import { MensajeConfirmacionComponent} from '@shared/mensaje-confirmacion/mensaje-confirmacion.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { TasksModule } from '../tasks.module';
 
 @Injectable()
@@ -23,7 +24,7 @@ export class ListTasksComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   
-  displayedColumns: string[] = ['id', 'nameTask', 'description', 'dueDate', 'priorityTask','status', 'acciones'];
+  displayedColumns: string[] = ['status','nameTask', 'description', 'dueDate', 'priorityTask', 'acciones'];
   priority: IPriorities = {
     id: 1,
     namePriority: '',
@@ -61,50 +62,58 @@ export class ListTasksComponent implements OnInit {
 
   tasks$!: Observable<TaskModel[]>;
   hasValue = false;
+  isDisable = false;
   
   @Input() spaceIdHijo: number = 0;
   
   constructor(
     private taskService: TaskService, 
     private activatedRouter : ActivatedRoute,
-    private dialog: MatDialog
-    ) { }  
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    ) { 
+      console.log ('cosntructor',  this.spaceIdHijo)
+    }  
   
 
   ngOnInit(): void {
     this.idUrl = this.activatedRouter.snapshot.params['id'];
     console.log('ngOnInit-idUrl', this.idUrl);
     console.log('ngOnInit-spaceIdHijo', this.spaceIdHijo);
-    // console.log('dataSource..', this.dataSource);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     
     this.idUrl = this.activatedRouter.snapshot.params['id'];
-    //this.loadTasks();
+    this.isDisable = this.spaceIdHijo === undefined ? true : false;
    }
 
   ngOnChanges(){
     console.log("ngOnChanges...", this.spaceIdHijo);
+    this.isDisable = this.spaceIdHijo === undefined ? true : false;
     if (this.spaceIdHijo === undefined)
     {
+      this.isDisable = true;
       console.log("ngOnChanges.1..", this.spaceIdHijo);
       this.tasks.length=0; 
     }
     else{
-      this.tasks$ = this.taskService.getTasks_azure(this.spaceIdHijo);
-      this.tasks$.subscribe(
-        (data) => {
-          console.log('lista.x.', data);
-          this.tasks = data;
-          // this.tasks.description= ''
-          this.dataSource = new MatTableDataSource<TaskModel>(this.tasks);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-      });
+      this.loadTasks();
 
     }
 
   } 
+
+  loadTasks() {
+    this.tasks$ = this.taskService.getTasks(this.spaceIdHijo);
+    this.tasks$.subscribe(
+      (data) => {
+        console.log('lista.x.', data);
+        this.tasks = data;
+        this.dataSource = new MatTableDataSource<TaskModel>(this.tasks);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -118,15 +127,19 @@ export class ListTasksComponent implements OnInit {
 
     const dialogRef = this.dialog.open(AddEditTaskComponent, {
       width: '350px',
-      // data: {spaceId: this.spaceIdHijo, taskData: task},
       data: this.dataSelected
-
     });
     dialogRef.afterClosed().subscribe((result: any) => {
       console.log('The dialog was closed');
       console.log(result);
+      // this.loadTasks();
+
+      // To review
+      window.location.reload();
     }
     );
+
+
   }
 
   openDialogAdd(): void {
@@ -154,17 +167,41 @@ export class ListTasksComponent implements OnInit {
  
   deleteTask(index: number) {
     console.log('deleteTask-id..', index);
-    this.taskService.deleteTask(index).subscribe(
-      () => {
-        console.log('Objeto eliminado correctamente');
-        window.location.reload()
-      },
-      (error) => {
-        console.error('Error al eliminar el objeto', error);
-        //window.location.reload()
-      }
-    );
+    const dialogRef = this.dialog.open(MensajeConfirmacionComponent, {
+      width: '350px',
+      data: {mensaje: 'Esta seguro que desea eliminar la tarea?'}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Eliminar-result', result);
+      if (result === 'aceptar') {
+        this.taskService.deleteTask(index).subscribe({
+          error: error => {
+            console.error('Error al eliminar el objeto****', error);
+            if (error.status===200) {
+              console.log('La tarea ha sido eliminada con exito.');
+              this.snackBar.open('La tarea ha sido eliminada con exito!!!', 'Completado', {
+                duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
+                });               
+              this.loadTasks();            
+            }
+          },
+          complete: () => {
+            console.log('La tarea ha sido eliminada con exito.');
+            this.snackBar.open('La tarea ha sido eliminada con exito!!!', 'Completado', {
+              duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
+              });
+            this.loadTasks();            
+          },
+        });
+      }
+      else {
+        this.snackBar.open('Transacion ha sido cancelada', 'Cancelada', {
+          duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
+        });
+      }
+
+    });    
 
   }  
 

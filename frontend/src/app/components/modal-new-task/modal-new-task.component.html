@@ -38,31 +38,27 @@
 
         </div>
 
-        <div class="modal-body bg-dark border-0 d-flex">
+        <div >
+            
+            <label for="exampleInputEmail1 mx-2 p-2" class="form-label">Fecha limite</label>
 
-            <!--            
-            <div class="me-3 d-inline">
-                <label for="exampleInputEmail1 m-1 p-1" class="form-label">Status</label>
-                <select class="form-select my-0 custom-select" aria-label="Rol de equipo" style="width: 100px;">
-                    <option selected>select</option>
-                    <option value="1">persona 1</option>
-                    <option value="2">persona 2</option>
-                    <option value="3">persona 3</option>
-                    <option value="4">persona 4</option>
-                </select>
-            </div>
+            <ng-container>
+                <mat-form-field class="form-element">
+                  <mat-label>Fecha de expiracion</mat-label>
+                  <input matInput [matDatepicker]="dp1" formControlName="dueDate">
+                  <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+                  <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+              </ng-container>   
+
+            <!--
+            <select class="form-select my-0 mx-2 custom-select" aria-label="Rol de equipo" style="width: 200px;">
+                <option selected>DD/MM/AAAA</option>
+                <option value="1">persona 1</option>
+                <option value="3">persona 3</option>
+                <option value="4">persona 4</option>
+            </select>
             -->
-
-            <div class="">
-                <label for="exampleInputEmail1 m-1 p-2" class="form-label">Fecha limite</label>
-                <select class="form-select my-0 mx-2 custom-select" aria-label="Rol de equipo" style="width: 200px;">
-                    <option selected>DD/MM/AAAA</option>
-                    <option value="1">persona 1</option>
-                    <option value="2">persona 2</option>
-                    <option value="3">persona 3</option>
-                    <option value="4">persona 4</option>
-                </select>
-            </div>
 
         </div>
 

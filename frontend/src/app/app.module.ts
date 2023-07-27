@@ -26,6 +26,7 @@ import { ModalNewSpaceComponent } from './components/modal-new-space/modal-new-s
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { PasswordChangeComponent } from './components/password-change/password-change.component';
 import { ModalNewTaskComponent } from './components/modal-new-task/modal-new-task.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { ModalNewTaskComponent } from './components/modal-new-task/modal-new-tas
     ReactiveFormsModule,
     MaterialModule    
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
