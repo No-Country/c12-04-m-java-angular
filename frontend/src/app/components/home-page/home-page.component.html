@@ -1,7 +1,7 @@
 <h1 class="bg-dark">Proyectos</h1>
 <div class="proyectsListContainer">
-    <div *ngFor="let proyecto of proyectos" class="project-card">
-        <div class="project-color"></div>
+    <div *ngFor="let proyecto of proyectos; let i = index" class="project-card">
+        <div class="project-color" [style.backgroundColor]="projectColors[i % projectColors.length]"></div>
         <h2>{{ proyecto.nameWorkspace }} {{proyecto.id}}</h2>
         <p class="textDescription">{{proyecto.description}}</p>
         <button class="go-to-project" (click)="redirigir(proyecto.id,proyecto.nameWorkspace)">Ir a
