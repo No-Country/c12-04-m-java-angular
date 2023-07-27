@@ -17,9 +17,7 @@ interface Proyecto {
   id: number;
   userSet: Usuario[];
   spaceSet: Espacio[]
-}
-
-@Component({
+}@Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
@@ -32,6 +30,7 @@ export class HomePageComponent implements OnInit {
     nameSpace: "",
     description: "",
   }
+  projectColors = ['#0F5132', '#997404', '#984C0C', '#801F4F', '#432874', '#084298', '#13795B', '#3D0A91', '#087990', '#842029'];
 
   projectEditing: Proyecto = {
     nameWorkspace: '',
@@ -125,18 +124,13 @@ export class HomePageComponent implements OnInit {
     this.textoDescripcionEditable = "Descripción de este proyecto";
 
     this.closeModal();
-    this.agregarProyecto(nuevoProyecto).pipe(
-      tap((data: any) => {
-        this.loadSpacesNewProject(data.id).subscribe(() => {
-          this.loadProjects();
-        });
-      })
-    ).subscribe(
+    this.agregarProyecto(nuevoProyecto).subscribe(
       () => {
         this.loadProjects();
       },
       (error) => {
-        console.error('Error: ', error);
+        this.loadProjects();
+        this.loadSpacesNewProject(this.proyectos[this.proyectos.length - 1].id)
       }
     );
   }
@@ -173,10 +167,15 @@ export class HomePageComponent implements OnInit {
       description: "Espacio dedicado para UX/UI",
     };
 
-    this.agregarEspacio(espacioFrontEnd, projectId);
-    this.agregarEspacio(espacioBackEnd, projectId);
-    this.agregarEspacio(espacioTesting, projectId);
-    this.agregarEspacio(espacioUXUI, projectId)
+    return this.agregarEspacio(espacioFrontEnd, projectId).pipe(
+      concatMap(() => this.agregarEspacio(espacioBackEnd, projectId)),
+      concatMap(() => this.agregarEspacio(espacioTesting, projectId)),
+      concatMap(() => this.agregarEspacio(espacioUXUI, projectId)),
+      catchError((error) => {
+        console.error('Error en la petición: ', error);
+        return of([]);
+      })
+    );
   }
   //Funciones para editar proyecto ya creado.
   modalConfirmDelete: boolean = false;
