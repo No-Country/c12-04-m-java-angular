@@ -105,9 +105,8 @@
         </form>
 
         <mat-card-actions>
-          <button mat-raised-button color="accent"   (click)="onCancelDialog()">Cancelar</button>
-          <button mat-raised-button color="primary" [disabled]="myForm.invalid && this.actionTypes === 'Edit'" (click)="GuardarTask()">{{ this.actionBtn }}</button>
-          <!-- <button mat-raised-button color="primary" (click)="GuardarTask()">{{ this.actionBtn }}</button> -->
+          <button mat-raised-button class="btn my-3 ms-3 me-5 px-3" style="background-color: #212529;"  (click)="onCancelDialog()">Cancelar</button>
+          <button mat-raised-button class="btn m-3 px-3" [disabled]="myForm.invalid && this.actionTypes === 'Edit'" style="background-color: #0d6efd;" (click)="GuardarTask()">{{ this.actionBtn }}</button>
 
           <!-- <div class="modal-footer d-flex border-0">
             <button type="button" class="btn btn-dark btn-outline-danger text-light me-auto"  data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deleteSpaceModal">eliminar espacio</button>
