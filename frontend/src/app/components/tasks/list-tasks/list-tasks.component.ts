@@ -24,7 +24,7 @@ export class ListTasksComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   
-  displayedColumns: string[] = ['status', 'nameTask', 'description', 'dueDate', 'priorityTask','acciones'];
+  displayedColumns: string[] = ['status', 'description', 'dueDate', 'priorityTask','acciones'];
   priority: IPriorities = {
     id: 1,
     namePriority: '',
