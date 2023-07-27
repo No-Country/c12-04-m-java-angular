@@ -5,14 +5,16 @@
     </svg>
   </div>
   <h1 mat-dialog-title style="text-align: center;">Eliminar Tarea</h1>
+  <p style="text-align: center;" class="text-light">¿Estas seguro que quieres eliminar el espacio?</p>
+</div>
 <div mat-dialog-content style="text-align: center;">
-  <p style="text-align: center;">¿Estas seguro que quieres eliminar el espacio?</p>
+
 </div>
 <div mat-dialog-actions class="d-flex">
   <button mat-raised-button class="btn btn-dark btn-outline-secondary m-2 me-auto px-3 d-inline" (click)="onNoClick()">Cancelar</button>
   <button mat-raised-button class="btn btn-danger m-2 px-3 d-inline" [mat-dialog-close]="btn" cdkFocusInitial>Aceptar</button>  
 </div>
-</div>
+
 <!--
 <div class="modal fade" id="deleteSpaceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog text-center">

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, concatMap, of } from 'rxjs';
+import { Observable, catchError, concatMap, of, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
 interface Espacio {
@@ -30,7 +30,7 @@ export class HomePageComponent implements OnInit {
   espacios: Espacio[] = [];
   spaceEditing: Espacio = {
     nameSpace: "",
-    description: ""
+    description: "",
   }
 
   projectEditing: Proyecto = {
@@ -63,13 +63,13 @@ export class HomePageComponent implements OnInit {
     return this.http.get<any[]>(url);
   }
 
-  agregarProyecto(nuevoProyecto: any): Observable<any> { //POST
+  agregarProyecto(nuevoProyecto: any): Observable<any[]> { //POST
     const url = this.urlAPI + 'workspace';
 
-    return this.http.post(url, nuevoProyecto);
+    return this.http.post<any[]>(url, nuevoProyecto);
   }
 
-  agregarEspacio(nuevoEspacio: Espacio, id: number): Observable<any> {
+  agregarEspacio(nuevoEspacio: any, id: number): Observable<any> {
     const url = this.urlAPI + `space?workspaceId=${id}`;
 
     return this.http.post(url, nuevoEspacio);
@@ -125,10 +125,11 @@ export class HomePageComponent implements OnInit {
     this.textoDescripcionEditable = "Descripción de este proyecto";
 
     this.closeModal();
-
     this.agregarProyecto(nuevoProyecto).pipe(
-      concatMap((data: any) => {
-        return this.loadSpacesNewProject(data.id);
+      tap((data: any) => {
+        this.loadSpacesNewProject(data.id).subscribe(() => {
+          this.loadProjects();
+        });
       })
     ).subscribe(
       () => {
@@ -157,7 +158,7 @@ export class HomePageComponent implements OnInit {
   loadSpacesNewProject(projectId: number): any {
     const espacioFrontEnd: Espacio = {
       nameSpace: "Front-End",
-      description: "Espacio dedicado para Front-End"
+      description: "Espacio dedicado para Front-End",
     };
     const espacioBackEnd: Espacio = {
       nameSpace: "Back-End",
@@ -172,15 +173,10 @@ export class HomePageComponent implements OnInit {
       description: "Espacio dedicado para UX/UI",
     };
 
-    return this.agregarEspacio(espacioFrontEnd, projectId).pipe(
-      concatMap(() => this.agregarEspacio(espacioBackEnd, projectId)),
-      concatMap(() => this.agregarEspacio(espacioTesting, projectId)),
-      concatMap(() => this.agregarEspacio(espacioUXUI, projectId)),
-      catchError((error) => {
-        console.error('Error en la petición: ', error);
-        return of([]);
-      })
-    );
+    this.agregarEspacio(espacioFrontEnd, projectId);
+    this.agregarEspacio(espacioBackEnd, projectId);
+    this.agregarEspacio(espacioTesting, projectId);
+    this.agregarEspacio(espacioUXUI, projectId)
   }
   //Funciones para editar proyecto ya creado.
   modalConfirmDelete: boolean = false;
