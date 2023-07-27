@@ -24,7 +24,7 @@ export class ListTasksComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   
-  displayedColumns: string[] = ['nameTask', 'description', 'dueDate', 'priorityTask','status', 'acciones'];
+  displayedColumns: string[] = ['status', 'nameTask', 'description', 'dueDate', 'priorityTask','acciones'];
   priority: IPriorities = {
     id: 1,
     namePriority: '',
@@ -72,23 +72,22 @@ export class ListTasksComponent implements OnInit {
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     ) { 
-      console.log ('cosntructor',  this.spaceIdHijo)
+      console.log ('constructor',  this.spaceIdHijo)
     }  
   
 
   ngOnInit(): void {
     this.idUrl = this.activatedRouter.snapshot.params['id'];
-    console.log('ngOnInit-idUrl', this.idUrl);
-    console.log('ngOnInit-spaceIdHijo', this.spaceIdHijo);
+    console.log('OnInit-idUrl-PID:', this.idUrl);
+    console.log('OnInit-spaceIdHijo:', this.spaceIdHijo);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     
-    this.idUrl = this.activatedRouter.snapshot.params['id'];
     this.isDisable = this.spaceIdHijo === undefined ? true : false;
    }
 
   ngOnChanges(){
-    console.log("ngOnChanges...", this.spaceIdHijo);
+    console.log("ngOnChanges...spaceId:", this.spaceIdHijo);
     this.isDisable = this.spaceIdHijo === undefined ? true : false;
     if (this.spaceIdHijo === undefined)
     {
@@ -104,10 +103,12 @@ export class ListTasksComponent implements OnInit {
   } 
 
   loadTasks() {
+    console.log('loadTasks.spaceId.', this.spaceIdHijo);
     this.tasks$ = this.taskService.getTasks(this.spaceIdHijo);
     this.tasks$.subscribe(
       (data) => {
         console.log('lista.x.', data);
+        console.log('lista.x.length', data.length);
         this.tasks = data;
         this.dataSource = new MatTableDataSource<TaskModel>(this.tasks);
         this.dataSource.paginator = this.paginator;
@@ -121,21 +122,20 @@ export class ListTasksComponent implements OnInit {
   }  
   
   openDialog(task: TaskModel): void {
-    console.log('The openDialog', task);
     this. dataSelected.spaceId = this.spaceIdHijo
     this. dataSelected.task = task;
-
+    console.log('The openDialog', this. dataSelected);
     const dialogRef = this.dialog.open(AddEditTaskComponent, {
       width: '350px',
       data: this.dataSelected
     });
     dialogRef.afterClosed().subscribe((result: any) => {
-      console.log('The dialog was closed');
+      console.log('The dialog was closed list-tasks');
       console.log(result);
-      // this.loadTasks();
+      this.loadTasks();
 
       // To review
-      window.location.reload();
+      // window.location.reload();
     }
     );
 
@@ -181,7 +181,7 @@ export class ListTasksComponent implements OnInit {
             if (error.status===200) {
               console.log('La tarea ha sido eliminada con exito.');
               this.snackBar.open('La tarea ha sido eliminada con exito!!!', 'Completado', {
-                duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
+                duration: 3000, verticalPosition: "top", horizontalPosition: "end" 
                 });               
               this.loadTasks();            
             }
@@ -189,7 +189,7 @@ export class ListTasksComponent implements OnInit {
           complete: () => {
             console.log('La tarea ha sido eliminada con exito.');
             this.snackBar.open('La tarea ha sido eliminada con exito!!!', 'Completado', {
-              duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
+              duration: 3000, verticalPosition: "top", horizontalPosition: "end" 
               });
             this.loadTasks();            
           },
@@ -197,7 +197,7 @@ export class ListTasksComponent implements OnInit {
       }
       else {
         this.snackBar.open('Transacion ha sido cancelada', 'Cancelada', {
-          duration: 4000, verticalPosition: "top", horizontalPosition: "end" 
+          duration: 3000, verticalPosition: "top", horizontalPosition: "end" 
         });
       }
 
