@@ -1,4 +1,4 @@
-.profile-container{
+.profile-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,13 +6,179 @@
     background-color: #212529;
     color: white;
 }
-.principal-user-settings{
-    margin-top: 75px;
+
+.principal-user-settings,
+.mail-password-settings,
+.delete-account-container {
+    position: relative;
     background-color: #021218;
     width: 743px;
-    height: 90px;
+    height: 186px;
     padding: 24px 10px;
+    border-radius: 4px;
+    margin: 30px 0px;
 }
-.titles{
+
+.name-section,
+.email-section {
+    position: absolute;
+    top: 16px;
+    left: 25px;
+}
+
+.role-section,
+.password-section {
+    position: absolute;
+    bottom: 1px;
+    left: 25px;
+}
+
+.id-section {
+    position: absolute;
+    bottom: 1px;
+    right: 25px;
+}
+.edit-btn-section{
+    position: absolute;
+    top: 16px;
+    right: 25px;
+}
+
+.titles {
     text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 300;
+}
+
+.modalEditUser {
+    background-color: #2B3035;
+    color: white;
+    width: 350px;
+    height: 260px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    z-index: 9999;
+    padding: 25px;
+}
+.modalEditUser input,
+.modalEditUser select{
+    margin-bottom: 20px;
+}
+
+.second-user-settings h2 {
+    margin-top: 40px;
+}
+
+.btn-change-psw {
+    border: none;
+    border-radius: 4px;
+    background-color: #0A57C9;
+    padding: 8px 12px;
+    color: white;
+    position: absolute;
+    bottom: 16px;
+    right: 25px;
+}
+
+.btn-logout {
+    border: none;
+    border-radius: 4px;
+    background-color: #495057;
+    padding: 8px 12px;
+    color: white;
+    position: absolute;
+    top: 118px;
+    right: 60px;
+}
+
+.btn-logout:hover {
+    background-color: #454a4e;
+}
+
+.delete-account-container button {
+    background-color: #9F2632;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+}
+
+.delete-account-container {
+    padding: 16px 25px;
+}
+
+.modalConfirmDelete {
+    background-color: #2B3035;
+    color: white;
+    width: 350px;
+    height: 260px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    text-align: center;
+    z-index: 9999;
+}
+
+.modalConfirmDelete svg {
+    width: 75px;
+    height: 75px;
+}
+
+.modalConfirmDelete :last-child, 
+.btn-editUserSave{
+    position: absolute;
+    right: 40px;
+    bottom: 20px;
+    border: 3px solid #DC3545;
+    background-color: #DC3545;
+    color: white;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 5px 10px;
+    font-weight: 500;
+}
+.btn-editUserSave{
+    border: 3px solid #0A57C9;
+    background-color: #0A57C9;
+}
+
+.modalConfirmDelete :nth-child(4),
+.btn-editUserCancel{
+    position: absolute;
+    left: 40px;
+    bottom: 20px;
+    border: 3px solid #495057;
+    background-color: #495057;
+    color: white;
+    border-radius: 8px;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 5px 10px;
+    font-weight: 500;
+}
+
+.modalConfirmDelete h2 {
+    padding-top: 10px;
+    font-size: 36px;
+    font-weight: 300;
+}
+
+.modalConfirmDelete p {
+    font-size: 14px;
+}
+
+.modalBackdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
 }

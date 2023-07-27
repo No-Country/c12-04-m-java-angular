@@ -1,6 +1,78 @@
 <div class="profile-container">
     <div class="principal-user-settings">
-        <p class="titles">Nombre de usuario:</p>
-        <p></p>
+        <section class="name-section">
+            <p class="titles">Nombre de usuario</p>
+            <p>{{showingUserConfigs.name}}</p>
+        </section>
+        <section class="role-section">
+            <p class="titles">Rol de equipo</p>
+            <p>{{showingUserConfigs.role}}</p>
+        </section>
+        <section class="id-section">
+            <p class="titles">ID de usuario</p>
+            <p>{{showingUserConfigs.id}}</p>
+        </section>
+        <section class="edit-btn-section">
+            <svg xmlns="http://www.w3.org/2000/svg" class="ionicon btn-edit-new-project" viewBox="0 0 512 512"
+                (click)="toggleModalEditUser()" width="20">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="44"
+                    d="M358.62 129.28L86.49 402.08 70 442l39.92-16.49 272.8-272.13-24.1-24.1zM413.07 74.84l-11.79 11.78 24.1 24.1 11.79-11.79a16.51 16.51 0 000-23.34l-.75-.75a16.51 16.51 0 00-23.35 0z" />
+            </svg>
+        </section>
     </div>
+    <div class="second-user-settings">
+        <h2>Configuración</h2>
+        <div class="mail-password-settings">
+            <section class="email-section">
+                <p class="titles">Correo electrónico</p>
+                <p>{{showingUserConfigs.email}}</p>
+            </section>
+            <section class="password-section">
+                <p class="titles">Contraseña</p>
+                <p>**********</p>
+            </section>
+            <button class="btn-change-psw" (click)="redirigirToPasswordRecovery()">Cambiar contraseña</button>
+        </div>
+        <div class="delete-account-container">
+            <h3>Eliminar cuenta</h3>
+            <p>Si eliminas la cuenta, se eliminarán de manera permanente todos los proyectos y tareas que están
+                relacionados a tu perfil y se perderá toda tu información.</p>
+            <button (click)="toggleModalDelete()">Eliminar cuenta</button>
+        </div>
+    </div>
+    <button class="btn-logout" (click)="redirigirPresentationPage()">Cerrar sesión</button>
+</div>
+
+
+<div class="modalBackdrop" *ngIf="modalEditUser"></div>
+<div class="modalEditUser" *ngIf="modalEditUser">
+    <p>Nombre:</p>
+    <input type="text" [(ngModel)]="userName">
+    <p>Rol:</p>
+    <select [(ngModel)]="userRole">
+        <option [ngValue]="'Diseñador/a UX'">Diseñador/a UX</option>
+        <option [ngValue]="'Diseñador/a UI'">Diseñador/a UI</option>
+        <option [ngValue]="'Desarrollador/a Frontend'">Desarrollador/a Frontend</option>
+        <option [ngValue]="'Desarrollador/a Backend'">Desarrollador/a Backend</option>
+        <option [ngValue]="'QA de Automatización'">QA de Automatización</option>
+        <option [ngValue]="'QA Manual'">QA Manual</option>
+        <option [ngValue]="'Project Manager'">Project Manager</option>
+    </select>
+    <button class="btn-editUserCancel" (click)="toggleModalEditUser()">Cancelar</button>
+    <button class="btn-editUserSave" (click)="saveUserConfig()">Guardar</button>
+</div>
+
+<div class="modalBackdrop" *ngIf="modalConfirmDelete"></div>
+<div class="modalConfirmDelete" *ngIf="modalConfirmDelete">
+    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512">
+        <path d="M448 256c0-106-86-192-192-192S64 150 64 256s86 192 192 192 192-86 192-192z" fill="none"
+            stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
+        <path d="M250.26 166.05L256 288l5.73-121.95a5.74 5.74 0 00-5.79-6h0a5.74 5.74 0 00-5.68 6z" fill="none"
+            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
+        <path d="M256 367.91a20 20 0 1120-20 20 20 0 01-20 20z" stroke="currentColor" fill="white" />
+    </svg>
+    <h2>Eliminar Proyecto</h2>
+    <p>¿Estas seguro que quieres eliminar el proyecto?</p>
+    <button (click)="toggleModalDelete()">Cancelar</button>
+    <button (click)="redirigirPresentationPage()">Eliminar</button>
 </div>
