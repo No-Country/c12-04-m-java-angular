@@ -16,21 +16,33 @@
           <mat-form-field class="form-element">
             <input matInput placeholder="Nombre de la tarea" formControlName="nameTask">
           </mat-form-field>
+          <div *ngIf="myForm.get('nameTask')?.hasError('required') && myForm.get('nameTask')?.touched" style="margin-top: -20px;">
+            <span class="mda-form-msg">Este campo es <strong>requerido</strong></span>
+        </div>
+        <div *ngIf="myForm.get('nameTask')?.hasError('maxlength') && myForm.get('nameTask')?.touched" style="margin-top: -20px;">
+          <span class="mda-form-msg">El campo debe tener como maximo <strong> 10 caracteres</strong></span>
+        </div>          
 
           <ng-container *ngIf="isVisible">
             <mat-form-field class="form-element">
               <input matInput placeholder="Descripcion de la tarea" formControlName="description">
-            </mat-form-field>              
+            </mat-form-field>
+            <div *ngIf="myForm.get('description')?.hasError('maxlength') && myForm.get('description')?.touched" style="margin-top: -20px;">
+              <span class="mda-form-msg">El campo debe tener como maximo <strong> 20 caracteres</strong></span>
+          </div>                          
           </ng-container>
 
           <ng-container *ngIf="isVisible">
             <mat-form-field class="form-element">
-              <mat-label>Fecha de expiracion "</mat-label>
-              <input matInput [matDatepicker]="dp1" formControlName="dueDate">
+              <mat-label>Fecha de expiracion</mat-label>
+              <input matInput [matDatepicker]="picker" formControlName="dueDate">
               <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
-              <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
-              <mat-datepicker #dp1></mat-datepicker>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi #picker></mat-datepicker>
             </mat-form-field>
+            <!-- <div *ngIf="myForm.get('dueDate')?.hasError('required') && myForm.get('dueDate')?.touched" style="margin-top: -20px;">
+              <span class="mda-form-msg">Este campo es <strong>requerido</strong></span>
+          </div>             -->
           </ng-container>   
 
           <!-- <mat-form-field class="form-element">
@@ -94,7 +106,8 @@
 
         <mat-card-actions>
           <button mat-raised-button color="accent"   (click)="onCancelDialog()">Cancelar</button>
-          <button mat-raised-button color="primary"  (click)="GuardarTask()">{{ this.actionBtn }}</button>
+          <button mat-raised-button color="primary" [disabled]="myForm.invalid && this.actionTypes === 'Edit'" (click)="GuardarTask()">{{ this.actionBtn }}</button>
+          <!-- <button mat-raised-button color="primary" (click)="GuardarTask()">{{ this.actionBtn }}</button> -->
 
           <!-- <div class="modal-footer d-flex border-0">
             <button type="button" class="btn btn-dark btn-outline-danger text-light me-auto"  data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#deleteSpaceModal">eliminar espacio</button>

@@ -81,11 +81,11 @@ constructor(
 	let pid = 
     this.myForm = new FormGroup({
 		id: new FormControl(data.task.id),
-		nameTask: new FormControl(data.task.nameTask),
-		description: new FormControl(data.task.description),
-		dueDate: new FormControl(data.task.dueDate),
-		priorityTask: new FormControl(data.task.priorityTask),
-		status: new FormControl(data.task.status),
+		nameTask: new FormControl(data.task.nameTask, [Validators.required, Validators.maxLength(10)]),
+		description: new FormControl(data.task.description, [Validators.required, Validators.maxLength(20)]),
+		dueDate: new FormControl(data.task.dueDate, [Validators.required]),
+		priorityTask: new FormControl(data.task.priorityTask, [Validators.required]),
+		status: new FormControl(data.task.status, [Validators.required]),
 		
     });
 	// this.myForm.setValue(data.task.priorityTask.id);
@@ -113,19 +113,31 @@ ngOnInit(): void {
 		if (this.actionTypes === ActionTypes.EDIT)
 		{
 			console.log('patchValue', this.data);
+			let today = new Date();
+			console.log('A:',today);
+			// today = new Date(this.data.task.dueDate);
+			let date_string = this.data.task.dueDate; // Apr 03 2020
+			let parts_of_date = date_string.split("/");
+			today = new Date(+parts_of_date[2], parts_of_date[1] - 1, +parts_of_date[0]);
+			
+
 			this.myForm.patchValue({
 				id: this.data.task.id,
 				nameTask: this.data.task.nameTask,
 				description: this.data.task.description,
-				dueDate: this.data.task.dueDate,
+				dueDate: today,
+				//XXXdueDate: new Date(this.data.task.dueDate),
+				//dueDate: this.datepipe.transform(this.data.task.dueDate, 'dd/MM/yyyy'),
+				// dueDate: new Date(), //this.data.task.dueDate,
+				//dueDate: '22/07/1956',
 				//priorityTask: "2", 
 				priorityTask: this.data.task.priorityTask.id.toString(),
 				status: this.data.task.status,				
 			});
 			// this.myForm.setValue(this.data.task.priorityTask.id);
 			// this.myForm.get('priorityTask')?.setValue(this.data.task.priorityTask.id)
-			console.log('patch-priorityTask1:', this.myForm.get('priorityTask'));
-			console.log('patch-priorityTask2:', this.myForm.controls['priorityTask']);
+			console.log('patch-dueDate1:', this.myForm.get('dueDate'));
+			console.log('patch-dueDate2:', this.myForm.controls['dueDate']);
 		}
 
 	}
@@ -187,14 +199,13 @@ GuardarTask() {
 }
 
 esEditar(task: any) {
-    // const empleado: Empleado = this.empleadoService.getEmpleado(
-    //   this.idEmpleado
-    // );
     console.log(task);
     this.myForm.patchValue({
       nameTask: task.nameTask,
       description: task.description,
 	  dueDate: task.dueDate, //this.datepipe.transform(this.myForm.value.dueDate, 'dd/MM/yyyy'),
+	 // dueDate: this.datepipe.transform(task.dueDate, 'dd/MM/yyyy'),
+	 // dueDate: '22/07/1956',
 	  priorityTask: task.priority.id, //this.priorityValue, //this.priority, // this.myForm.value.priorityTask,
 	  status: task.status //this.actionTypes === ActionTypes.ADD ? false : true //this.myForm.value.status
 
@@ -268,6 +279,12 @@ editTask(task: any) {
 				  this.snackBar.open('La tarea ha sido editada con exito!!!', 'Completado', {
 					duration: 3000, verticalPosition: "top", horizontalPosition: "end" 
 				  });
+				}
+				else {
+					console.log('La tarea ha sido editada con exito.');
+					this.snackBar.open('ERROR se ha producido', 'error.status:' + error.status, {
+					  duration: 4000, verticalPosition: "top", horizontalPosition: "center" 
+					});					
 				}
 				this.onCancelDialog();
 			  },
