@@ -1,13 +1,17 @@
 package com.no_country.project_ninja.api.controller.workspace;
 
-import com.no_country.project_ninja.api.domain.user.User;
+import com.no_country.project_ninja.api.domain.user.UserEntity;
 import com.no_country.project_ninja.api.domain.user.UserRepository;
 import com.no_country.project_ninja.api.domain.workspace.Workspace;
 import com.no_country.project_ninja.api.domain.workspace.WorkspaceRepository;
 import com.no_country.project_ninja.api.domain.workspace.dto.WorkspaceDTO;
+import com.no_country.project_ninja.api.infra.security.jwt.TokenUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +27,10 @@ public class WorkspaceController {
     private WorkspaceRepository workspaceRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TokenUtils tokenUtils;
 
-    @GetMapping
+    @GetMapping("/all-workspaces-database")
     public ResponseEntity<List<WorkspaceDTO>> getAllWorkspaces() {
         List<Workspace> workspaces = workspaceRepository.findAll();
 
@@ -35,11 +41,56 @@ public class WorkspaceController {
         return ResponseEntity.ok(workspaceDTOs);
     }
 
+    @GetMapping
+    public ResponseEntity<List<WorkspaceDTO>> getWorkspacesForUser(@NonNull HttpServletRequest request) {
+        String tokenHeader= request.getHeader("Authorization");
+
+        UserEntity userToFilter= new UserEntity();
+        if(tokenHeader != null && tokenHeader.startsWith("Bearer ")) {
+            String token = tokenHeader.substring(7);
+
+            if (tokenUtils.validToken(token)) {
+                String email = tokenUtils.getUserFromToken(token);
+                userToFilter = (UserEntity) userRepository.findByEmail(email).orElseThrow(
+                        () -> new UsernameNotFoundException("not found user: "+email));
+            }
+        }
+        List<Workspace> workspaces = workspaceRepository.findAll();
+
+        UserEntity finalUserToFilter = userToFilter;
+
+        List<WorkspaceDTO> workspaceDTOs = workspaces.stream()
+                .filter(workspace -> workspace.getUserEntities().contains(finalUserToFilter))
+                .map(this::mapWorkspaceToDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(workspaceDTOs);
+    }
+
     @PostMapping
-    public ResponseEntity<WorkspaceDTO> createWorkspace(@RequestBody WorkspaceDTO workspaceDTO) {
+    public ResponseEntity<WorkspaceDTO> createWorkspace(@RequestBody WorkspaceDTO workspaceDTO, @NonNull HttpServletRequest request) {
         Workspace workspace = new Workspace();
         workspace.setNameWorkspace(workspaceDTO.getNameWorkspace());
         workspace.setDescription(workspaceDTO.getDescription());
+
+        String tokenHeader= request.getHeader("Authorization");
+
+        UserEntity userEntity= new UserEntity();
+
+        if(tokenHeader != null && tokenHeader.startsWith("Bearer ")) {
+            String token = tokenHeader.substring(7);
+
+            if (tokenUtils.validToken(token)) {
+                String email = tokenUtils.getUserFromToken(token);
+                userEntity = (UserEntity) userRepository.findByEmail(email).orElseThrow(
+                        () -> new UsernameNotFoundException("not found user: "+email));
+            }
+        }
+        UserEntity userEntityToAdd= userEntity;
+
+        // Asignamos el usuario actual al conjunto userEntities del Workspace
+        workspace.getUserEntities().add(userEntityToAdd);
+
 
         Workspace createdWorkspace = workspaceRepository.save(workspace);
         WorkspaceDTO createdWorkspaceDTO = mapWorkspaceToDTO(createdWorkspace);
@@ -83,16 +134,16 @@ public class WorkspaceController {
     @PostMapping("/users")
     public ResponseEntity<String> addUserToWorkspace(@RequestParam Long workspaceId, @RequestParam Long userId) {
         Optional<Workspace> workspaceOptional = workspaceRepository.findById(workspaceId);
-        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<UserEntity> userOptional = userRepository.findById(userId);
 
         if (workspaceOptional.isPresent() && userOptional.isPresent()) {
             Workspace workspace = workspaceOptional.get();
-            User user = userOptional.get();
+            UserEntity userEntity = userOptional.get();
 
-            workspace.getUsers().add(user);
+            workspace.getUserEntities().add(userEntity);
             workspaceRepository.save(workspace);
 
-            return ResponseEntity.ok("User added to workspace successfully");
+            return ResponseEntity.ok("UserEntity added to workspace successfully");
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -101,16 +152,16 @@ public class WorkspaceController {
     @DeleteMapping("/users")
     public ResponseEntity<String> removeUserFromWorkspace(@RequestParam Long workspaceId, @RequestParam Long userId) {
         Optional<Workspace> workspaceOptional = workspaceRepository.findById(workspaceId);
-        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<UserEntity> userOptional = userRepository.findById(userId);
 
         if (workspaceOptional.isPresent() && userOptional.isPresent()) {
             Workspace workspace = workspaceOptional.get();
-            User user = userOptional.get();
+            UserEntity userEntity = userOptional.get();
 
-            workspace.getUsers().remove(user);
+            workspace.getUserEntities().remove(userEntity);
             workspaceRepository.save(workspace);
 
-            return ResponseEntity.ok("User removed from workspace successfully");
+            return ResponseEntity.ok("UserEntity removed from workspace successfully");
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -123,8 +174,12 @@ public class WorkspaceController {
         workspaceDTO.setId(workspace.getId());
         workspaceDTO.setNameWorkspace(workspace.getNameWorkspace());
         workspaceDTO.setDescription(workspace.getDescription());
-        workspaceDTO.setUserSet(workspace.getUsers());
-        workspaceDTO.setSpace(workspace.getSpaceDTOs());
+
+        if(workspace.getUserEntities() != null)
+            workspaceDTO.setUserSet(workspace.getUsersDTOs());
+
+        if(workspace.getSpaces() != null)
+            workspaceDTO.setSpace(workspace.getSpaceDTOs());
 
         return workspaceDTO;
     }

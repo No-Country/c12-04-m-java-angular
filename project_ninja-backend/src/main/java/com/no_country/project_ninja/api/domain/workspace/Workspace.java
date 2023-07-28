@@ -3,7 +3,8 @@ package com.no_country.project_ninja.api.domain.workspace;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.no_country.project_ninja.api.domain.space.Space;
 import com.no_country.project_ninja.api.domain.space.dto.SpaceDTO;
-import com.no_country.project_ninja.api.domain.user.User;
+import com.no_country.project_ninja.api.domain.user.UserEntity;
+import com.no_country.project_ninja.api.domain.user.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -37,14 +38,14 @@ public class Workspace {
     @JoinTable(
             name = "users_workspace", // Name of the join table
             joinColumns = @JoinColumn(name = "workspace_id"), // Column name in the join table referring to Workspace
-            inverseJoinColumns = @JoinColumn(name = "user_id") // Column name in the join table referring to User
+            inverseJoinColumns = @JoinColumn(name = "user_id") // Column name in the join table referring to UserEntity
     )
     @JsonIgnore
-    private Set<User> users= new HashSet<>();
+    private Set<UserEntity> userEntities = new HashSet<>();
 
     @OneToMany(mappedBy = "workspace")
     @JsonIgnore
-    private Set<Space> spaces;
+    private List<Space> spaces;
 
     public Long getId() {
         return id;
@@ -70,18 +71,36 @@ public class Workspace {
         this.description = description;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<UserEntity> getUserEntities() {
+        return userEntities;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUserEntities(Set<UserEntity> userEntities) {
+        this.userEntities = userEntities;
     }
 
     public List<SpaceDTO> getSpaceDTOs() {
         return this.spaces.stream()
                 .map(this::mapSpaceToDTO)
                 .collect(Collectors.toList());
+    }
+
+    public Set<UserDTO> getUsersDTOs(){
+        return this.userEntities.stream()
+                .map(this::mapUserToDTO)
+                .collect(Collectors.toSet());
+    }
+
+
+    private UserDTO mapUserToDTO(UserEntity userEntity){
+        UserDTO userDTO= new UserDTO();
+
+        userDTO.setId(userEntity.getId());
+        userDTO.setName(userEntity.getName());
+        userDTO.setEmail(userEntity.getEmail());
+        userDTO.setTeamRol(userEntity.getTeamRol());
+
+        return userDTO;
     }
 
     private SpaceDTO mapSpaceToDTO(Space space) {

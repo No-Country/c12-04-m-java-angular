@@ -3,22 +3,15 @@ CREATE TABLE "users"
     id                BIGSERIAL    NOT NULL PRIMARY KEY,
     name              VARCHAR(100) NOT NULL,
     email             VARCHAR(100) NOT NULL UNIQUE,
-    password          VARCHAR(8)  NOT NULL,
-    subscription_type BIGINT
-);
-
-CREATE TABLE "subscription"
-(
-    id                BIGSERIAL   NOT NULL PRIMARY KEY,
-    name_subscription VARCHAR(20) NOT NULL
+    password          VARCHAR(255)  NOT NULL,
+    team_rol          VARCHAR(20)  NOT NULL
 );
 
 CREATE TABLE "workspace"
 (
     id           BIGSERIAL NOT NULL PRIMARY KEY,
     name_workspace VARCHAR(50),
-    description  VARCHAR(255),
-    users        BIGINT
+    description  VARCHAR(255)
 );
 
 CREATE TABLE "space"
@@ -37,7 +30,7 @@ CREATE TABLE "task"
     due_date    DATE,
     priority    BIGINT,
     space       BIGINT  NOT NULL,
-    user_id     BIGINT
+    status      BOOLEAN
 );
 
 CREATE TABLE "priority"

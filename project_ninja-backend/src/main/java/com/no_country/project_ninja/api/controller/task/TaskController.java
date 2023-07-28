@@ -8,18 +8,16 @@ import com.no_country.project_ninja.api.domain.task.Task;
 import com.no_country.project_ninja.api.domain.task.TaskRepository;
 import com.no_country.project_ninja.api.domain.task.dto.TaskDTO;
 import com.no_country.project_ninja.api.domain.task.dto.TaskSimpleDTO;
-import com.no_country.project_ninja.api.domain.user.User;
+import com.no_country.project_ninja.api.domain.user.UserEntity;
 import com.no_country.project_ninja.api.domain.user.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -158,17 +156,17 @@ public class TaskController {
     @PostMapping("/users")
     public ResponseEntity<TaskDTO> assignUserToTask(@RequestParam Long taskId, @RequestParam Long userId) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
-        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<UserEntity> userOptional = userRepository.findById(userId);
 
         if (taskOptional.isPresent() && userOptional.isPresent()) {
             Task task = taskOptional.get();
-            User user = userOptional.get();
+            UserEntity userEntity = userOptional.get();
 
-            task.getUsers().add(user);
-            user.getTaskSet().add(task);
+            task.getUserEntities().add(userEntity);
+            userEntity.getTasks().add(task);
 
             taskRepository.save(task);
-            userRepository.save(user);
+            userRepository.save(userEntity);
 
             TaskDTO taskDTO = mapTaskToDTO(task);
             return ResponseEntity.ok(taskDTO);
@@ -180,17 +178,17 @@ public class TaskController {
     @DeleteMapping("/users")
     public ResponseEntity<TaskDTO> removeUserFromTask(@RequestParam Long taskId, @RequestParam Long userId) {
         Optional<Task> taskOptional = taskRepository.findById(taskId);
-        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<UserEntity> userOptional = userRepository.findById(userId);
 
         if (taskOptional.isPresent() && userOptional.isPresent()) {
             Task task = taskOptional.get();
-            User user = userOptional.get();
+            UserEntity userEntity = userOptional.get();
 
-            task.getUsers().remove(user);
-            user.getTaskSet().remove(task);
+            task.getUserEntities().remove(userEntity);
+            userEntity.getTasks().remove(task);
 
             taskRepository.save(task);
-            userRepository.save(user);
+            userRepository.save(userEntity);
 
             TaskDTO taskDTO = mapTaskToDTO(task);
             return ResponseEntity.ok(taskDTO);
@@ -208,7 +206,7 @@ public class TaskController {
         taskDTO.setDueDate(task.getDueDate());
         taskDTO.setPriorityTask(task.getPriorityTask());
         taskDTO.setStatus(task.isStatus());
-        taskDTO.setUserSet(task.getUsers());
+        taskDTO.setUserSet(task.getUserEntities());
 
         return taskDTO;
     }

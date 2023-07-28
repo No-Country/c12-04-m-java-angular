@@ -1,2 +1,0 @@
-ALTER TABLE "users" ADD COLUMN team_rol VARCHAR(50);
-ALTER TABLE "task" ADD COLUMN status BOOLEAN;

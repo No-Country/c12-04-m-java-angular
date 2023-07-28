@@ -1,8 +1,8 @@
 package com.no_country.project_ninja.api.domain.workspace.dto;
 
-import com.no_country.project_ninja.api.domain.space.Space;
 import com.no_country.project_ninja.api.domain.space.dto.SpaceDTO;
-import com.no_country.project_ninja.api.domain.user.User;
+import com.no_country.project_ninja.api.domain.user.UserEntity;
+import com.no_country.project_ninja.api.domain.user.dto.UserDTO;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ public class WorkspaceDTO {
     private Long id;
     private String nameWorkspace;
     private String description;
-    private Set<User> userSet= new HashSet<>();
+    private Set<UserDTO> userEntitySet = new HashSet<>();
     private List<SpaceDTO> spaceSet= new ArrayList<>();
 
     public Long getId() {
@@ -40,12 +40,12 @@ public class WorkspaceDTO {
         this.description = description;
     }
 
-    public Set<User> getUserSet() {
-        return userSet;
+    public Set<UserDTO> getUserSet() {
+        return userEntitySet;
     }
 
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
+    public void setUserSet(Set<UserDTO> userEntitySet) {
+        this.userEntitySet = userEntitySet;
     }
 
     public List<SpaceDTO> getSpaceSet() {

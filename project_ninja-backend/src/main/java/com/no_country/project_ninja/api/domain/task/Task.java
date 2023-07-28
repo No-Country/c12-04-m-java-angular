@@ -3,8 +3,7 @@ package com.no_country.project_ninja.api.domain.task;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.no_country.project_ninja.api.domain.priority.PriorityTask;
 import com.no_country.project_ninja.api.domain.space.Space;
-import com.no_country.project_ninja.api.domain.task.dto.TaskSimpleDTO;
-import com.no_country.project_ninja.api.domain.user.User;
+import com.no_country.project_ninja.api.domain.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -51,10 +50,10 @@ public class Task {
     @JoinTable(
             name = "user_task", // Name of the join table
             joinColumns = @JoinColumn(name = "task_id"), // Column name in the join table referring to Task
-            inverseJoinColumns = @JoinColumn(name = "user_id") // Column name in the join table referring to User
+            inverseJoinColumns = @JoinColumn(name = "user_id") // Column name in the join table referring to UserEntity
     )
     @JsonIgnore
-    private Set<User> users= new HashSet<>();
+    private Set<UserEntity> userEntities = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -96,12 +95,12 @@ public class Task {
         this.priorityTask = priorityTask;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public Set<UserEntity> getUserEntities() {
+        return userEntities;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUserEntities(Set<UserEntity> userEntities) {
+        this.userEntities = userEntities;
     }
 
     public Date getDueDate() {

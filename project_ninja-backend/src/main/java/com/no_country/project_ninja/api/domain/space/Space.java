@@ -87,7 +87,7 @@ public class Space {
         taskDTO.setDueDate(task.getDueDate());
         taskDTO.setStatus(task.isStatus());
         taskDTO.setPriorityTask(task.getPriorityTask());
-        taskDTO.setUserSet(task.getUsers());
+        taskDTO.setUserSet(task.getUserEntities());
 
         return taskDTO;
     }

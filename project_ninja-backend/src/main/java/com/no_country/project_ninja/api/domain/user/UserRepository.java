@@ -1,13 +1,11 @@
 package com.no_country.project_ninja.api.domain.user;
 
-import com.no_country.project_ninja.api.domain.task.Task;
-import com.no_country.project_ninja.api.domain.workspace.Workspace;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
+import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
 
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
+    Optional<UserDetails> findByEmail(String email);
 }

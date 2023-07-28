@@ -1,4 +1,4 @@
-package com.no_country.project_ninja;
+package com.no_country.project_ninja.api.infra.cors;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
