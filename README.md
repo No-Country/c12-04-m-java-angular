@@ -482,7 +482,7 @@ Obtener la tercera página con un tamaño de página de 15 y ordenar por fecha d
 `{api_url}/task/space/2?page=2&size=15&sort=dueDate,desc`
 
 
-### Crear spaces:
+### Crear task:
 ### URL: {api.url}/task 
 #### Request: POST
 
@@ -522,8 +522,8 @@ Respuesta:
 }
 ```
 
-### Actualizar tarea:
-### URL: {api.url}/space/{id_task} 
+### Actualizar task:
+### URL: {api.url}/task/{id_task} 
 #### Request: PUT
 
 Para actualizar una tarea se debe enviar la peticion identificando la mismo con su respectivo id pasado como parametro en `{id_task}` enviando el json siguiente:
@@ -549,7 +549,7 @@ Al momento de querer eliminar una tarea se debe enviar la peticion identificando
 Task deleted successfully
 ```
 
-### Agregar usuario a una tarea:
+### Agregar usuario a una task:
 ### URL: {api.url}/task/{id_task}/users/{id_user} 
 #### Request: POST
 
