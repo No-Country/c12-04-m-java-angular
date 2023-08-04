@@ -8,24 +8,24 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { HomePageComponent } from './components/home-page/home-page.component';
-import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
-import { FooterComponent } from './footer/footer.component';
-import { ModalEditSpaceComponent } from './components/modal-edit-space/modal-edit-space.component';
-import { ModalConfirmDeleteSpaceComponent } from './modal-confirm-delete-space/modal-confirm-delete-space.component';
-import { ProjectComponent } from './components/project/project.component';
+import { NavigationBarComponent } from './components/layout/navigation-bar/navigation-bar.component';
+import { FooterComponent } from './components/layout/footer/footer.component';
+import { ModalEditSpaceComponent } from './components/project-spaces/modal-edit-space/modal-edit-space.component';
+import { ModalConfirmDeleteSpaceComponent } from './components/project-spaces/modal-confirm-delete-space/modal-confirm-delete-space.component';
+import { ProjectComponent } from './components/project-spaces/project/project.component';
 import { LogInAndRegisterComponent } from './components/log-in-and-register/log-in-and-register.component';
 import { TasksModule } from './components/tasks/tasks.module';
 import { ListTasksComponent } from './components/tasks/list-tasks/list-tasks.component';
 import { AddEditTaskComponent } from './components/tasks/add-edit-task/add-edit-task.component';
-import { ProfilePageComponent } from './components/profile-page/profile-page.component';
-import { PresentationPageComponent } from './presentation-page/presentation-page.component';
+import { ProfilePageComponent } from './components/account/profile-page/profile-page.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 import { MaterialModule } from '@shared/material.module'
 import { ReactiveFormsModule } from '@angular/forms';
-import { ModalNewSpaceComponent } from './components/modal-new-space/modal-new-space.component';
-import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
-import { PasswordChangeComponent } from './components/password-change/password-change.component';
-import { ModalNewTaskComponent } from './components/modal-new-task/modal-new-task.component';
+import { ModalNewSpaceComponent } from './components/project-spaces/modal-new-space/modal-new-space.component';
+import { PasswordRecoveryComponent } from './components/account/password-recovery/password-recovery.component';
+import { PasswordChangeComponent } from './components/account/password-change/password-change.component';
+import { ModalNewTaskComponent } from './components/tasks/modal-new-task/modal-new-task.component';
 import { DatePipe } from '@angular/common';
 
 @NgModule({
@@ -41,7 +41,7 @@ import { DatePipe } from '@angular/common';
     LogInAndRegisterComponent,
     ListTasksComponent,
     AddEditTaskComponent,
-    PresentationPageComponent,
+    WelcomeComponent,
     ProfilePageComponent,
     PasswordRecoveryComponent,
     PasswordChangeComponent,

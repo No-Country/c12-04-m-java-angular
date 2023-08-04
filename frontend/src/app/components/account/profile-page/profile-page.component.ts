@@ -48,7 +48,7 @@ export class ProfilePageComponent {
     this.router.navigateByUrl(`PasswordRecovery`);
   }
 
-  redirigirPresentationPage() {
+  redirigirWelcome() {
     this.router.navigateByUrl(`/`);
   }
 }
